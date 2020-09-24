@@ -1,0 +1,12 @@
+.navbar-expand-lg {
+    height: 120px;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: #888;
+}
+
+.navbar-dark .navbar-brand {
+    font-size: 30px;
+    color: #6cc3d5;
+}
