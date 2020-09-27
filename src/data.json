@@ -1,0 +1,141 @@
+{
+    "products": [{
+            "ref": "lime_1",
+            "name": "lime",
+            "price": 1.5,
+            "unite": "kg",
+            "pic": "lime.jpg",
+            "type": "fruits",
+            "promo": 20
+        },
+
+        {
+            "ref": "peach_1",
+            "name": "peach",
+            "price": 2,
+            "unite": "kg",
+            "pic": "peach.jpg",
+            "type": "fruits",
+            "promo": 0
+        },
+        {
+            "ref": "pomegranate_1",
+            "name": "pomegranate",
+            "price": 3.5,
+            "unite": "kg",
+            "pic": "pomegranate.jpg",
+            "type": "fruits",
+            "promo": 30
+        },
+        {
+            "ref": "strawberries_1",
+            "name": "strawberries",
+            "price": 2.5,
+            "unite": "kg",
+            "pic": "strawberries.jpg",
+            "type": "fruits",
+            "promo": 0
+        },
+        {
+            "ref": "ananas_1",
+            "name": "Ananas",
+            "price": 2,
+            "unite": "piece",
+            "pic": "ananas.jpg",
+            "type": "fruits",
+            "promo": 0
+        },
+        {
+            "ref": "apple_1",
+            "name": "Apples",
+            "price": 3,
+            "unite": "kg",
+            "pic": "apple.jpg",
+            "type": "fruits",
+            "promo": 0
+        },
+        {
+            "ref": "bananas_1",
+            "name": "Bananas",
+            "price": 2,
+            "unite": "kg",
+            "pic": "banana.jpg",
+            "type": "fruits",
+            "promo": 0
+        },
+        {
+            "ref": "orange_1",
+            "name": "Oranges",
+            "price": 1.5,
+            "unite": "kg",
+            "pic": "orange.jpg",
+            "type": "fruits",
+            "promo": 50
+        },
+        {
+            "ref": "Coconut_1",
+            "name": "Coconut",
+            "price": 3.5,
+            "unite": "piece",
+            "pic": "coconut.jpg",
+            "type": "fruits",
+            "promo": 0
+        },
+
+        {
+            "ref": "tomatoes_2",
+            "name": "Tomatoes",
+            "price": 1.5,
+            "unite": "kg",
+            "pic": "tomatoes.jpg",
+            "type": "vegetables",
+            "promo": 0
+        },
+
+        {
+            "ref": "potatoes_2",
+            "name": "Potatoes",
+            "price": 3.5,
+            "unite": "kg",
+            "pic": "potatoes.jpg",
+            "type": "vegetables",
+            "promo": 15
+        },
+        {
+            "ref": "garlic_2",
+            "name": "Garlic",
+            "price": 3.5,
+            "unite": "kg",
+            "pic": "garlic.jpg",
+            "type": "vegetables",
+            "promo": 0
+        },
+        {
+            "ref": "artichokes_2",
+            "name": "Artichokes",
+            "price": 3.5,
+            "unite": "piece",
+            "pic": "artichokes.jpg",
+            "type": "vegetables",
+            "promo": 0
+        },
+        {
+            "ref": "carrots_2",
+            "name": "Carrots",
+            "price": 2,
+            "unite": "piece",
+            "pic": "carrots.jpg",
+            "type": "vegetables",
+            "promo": 20
+        },
+        {
+            "ref": "mashroom_2",
+            "name": "Mashroom",
+            "price": 3.5,
+            "unite": "piece",
+            "pic": "mashroom.jpg",
+            "type": "vegetables",
+            "promo": 0
+        }
+    ]
+}

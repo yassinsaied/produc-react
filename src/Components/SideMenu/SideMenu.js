@@ -1,25 +1,37 @@
-import React from 'react';
-import "./SideMenu.css"
+import React from "react";
+import { NavLink } from "react-router-dom";
 
+import "./SideMenu.css";
 
 const sidMenu = () => {
-    return (
-      <>  
-    <div className="col-sm-2 side-menu">
+  return (
+    <>
+      <div className="col-sm-2 side-menu">
         <nav className="nav flex-column">
-        <a className="nav-link text-info active" href="#">Légume </a>
-        <a className="nav-link text-info active" href="#">Fruits</a>
-        <a className="nav-link text-info" href="#">Produit Frais </a>
-       <a className="nav-link text-info " href="#">Epicerie </a>
-        <a className="nav-link text-info " href="#"> Boisson</a>
-     <a className="nav-link text-info " href="#"> Autre...</a>
-     </nav>
+          <NavLink to="/products/vegetables" className="nav-link text-info">
+            Vegetables{" "}
+          </NavLink>
+          <NavLink to="/products/fruits" className="nav-link text-info">
+            Fruits
+          </NavLink>
+          <NavLink to="/products/fresh" className="nav-link text-info">
+            Fresh products
+          </NavLink>
+          <NavLink to="/products/grocerys" className="nav-link text-info ">
+            Grocerys{" "}
+          </NavLink>
+          <NavLink to="/products/drinks" className="nav-link text-info ">
+            {" "}
+            Drinks
+          </NavLink>
+          <NavLink to="/products/other" className="nav-link text-info ">
+            {" "}
+            Other...
+          </NavLink>
+        </nav>
+      </div>
+    </>
+  );
+};
 
-  </div>
-
-</>
-
-      );
-}
- 
 export default sidMenu;
