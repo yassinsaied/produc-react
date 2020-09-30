@@ -13,13 +13,14 @@ const ListProducts = ({ allProducts, history }) => {
     );
     //console.log(allProducts.products);
     //console.log(products);
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // console.log(keyProduct);
   const listp = products.map((product) => {
     //console.log(product);
     return (
       <CardProduct
+        key={product.ref}
         nameProduct={product.name}
         unite={product.unite}
         price={product.price}
@@ -31,11 +32,8 @@ const ListProducts = ({ allProducts, history }) => {
 
   return (
     <>
-      {
-        listp
-
-        /* <CardProduct nameProduct={product.name}   unite={product.unite}  price={product.price} pic={product.pic}  type={keyProducts} /> */
-      }
+      <h1>Our promotions</h1>
+      <div className="row">{listp}</div>
     </>
   );
 };

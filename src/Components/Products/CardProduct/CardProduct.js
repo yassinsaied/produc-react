@@ -1,9 +1,9 @@
 import React from "react";
 
-const CardProduct = ({ nameProduct, unite, price, pic, type }) => {
-  console.log(process.env.PUBLIC_URL + "zzz");
+const CardProduct = ({ nameProduct, unite, price, pic, type, keyProduct }) => {
+  //console.log(process.env.PUBLIC_URL + "zzz");
   return (
-    <div className="col-sm-6 col-md-4 col-lg-3">
+    <div className="col-sm-6 col-md-4 col-lg-3" key={keyProduct}>
       {/* <div className="card border-primary mb-4" >
     <div className="card-header">Header</div>
     <div className="card-body">
@@ -32,9 +32,9 @@ const CardProduct = ({ nameProduct, unite, price, pic, type }) => {
 
           <div className="buy d-flex justify-content-between align-items-center">
             <div className="price text-info">
-              <h5 className="mt-4">
+              <h6 className="mt-4">
                 {price}$ {""}\ {unite}
-              </h5>
+              </h6>
             </div>
             <span className="btn btn-info mt-3">
               <i className="fa fa-shopping-cart"></i> Add to Cart
