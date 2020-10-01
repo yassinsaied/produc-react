@@ -19,16 +19,7 @@ const ListProduct = (props) => {
   }, [typeProduct]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const listp = products.map((product) => {
-    return (
-      <CardProduct
-        key={product.ref}
-        nameProduct={product.name}
-        unite={product.unite}
-        price={product.price}
-        pic={product.pic}
-        type={product.type}
-      />
-    );
+    return <CardProduct product={product} key={product.ref} />;
   });
 
   const titleProduct =

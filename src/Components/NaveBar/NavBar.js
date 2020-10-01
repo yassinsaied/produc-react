@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
+
 import "./NavBar.css";
 
 const NavBar = (props) => {
@@ -34,10 +36,10 @@ const NavBar = (props) => {
   return (
     <>
       <nav className=" d-flex navbar navbar-expand-lg navbar-dark bg-warning">
-        <span className="navbar-brand">
+        <NavLink className="navbar-brand" to="/">
           Zarga Market
           <i className="fa fa-shopping-cart ml-2"></i>
-        </span>
+        </NavLink>
 
         <div className=" collapse navbar-collapse" id="navbarColor01">
           <form

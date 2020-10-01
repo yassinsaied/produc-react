@@ -36,6 +36,7 @@ const SearchResult = (props) => {
         price={product.price}
         pic={product.pic}
         type={product.type}
+        promo={product.promo}
       />
     );
   });
