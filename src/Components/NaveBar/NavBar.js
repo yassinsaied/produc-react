@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import { NavLink } from "react-router-dom";
 
 import "./NavBar.css";
 
 const NavBar = (props) => {
   const [searchText, setSearchText] = useState("");
+
+useEffect(() => {
+  onHandelKeyUp()
+}, [searchText]); // eslint-disable-line react-hooks/exhaustive-deps
 
   //console.log(props);
   const onHandelChange = (event) => {
@@ -13,25 +17,18 @@ const NavBar = (props) => {
   };
 
   const onHandelKeyUp = (event) => {
-    if (event.key === "Enter" && event.keyCode === 13) {
-      event.preventDefault();
-      onHandelSubmit();
-    }
-  };
-
-  const onHandelSubmit = (event) => {
-    event.preventDefault();
-    if (searchText) {
+     if (searchText) {
       let text = searchText;
-      setSearchText("");
-      props.history.push({
+          props.history.push({
         pathname: "/search/" + text,
         state: { searchText: text },
       });
     } else {
       props.history.push("/");
     }
+    
   };
+
 
   return (
     <>
@@ -44,11 +41,11 @@ const NavBar = (props) => {
         <div className=" collapse navbar-collapse" id="navbarColor01">
           <form
             className="ml-auto form-inline my-2 my-lg-0"
-            onSubmit={onHandelSubmit}
+           
           >
             <input
               className="form-control mr-sm-2"
-              type="text"
+              type="search"
               placeholder="Search"
               onChange={onHandelChange}
               onKeyUp={onHandelKeyUp}

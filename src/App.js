@@ -2,10 +2,11 @@ import React from "react";
 import { HashRouter, Switch, Route, withRouter } from "react-router-dom";
 import NavBar from "./Components/NaveBar/NavBar";
 import SideMenu from "./Components/SideMenu/SideMenu";
-import PromoProducts from "./Components/Products/ListProducts/PromoProducts";
+import PromoProducts from "./Components/Products/PromoProducts/PromoProducts";
 import ListProducts from "./Components/Products/ListProducts/ListProducts";
-import SearchResult from "./Components/Products/ListProducts/SearchResult";
+import SearchResult from "./Components/Products/SearchProducts/SearchProducts";
 import dataProduct from "./data.json";
+
 
 function App() {
   const NavBarwithRouter = withRouter(NavBar);

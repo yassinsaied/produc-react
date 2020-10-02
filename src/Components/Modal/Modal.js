@@ -1,6 +1,38 @@
-import React from "react";
+import React , {useState , useEffect} from "react";
 
 const Modal = ({ product, price }) => {
+ 
+  const [command, setCommand] = useState({
+
+   price : price,
+   amount : 1 ,
+   count : 0
+
+  });
+
+  console.log(command.count)
+
+
+  // useEffect(() => {
+  //   handleAddQt()
+  //   console.log(command.count)
+  // }, [command.count]); // eslint-disable-line react-hooks/exhaustive-deps
+
+const handleAddQt = () =>{
+
+
+ const NewCommand = {
+  price : command.price* command.count,
+  amount : command.amount * command.count,
+  count : command.count
+ }
+
+ console.log(NewCommand)
+ setCommand({NewCommand})
+
+}
+
+
   return (
     <div
       className="modal "
@@ -43,11 +75,23 @@ const Modal = ({ product, price }) => {
                 <div className="price-wrap h6 mt-3">
                   $ {price}/ {product.unite}
                 </div>
+
+
+                <div className="btn-group mt-3" role="group" >
+                  <button type="button" className="btn btn-info">-</button>
+                  <span className="btn btn-light" >{command.count}</span>
+                  <button type="button" className="btn btn-info" onClick={()=>{setCommand({count: command.count +1 })}}>+</button>
+             </div>
+
+
               </div>
-            </div>
+
+           </div>
+
+          
           </div>
           <div className="modal-footer">
-            <button type="button" className="btn btn-primary">
+            <button type="button" className="btn btn-info">
               <i className="fa fa-shopping-cart cart"></i> Add To Cate
             </button>
             <button

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CardProduct from "../CardProduct/CardProduct";
+import "./SearchProducts.css"
+
 
 const SearchResult = (props) => {
   const [search, setSearch] = useState({
@@ -30,21 +32,17 @@ const SearchResult = (props) => {
     //console.log(product);
     return (
       <CardProduct
-        key={product.ref}
-        nameProduct={product.name}
-        unite={product.unite}
-        price={product.price}
-        pic={product.pic}
-        type={product.type}
-        promo={product.promo}
-      />
+       product={product} key={product.ref} />
+     
     );
   });
 
   return (
     <>
+ 
       <h1>Result Of {search.searchText}</h1>
-      <div className="row">{listp}</div>
+      <div className="row result-row">{listp}</div>
+     
     </>
   );
 };

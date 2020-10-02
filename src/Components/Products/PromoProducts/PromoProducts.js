@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CardProduct from "../CardProduct/CardProduct";
+import "./PromoProducts.css"
+
 
 const ListProducts = ({ allProducts, history }) => {
   const [products, setProducts] = useState([]);
@@ -22,9 +24,11 @@ const ListProducts = ({ allProducts, history }) => {
   });
 
   return (
-    <>
+  <>
+    <div  className="row result-row">
       <h1>Our promotions</h1>
-      <div className="row">{listp}</div>
+      <div className="row result-row">{listp}</div>
+      </div>
     </>
   );
 };
