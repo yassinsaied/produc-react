@@ -1,0 +1,2 @@
+export const INCREMENTQT = "INCREMENTQT";
+export const DECREMENTQT = "DECREMENTQT";

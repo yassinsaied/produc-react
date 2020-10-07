@@ -5,8 +5,9 @@ import SideMenu from "./Components/SideMenu/SideMenu";
 import PromoProducts from "./Components/Products/PromoProducts/PromoProducts";
 import ListProducts from "./Components/Products/ListProducts/ListProducts";
 import SearchResult from "./Components/Products/SearchProducts/SearchProducts";
+import ShippingCart from "./Components/ShippingCart/ShippingCart";
 import dataProduct from "./data.json";
-
+//import Modal from "./Components/Modal/Modal";
 
 function App() {
   const NavBarwithRouter = withRouter(NavBar);
@@ -15,32 +16,35 @@ function App() {
     <>
       <HashRouter>
         <NavBarwithRouter />
-        <div className="row p-4">
-          <SideMenu />
-          <div className="container col-sm">
-            <div className="row">
-              <Switch>
-                <Route
-                  path="/products/:product"
-                  render={(props) => (
-                    <ListProducts allProducts={dataProduct} {...props} />
-                  )}
-                />
-                <Route
-                  path="/search/:search"
-                  component={(props) => (
-                    <SearchResult allProducts={dataProduct} {...props} />
-                  )}
-                />
 
-                <Route
-                  path="/"
-                  render={(props) => (
-                    <PromoProducts allProducts={dataProduct} {...props} />
-                  )}
-                />
-              </Switch>
-            </div>
+        <div className="row m-0 pt-3">
+          <div className="col-sm-2">
+            <SideMenu />
+          </div>
+          <div className="col-10">
+            <Switch>
+              <Route
+                path="/products/:product"
+                render={(props) => (
+                  <ListProducts allProducts={dataProduct} {...props} />
+                )}
+              />
+              <Route
+                path="/search/:search"
+                component={(props) => (
+                  <SearchResult allProducts={dataProduct} {...props} />
+                )}
+              />
+
+              <Route path="/shippingcart" component={ShippingCart} />
+
+              <Route
+                path="/"
+                render={(props) => (
+                  <PromoProducts allProducts={dataProduct} {...props} />
+                )}
+              />
+            </Switch>
           </div>
         </div>
       </HashRouter>

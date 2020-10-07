@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import CardProduct from "../CardProduct/CardProduct";
-import "./ListProducts.css"
+import "./ListProducts.css";
 
 const ListProduct = (props) => {
   const [products, setProducts] = useState([]);
@@ -28,12 +28,11 @@ const ListProduct = (props) => {
 
   return (
     <>
-    
       <h1> list Of {titleProduct}</h1>
       <div className="row result-row">{listp}</div>
-    
     </>
   );
 };
 
 export default ListProduct;
+

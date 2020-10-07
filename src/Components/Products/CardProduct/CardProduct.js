@@ -17,7 +17,7 @@ const CardProduct = ({ product }) => {
         promo: true,
       });
     }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [promoProduct.promo]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const pricePromo = promoProduct.promo ? (
     <>
@@ -80,7 +80,7 @@ const CardProduct = ({ product }) => {
           </div>
         </div>
       </div>
-      <Modal product={product} price={promoProduct.newPrice} />
+      <Modal product={product} newPrice={promoProduct.newPrice} />
     </>
   );
 };

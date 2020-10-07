@@ -1,111 +1,152 @@
-import React , {useState , useEffect} from "react";
+import React, { Component } from "react";
+import * as actionType from "../../Store/ActionsAddToCart";
 
-const Modal = ({ product, price }) => {
- 
-  const [command, setCommand] = useState({
+import { connect } from "react-redux";
 
-   price : price,
-   amount : 1 ,
-   count : 0
+class Modal extends Component {
+  // const [command, setCommand] = useState({
+  //   amount: 0,
+  //   count: 0,
+  // });
 
-  });
+  // // eslint-disable-line react-hooks/exhaustive-deps
 
-  console.log(command.count)
+  // const incrementQt = () => {
+  //   const count = command.count + 1;
+  //   const amount = (newPrice * count).toFixed(2);
+  //   setCommand({ amount, count });
+  // };
 
-
-  // useEffect(() => {
-  //   handleAddQt()
-  //   console.log(command.count)
-  // }, [command.count]); // eslint-disable-line react-hooks/exhaustive-deps
-
-const handleAddQt = () =>{
-
-
- const NewCommand = {
-  price : command.price* command.count,
-  amount : command.amount * command.count,
-  count : command.count
- }
-
- console.log(NewCommand)
- setCommand({NewCommand})
-
-}
-
-
-  return (
-    <div
-      className="modal "
-      id={`${product.ref}`}
-      tabIndex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div className="modal-dialog modal-lg" role="document">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h5 className="modal-title">{product.name}</h5>
-            <button
-              type="button"
-              className="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div className="modal-body">
-            <div className="row">
-              <div className="col-5">
-                <img
-                  className="card-img"
-                  src={
-                    process.env.PUBLIC_URL +
-                    "/assets/img/" +
-                    product.type +
-                    "/" +
-                    product.pic
-                  }
-                  alt={product.name}
-                />
-              </div>
-              <div className="col-7">
-                <p>Modal body text goes here.</p>
-                <div className="price-wrap h6 mt-3">
-                  $ {price}/ {product.unite}
+  // const decrementQt = () => {
+  //   if (command.count > 1) {
+  //     const count = command.count - 1;
+  //     const amount = (newPrice * count).toFixed(2);
+  //     setCommand({ amount, count });
+  //   }
+  // };
+  render() {
+    return (
+      <div
+        className="modal "
+        id={`${this.props.product.ref}`}
+        tabIndex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-lg" role="document">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">{this.props.product.name}</h5>
+              <button
+                type="button"
+                className="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div className="modal-body">
+              <div className="row">
+                <div className="col-5">
+                  <img
+                    className="card-img"
+                    src={
+                      process.env.PUBLIC_URL +
+                      "/assets/img/" +
+                      this.props.product.type +
+                      "/" +
+                      this.props.product.pic
+                    }
+                    alt={this.props.product.name}
+                  />
                 </div>
+                <div className="col-7">
+                  <p>Modal body text goes here.</p>
+                  <div className="price-wrap h6 mt-3">
+                    $ {this.props.newPrice}/ {this.props.product.unite}
+                  </div>
 
-
-                <div className="btn-group mt-3" role="group" >
-                  <button type="button" className="btn btn-info">-</button>
-                  <span className="btn btn-light" >{command.count}</span>
-                  <button type="button" className="btn btn-info" onClick={()=>{setCommand({count: command.count +1 })}}>+</button>
-             </div>
-
-
+                  <div className="btn-group mt-3" role="group">
+                    <button
+                      type="button"
+                      className="btn btn-info"
+                      onClick={() =>
+                        this.props.deletQte(
+                          this.props.product.ref,
+                          this.props.newPrice
+                        )
+                      }
+                    >
+                      -
+                    </button>
+                    <span className="btn btn-light">{this.props.count}</span>
+                    <button
+                      type="button"
+                      className="btn btn-info"
+                      onClick={() =>
+                        this.props.addQte(
+                          this.props.product.ref,
+                          this.props.newPrice
+                        )
+                      }
+                    >
+                      +
+                    </button>
+                  </div>
+                  <div className="d-flex justify-content-end">
+                    <h5>
+                      Total:{" "}
+                      <span className="price text-success">
+                        {this.props.amount}
+                      </span>
+                    </h5>
+                  </div>
+                </div>
               </div>
-
-           </div>
-
-          
-          </div>
-          <div className="modal-footer">
-            <button type="button" className="btn btn-info">
-              <i className="fa fa-shopping-cart cart"></i> Add To Cate
-            </button>
-            <button
-              type="button"
-              className="btn btn-secondary"
-              data-dismiss="modal"
-            >
-              Cancel
-            </button>
+            </div>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-info">
+                <i className="fa fa-shopping-cart cart"></i> Add To Cate
+              </button>
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Cancel
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+    count: state.count,
+    amount: state.amount,
+    refProduct: state.refProduct,
+  };
 };
 
-export default Modal;
+const mapDispacheToProps = (dispatche) => {
+  return {
+    addQte: (ref, newPrice) =>
+      dispatche({
+        type: actionType.INCREMENTQT,
+        payload: { productRef: ref, price: newPrice },
+      }),
+
+    deletQte: (ref, newPrice) =>
+      dispatche({
+        type: actionType.DECREMENTQT,
+        payload: { productRef: ref, price: newPrice },
+      }),
+  };
+};
+
+export default connect(mapStateToProps, mapDispacheToProps)(Modal);
