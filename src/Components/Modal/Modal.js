@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import * as actionType from "../../Store/ActionsAddToCart";
+import * as actionTypes from "../../Store/ActionsAddToCart";
 
 import { connect } from "react-redux";
 
@@ -43,6 +43,7 @@ class Modal extends Component {
                 className="close"
                 data-dismiss="modal"
                 aria-label="Close"
+                onClick={this.props.cancel}
               >
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -107,13 +108,27 @@ class Modal extends Component {
               </div>
             </div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-info">
+              <button
+                type="button"
+                className="btn btn-info"
+                onClick={() =>
+                  this.props.addToCart(
+                    this.props.refProduct,
+                    this.props.amount,
+                    this.props.count,
+                    this.props.product.name,
+                    this.props.product.type,
+                    this.props.product.pic
+                  )
+                }
+              >
                 <i className="fa fa-shopping-cart cart"></i> Add To Cate
               </button>
               <button
                 type="button"
                 className="btn btn-secondary"
                 data-dismiss="modal"
+                onClick={this.props.cancel}
               >
                 Cancel
               </button>
@@ -127,9 +142,9 @@ class Modal extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    count: state.count,
-    amount: state.amount,
-    refProduct: state.refProduct,
+    count: state.addTocart.count,
+    amount: state.addTocart.amount,
+    refProduct: state.addTocart.refProduct,
   };
 };
 
@@ -137,14 +152,28 @@ const mapDispacheToProps = (dispatche) => {
   return {
     addQte: (ref, newPrice) =>
       dispatche({
-        type: actionType.INCREMENTQT,
+        type: actionTypes.INCREMENTQT,
         payload: { productRef: ref, price: newPrice },
       }),
 
     deletQte: (ref, newPrice) =>
       dispatche({
-        type: actionType.DECREMENTQT,
+        type: actionTypes.DECREMENTQT,
         payload: { productRef: ref, price: newPrice },
+      }),
+
+    cancel: () => dispatche({ type: actionTypes.CANCEL }),
+    addToCart: (ref, amount, count, name, typep, pic) =>
+      dispatche({
+        type: actionTypes.ADDTOCART,
+        payload: {
+          refProduct: ref,
+          amount: amount,
+          count: count,
+          nameProduct: name,
+          typeProduct: typep,
+          picProduct: pic,
+        },
       }),
   };
 };

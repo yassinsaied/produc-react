@@ -1,4 +1,4 @@
-import * as actionType from "../ActionsAddToCart";
+import * as actionTypes from "../ActionsAddToCart";
 
 const initialState = {
   count: 0,
@@ -9,7 +9,7 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   let count = 0;
   switch (action.type) {
-    case actionType.INCREMENTQT:
+    case actionTypes.INCREMENTQT:
       count = state.count + 1;
       return {
         ...state,
@@ -25,7 +25,7 @@ const reducer = (state = initialState, action) => {
         refProduct: action.payload.productRef,
       };
 
-    case actionType.DECREMENTQT:
+    case actionTypes.DECREMENTQT:
       count = state.count - 1;
 
       return {
@@ -33,6 +33,14 @@ const reducer = (state = initialState, action) => {
         count: state.count + 1,
         amount: (action.payload.price * count).toFixed(2),
         refProduct: action.payload.productRef,
+      };
+
+    case actionTypes.CANCEL:
+      return {
+        ...state,
+        count: 0,
+        amount: 0,
+        refProduct: "",
       };
     default:
   }
