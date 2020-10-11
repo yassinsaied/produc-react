@@ -4,6 +4,7 @@ const initialState = {
   count: 0,
   amount: 0,
   refProduct: "",
+ 
 };
 
 const reducer = (state = initialState, action) => {
@@ -35,13 +36,22 @@ const reducer = (state = initialState, action) => {
         refProduct: action.payload.productRef,
       };
 
-    case actionTypes.CANCEL:
+    case actionTypes.ADDTOCART:
       return {
         ...state,
         count: 0,
         amount: 0,
         refProduct: "",
       };
+    
+     case actionTypes.CANCEL:
+      return {
+        ...state,
+        count: 0,
+        amount: 0,
+        refProduct: "",
+      };
+    
     default:
   }
   return state;

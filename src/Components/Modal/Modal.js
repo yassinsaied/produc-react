@@ -110,6 +110,7 @@ class Modal extends Component {
             <div className="modal-footer">
               <button
                 type="button"
+                data-dismiss="modal"
                 className="btn btn-info"
                 onClick={() =>
                   this.props.addToCart(
@@ -118,7 +119,8 @@ class Modal extends Component {
                     this.props.count,
                     this.props.product.name,
                     this.props.product.type,
-                    this.props.product.pic
+                    this.props.product.pic,
+                    this.props.newPrice
                   )
                 }
               >
@@ -126,7 +128,7 @@ class Modal extends Component {
               </button>
               <button
                 type="button"
-                className="btn btn-secondary"
+                className="btn btn-warning"
                 data-dismiss="modal"
                 onClick={this.props.cancel}
               >
@@ -163,7 +165,7 @@ const mapDispacheToProps = (dispatche) => {
       }),
 
     cancel: () => dispatche({ type: actionTypes.CANCEL }),
-    addToCart: (ref, amount, count, name, typep, pic) =>
+    addToCart: (ref, amount, count, name, type, pic , price) =>
       dispatche({
         type: actionTypes.ADDTOCART,
         payload: {
@@ -171,8 +173,9 @@ const mapDispacheToProps = (dispatche) => {
           amount: amount,
           count: count,
           nameProduct: name,
-          typeProduct: typep,
+          typeProduct: type,
           picProduct: pic,
+          priceProduct : price
         },
       }),
   };
