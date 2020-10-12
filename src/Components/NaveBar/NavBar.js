@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import {connect} from "react-redux"
 
 import "./NavBar.css";
 
@@ -10,7 +11,7 @@ const NavBar = (props) => {
     onHandelKeyUp();
   }, [searchText]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  //console.log(props);
+  console.log(props.listProducts);
   const onHandelChange = (event) => {
     const value = event.currentTarget.value;
     setSearchText(value);
@@ -30,7 +31,7 @@ const NavBar = (props) => {
 
   return (
     <>
-      <nav className=" d-flex navbar navbar-expand-lg navbar-dark bg-warning">
+      <nav className=" d-flex navbar navbar-expand-lg navbar-dark bg-info">
         <NavLink className="navbar-brand" to="/">
           Bio Market
           <i className="fa fa-shopping-cart ml-2"></i>
@@ -47,14 +48,22 @@ const NavBar = (props) => {
             />
           </form>
 
-          <NavLink className="btn btn-info pannier" to="/shippingcart">
+          <NavLink className="btn btn-warning pannier" to="/shippingcart">
             <i className="fa fa-shopping-cart mr-2"></i>
-            <span className="badge badge-light">3</span>
+            <span className="badge badge-light">{props.nbrOrder}</span>
           </NavLink>
         </div>
       </nav>
     </>
   );
 };
+const mapStateToProps = (state) =>{
 
-export default NavBar;
+  return {
+  nbrOrder: state.cart.listProducts.length,
+
+  }
+
+}
+
+export default connect(mapStateToProps)(NavBar);

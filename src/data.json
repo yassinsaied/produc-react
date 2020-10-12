@@ -136,6 +136,75 @@
             "pic": "mashroom.jpg",
             "type": "vegetables",
             "promo": 0
+        },
+
+        {
+            "ref": "beef_braising_steak_3",
+            "name": "Beef Braising Steak",
+            "price": 3.5,
+            "unite": "kg",
+            "pic": "beef_braising_steak.jpg",
+            "type": "meat",
+            "promo": 0
+        }, 
+
+        {
+            "ref": "beef_fillet_steak_3",
+            "name": "Beef Fillet Steak",
+            "price": 2.5,
+            "unite": "piece",
+            "pic": "beef_fillet_steak.jpg",
+            "type": "meat",
+            "promo": 20
+        } ,
+
+        {
+            "ref": "beef_steak_3",
+            "name": "Beef Steak",
+            "price": 3.5,
+            "unite": "piece",
+            "pic": "beef_steak.jpg",
+            "type": "meat",
+            "promo": 0
+        },
+
+        {
+            "ref": "prime_beef_ribeye-steak_3",
+            "name": "Prime Beef Ribeye Steak",
+            "price": 3,
+            "unite": "piece",
+            "pic": "prime_beef_ribeye-steak.jpg",
+            "type": "meat",
+            "promo": 0
+        },
+
+        {
+            "ref": "sliced_beef_3",
+            "name": "Sliced Beef",
+            "price": 3.5,
+            "unite": "piece",
+            "pic": "sliced_beef.jpg",
+            "type": "vegetables",
+            "promo": 0
+        },
+        {
+            "ref": "minced_beef_3",
+            "name": "Minced Beef",
+            "price": 2,
+            "unite": "kg",
+            "pic": "minced_meat.jpg",
+            "type": "meat",
+            "promo": 0
+        }
+
+        ,   {
+            "ref": "salami_beef_3",
+            "name": "salami Beef",
+            "price": 2,
+            "unite": "kg",
+            "pic": "salami_beef.jpg",
+            "type": "meat",
+            "promo": 0
         }
     ]
 }

@@ -1,39 +1,52 @@
-import * as actionType from "../ActionsAddToCart";
+import * as actionTypes from "../ActionsAddToCart";
 
 const initialState = {
   count: 0,
   amount: 0,
   refProduct: "",
+ 
 };
 
 const reducer = (state = initialState, action) => {
   let count = 0;
   switch (action.type) {
-    case actionType.INCREMENTQT:
+    case actionTypes.INCREMENTQT:
       count = state.count + 1;
       return {
         ...state,
-
-        // const newState = Object.assign({}, state);
-        // newState.count = state.count + 1;
-        // newState.amount = (action.payload.price * state.count + 1).toFixed(2);
-        // newState.refProduct = action.payload.productRef;
-        // console.log(newState);
-        // console.log(action.payload.price);
         count: state.count + 1,
         amount: (action.payload.price * count).toFixed(2),
         refProduct: action.payload.productRef,
       };
 
-    case actionType.DECREMENTQT:
-      count = state.count - 1;
+    case actionTypes.DECREMENTQT:
+      state.count > 0 ?  count = state.count - 1 : count = 0
+
+     
 
       return {
         ...state,
-        count: state.count + 1,
+        count: count,
         amount: (action.payload.price * count).toFixed(2),
         refProduct: action.payload.productRef,
       };
+
+    case actionTypes.ADDTOCART:
+      return {
+        ...state,
+        count: 0,
+        amount: 0,
+        refProduct: "",
+      };
+    
+     case actionTypes.CANCEL:
+      return {
+        ...state,
+        count: 0,
+        amount: 0,
+        refProduct: "",
+      };
+    
     default:
   }
   return state;
