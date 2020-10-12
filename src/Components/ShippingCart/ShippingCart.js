@@ -108,7 +108,7 @@ const mapActionToState = (dispatch) => {
   
   return {
     
-    editIncQt: (ref) => dispatch({ type: actionTypes.EDITDECQTPRODUCT, payload: { refProduct: ref } }),
+    editIncQt: (ref) => dispatch({ type: actionTypes.EDITINCQTPRODUCT, payload: { refProduct: ref } }),
     editDecQt: (ref) => dispatch({ type: actionTypes.EDITDECQTPRODUCT, payload: { refProduct: ref } }),
     deleteProduct : (ref) => dispatch({type : actionTypes.DELETEPRODUCT , payload : {refProduct : ref}})
 

@@ -6,19 +6,19 @@ const sidMenu = () => {
   return (
     <>
       <nav className="nav flex-column ">
-        <NavLink to="/products/vegetables" className="nav-link" activeClassName="active">
+        <NavLink to="/vegetables" className="nav-link" activeClassName="active">
           Vegetables{" "}
         </NavLink>
-        <NavLink to="/products/fruits" className="nav-link">
+        <NavLink to="/fruits" className="nav-link">
           Fruits
         </NavLink>
-        <NavLink to="/products/fresh" className="nav-link ">
+        <NavLink to="/fresh" className="nav-link ">
           Fresh products
         </NavLink>
-        <NavLink to="/products/grocerys" className="nav-link  ">
+        <NavLink to="/grocerys" className="nav-link  ">
           Grocerys{" "}
         </NavLink>
-        <NavLink to="/products/drinks" className="nav-link ">
+        <NavLink to="/drinks" className="nav-link ">
           {" "}
           Drinks
         </NavLink>

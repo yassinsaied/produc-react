@@ -11,7 +11,15 @@ const ListProduct = (props) => {
     const fetchProductType = () => {
       setProducts(
         props.allProducts.products.filter((product) => {
-          return product.type === typeProduct;
+
+         if (typeProduct === undefined) {
+           
+            return product.promo >0
+         } else {
+
+           return product.type === typeProduct;
+         }
+         
         })
       );
     };
@@ -23,12 +31,12 @@ const ListProduct = (props) => {
     return <CardProduct product={product} key={product.ref} />;
   });
 
-  const titleProduct =
-    typeProduct.charAt(0).toUpperCase() + typeProduct.slice(1);
+  // const titleProduct =
+  //   typeProduct.charAt(0).toUpperCase() + typeProduct.slice(1);
 
   return (
     <>
-      <h1> list Of {titleProduct}</h1>
+     
       <div className="row result-row">{listp}</div>
     </>
   );
