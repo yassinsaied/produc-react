@@ -5,7 +5,7 @@ import "./ListProducts.css";
 const ListProduct = (props) => {
   const [products, setProducts] = useState([]);
   const typeProduct = props.match.params.product;
-  console.log(props.match.params.product);
+
 
   useEffect(() => {
     const fetchProductType = () => {

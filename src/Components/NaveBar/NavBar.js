@@ -11,7 +11,7 @@ const NavBar = (props) => {
     onHandelKeyUp();
   }, [searchText]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  console.log(props.listProducts);
+  
   const onHandelChange = (event) => {
     const value = event.currentTarget.value;
     setSearchText(value);
@@ -60,7 +60,7 @@ const NavBar = (props) => {
 const mapStateToProps = (state) =>{
 
   return {
-  nbrOrder: state.cart.listProducts.length,
+  nbrOrder: state.listProducts.length,
 
   }
 

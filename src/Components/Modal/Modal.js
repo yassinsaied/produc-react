@@ -4,26 +4,7 @@ import * as actionTypes from "../../Store/ActionsAddToCart";
 import { connect } from "react-redux";
 
 class Modal extends Component {
-  // const [command, setCommand] = useState({
-  //   amount: 0,
-  //   count: 0,
-  // });
-
-  // // eslint-disable-line react-hooks/exhaustive-deps
-
-  // const incrementQt = () => {
-  //   const count = command.count + 1;
-  //   const amount = (newPrice * count).toFixed(2);
-  //   setCommand({ amount, count });
-  // };
-
-  // const decrementQt = () => {
-  //   if (command.count > 1) {
-  //     const count = command.count - 1;
-  //     const amount = (newPrice * count).toFixed(2);
-  //     setCommand({ amount, count });
-  //   }
-  // };
+ 
   render() {
     return (
       <div
@@ -74,9 +55,10 @@ class Modal extends Component {
                       type="button"
                       className="btn btn-info"
                       onClick={() =>
-                        this.props.deletQte(
+                        this.props.incdecQte(
                           this.props.product.ref,
-                          this.props.newPrice
+                          this.props.newPrice,
+                          "minus"
                         )
                       }
                     >
@@ -87,9 +69,10 @@ class Modal extends Component {
                       type="button"
                       className="btn btn-info"
                       onClick={() =>
-                        this.props.addQte(
+                        this.props.incdecQte(
                           this.props.product.ref,
-                          this.props.newPrice
+                          this.props.newPrice,
+                          "plus"
                         )
                       }
                     >
@@ -120,7 +103,8 @@ class Modal extends Component {
                     this.props.product.name,
                     this.props.product.type,
                     this.props.product.pic,
-                    this.props.newPrice
+                    this.props.newPrice,
+                    this.props.product.unite
                   )
                 }
               >
@@ -144,28 +128,22 @@ class Modal extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    count: state.addTocart.count,
-    amount: state.addTocart.amount,
-    refProduct: state.addTocart.refProduct,
+    count: state.count,
+    amount: state.amount,
+    refProduct: state.refProduct,
   };
 };
 
 const mapDispacheToProps = (dispatche) => {
   return {
-    addQte: (ref, newPrice) =>
+    incdecQte: (ref, newPrice , operator) =>
       dispatche({
-        type: actionTypes.INCREMENTQT,
-        payload: { productRef: ref, price: newPrice },
+        type: actionTypes.INCDECREMENTQT,
+        payload: { productRef: ref, price: newPrice , operator },
       }),
-
-    deletQte: (ref, newPrice) =>
-      dispatche({
-        type: actionTypes.DECREMENTQT,
-        payload: { productRef: ref, price: newPrice },
-      }),
-
+   
     cancel: () => dispatche({ type: actionTypes.CANCEL }),
-    addToCart: (ref, amount, count, name, type, pic , price) =>
+    addToCart: (ref, amount, count, name, type, pic , price, unit) =>
       dispatche({
         type: actionTypes.ADDTOCART,
         payload: {
@@ -175,7 +153,8 @@ const mapDispacheToProps = (dispatche) => {
           nameProduct: name,
           typeProduct: type,
           picProduct: pic,
-          priceProduct : price
+          priceProduct: price,
+          unitProduct : unit
         },
       }),
   };

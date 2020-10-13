@@ -21,10 +21,7 @@ const reducer = (state = initialState, action) => {
 
     case actionTypes.DECREMENTQT:
       state.count > 0 ?  count = state.count - 1 : count = 0
-
-     
-
-      return {
+    return {
         ...state,
         count: count,
         amount: (action.payload.price * count).toFixed(2),

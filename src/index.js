@@ -1,18 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { createStore, combineReducers } from "redux";
+import { createStore } from "redux";
 import { Provider } from "react-redux";
 import App from "./App";
-import addTocartReducer from "./Store/Reducers/addToCart";
 import cartReducer from "./Store/Reducers/cart";
 import * as serviceWorker from "./serviceWorker";
 
-const rootReducer = combineReducers({
-  cart: cartReducer,
-  addTocart: addTocartReducer,
-});
 
-const store = createStore(rootReducer);
+
+const store = createStore(cartReducer);
 ReactDOM.render(
   <Provider store={store}>
     <App />
