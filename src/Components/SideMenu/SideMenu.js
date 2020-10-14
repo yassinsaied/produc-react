@@ -26,6 +26,9 @@ const sidMenu = () => {
           {" "}
           Other...
         </NavLink>
+            <NavLink to="/checkout" className="nav-link ">
+          Checkout
+        </NavLink>
       </nav>
     </>
   );

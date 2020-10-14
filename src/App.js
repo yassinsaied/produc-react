@@ -5,7 +5,9 @@ import SideMenu from "./Components/SideMenu/SideMenu";
 import ListProducts from "./Components/Products/ListProducts/ListProducts";
 import SearchResult from "./Components/Products/SearchProducts/SearchProducts";
 import ShippingCart from "./Components/ShippingCart/ShippingCart";
+import Checkout from "./Components/Checkout/CheckoutContainer"
 import dataProduct from "./data.json";
+
 
 
 function App() {
@@ -25,11 +27,12 @@ function App() {
           
               <Route
                 path="/search/:search"
-                component={(props) => (
+                render={(props) => (
                   <SearchResult allProducts={dataProduct} {...props} />
                 )}
               />
               <Route path="/shippingcart" component={ShippingCart} />
+              <Route path="/checkout" component={Checkout}/>
               
               <Route
                 path="/:product"
@@ -43,6 +46,13 @@ function App() {
                   <ListProducts allProducts={dataProduct} {...props} />
                 )}
               />
+
+
+
+
+
+
+
             </Switch>
           </div>
         </div>

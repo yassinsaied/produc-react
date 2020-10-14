@@ -83,10 +83,7 @@ const reducer = (state = initialState, action) => {
                           })
                    })
       })
-    
-  
-    
-    
+      
     case actionTypes.DELETEPRODUCT: 
       return Object.assign({}, state, {
                     listProducts: state.listProducts.filter(product => {

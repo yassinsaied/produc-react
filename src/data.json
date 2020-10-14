@@ -146,7 +146,7 @@
             "pic": "beef_braising_steak.jpg",
             "type": "meat",
             "promo": 0
-        }, 
+        },
 
         {
             "ref": "beef_fillet_steak_3",
@@ -156,7 +156,7 @@
             "pic": "beef_fillet_steak.jpg",
             "type": "meat",
             "promo": 20
-        } ,
+        },
 
         {
             "ref": "beef_steak_3",
@@ -184,7 +184,7 @@
             "price": 3.5,
             "unite": "piece",
             "pic": "sliced_beef.jpg",
-            "type": "vegetables",
+            "type": "meat",
             "promo": 0
         },
         {
@@ -197,7 +197,7 @@
             "promo": 0
         }
 
-        ,   {
+        , {
             "ref": "salami_beef_3",
             "name": "salami Beef",
             "price": 2,
