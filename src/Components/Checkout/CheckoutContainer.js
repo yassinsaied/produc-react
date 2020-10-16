@@ -5,11 +5,11 @@ import FormCheckout from "./FormCheckout/FormCheckout"
 
 
 const checkout = (props) => {
-    console.log(props)
+    
     return <>
       
     
-   <div class="row">
+   <div className="row">
       <CheckoutCart listProducts={props.listProducts}/>
       <FormCheckout/>
            
