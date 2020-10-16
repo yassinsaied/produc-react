@@ -1,7 +1,70 @@
-import React from 'react';
+import React, { Component}from 'react';
 
-const formCheckout = () => {
+class formCheckout extends Component{
     
+
+   State = {
+       order: {
+            firstName: null,
+            lastName:null,
+            userName:null,
+            adress:null,
+       },
+ 
+       error: {
+            firstName: {isValid :false , message:""},
+            lastName: {isValid :false , message:""},
+            userName: {isValid :false , message:""},
+            adress: {isValid :false , message:""},
+       }, 
+
+       validEmailRegex: RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i),
+       validForm : false
+   }
+    
+ 
+ 
+
+    onHandleChange = (event) => {
+        const { name, value } = event.currentTarget
+        const error = this.State.error;
+
+        switch (name) {
+            case "firstName":
+                error.firstName.message = value.length < 3 || value.length.trim() === ""  ? "First Name must be 3 characters long!" : ""
+                break;
+            case "lastName":
+                error.lastName.message = value.length < 3 || value.length.trim() === "" ? "LastName Must be 3 characters long!" : ""
+                break;
+            case "adress":
+                error.adress.message = value.length.trim() === "" ? "adress is required" :""
+                break;
+            case "userName":
+                error.userName.message = this.State.validEmailRegex.test(value) ? "" : "email invalid"
+                break;
+        
+            default:
+                break;
+        }
+        
+     
+
+    }
+    
+    validation = (value , rules) => {
+        
+        if (rules.required) {
+          
+
+      }
+
+    }
+
+
+
+
+render(){
+
     return ( <>
 
         <div class="col-md-8 order-md-1">
@@ -13,14 +76,14 @@ const formCheckout = () => {
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="firstName">First name</label>
-                        <input type="text" class="form-control" id="firstName" placeholder="" value=""/>
+                        <input type="text" class="form-control" id="firstName" placeholder="" value={this.State.firstName.value}/>
                         <span class="invalid-feedback">Valid first name is required.</span>
                      
                         
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="lastName">Last name</label>
-                        <input type="text" class="form-control" id="lastName" placeholder="" value=""/>
+                        <input type="text" class="form-control" id="lastName" placeholder="" value={this.State.lastName.value}/>
                         <span class="invalid-feedback">Valid last name is required.</span>
                     </div>
 
@@ -32,7 +95,7 @@ const formCheckout = () => {
                         <div class="input-group-prepend">
                         <span class="input-group-text">@</span>
                         </div>
-                        <input type="text" class="form-control" id="username" placeholder="Username"/>
+                        <input type="text" class="form-control" id="userName" placeholder="userName" value={this.State.userName.value}/>
                         <div class="invalid-feedback">
                         Your username is required.
                         </div>
@@ -41,7 +104,7 @@ const formCheckout = () => {
                 
               <div class="mb-3">
                     <label for="address">Address</label>
-                    <input type="text" class="form-control" id="address" placeholder="1234 Main St" />
+                    <input type="text" class="form-control" id="address" placeholder="1234 Main St" value={this.State.adress.value}/>
                     <span class="invalid-feedback">   Please enter your shipping address.  </span>
                 
                </div>
@@ -127,14 +190,9 @@ const formCheckout = () => {
             </form>
         </div>
 
-
-
-
-
-
-
-
-    </> );
+    </> )
+    
+        };
 }
  
 export default formCheckout;
