@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import "./FormCheckout.css"
 
 const validEmailRegex = RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
 class formCheckout extends Component{
     
    
-   State = {
+   state = {
        order: {
             firstName: "",
             lastName:"",
@@ -18,13 +19,16 @@ class formCheckout extends Component{
             userName: {isValid :true , message:"" ,  touched: false},
             address: {isValid :true , message:"" ,   touched: false},
        }, 
-      validForm:true,
+
+      validForm : true
     
   
    }
+     
+    onHandleChange = (event) => {
         
-    liveValidation(name , value , error) {
-
+       const { name, value } = event.target;
+       const error = this.state.error;
        switch (name) {
            case "firstName":
                  error.firstName.touched = true
@@ -80,47 +84,38 @@ class formCheckout extends Component{
                 break;
         }
 
-       this.setState({error , order :{ [name] : value }})
+        this.setState({
+           ...this.state,
+            error, order: { [name]: value }
+            
+        })
     }
+    
+    onHandelSubmit = (event) => {
+        event.preventDefault();
+       // const listIputError = [];
+        let  formValid = true;
+        const errors = this.state.error
+        Object.entries(errors).forEach((error) => {
+       
+            if ((!error[1].isValid && error[1].touched )|| (error[1].isValid && !error[1].touched)) {
+                formValid = false  
+                errors[error[0]].message = error[0] + " is Required ";
+                errors[error[0]].isValid = false;
 
-
-
-     onHandleChange = (event) => {
-        const {name, value } = event.target
-         const error = this.State.error;
-         
-        //console.log(event.target.value)
-        this.liveValidation(name,value ,error)
-      }
+           }
+             
+            }
+        );      
+        this.setState({
+            ...this.state,
+            error : errors ,
+            validForm: formValid
+        })
+    }
 
    
-    
-    validation = (event) => {
-       
-        const listIputError = [];
-        event.preventDefault();
-        let formValid = this.State.validForm;
-        const errors = this.State.error
-        Object.values(errors).forEach((error) => {
-         
-              listIputError.push(error)
-            }
-        );
-        listIputError.map((inputError) => {
-              console.log(inputError);
-           if ((!inputError.isValid && inputError.touched )|| (inputError.isValid && !inputError.touched)) {
-                 formValid = false;
-                     } 
-
-            return formValid
-        
-        })
-            console.log(formValid);
-          this.setState({validForm : formValid })
-                       
-      
-          console.log(this.State);
-    }
+ 
 
 
 
@@ -134,19 +129,19 @@ render(){
               <span className="text-muted">Confirm your order</span>
             </h4>             
             
-            <form className="needs-validation" onSubmit={(env) => { this.validation(env) }}>
+            <form className="needs-validation" onSubmit={this.onHandelSubmit}>
                 <div className="row">
                     <div className="col-md-6 mb-3">
                         <label htmlFor="firstName">First name</label>
-                        <input type="text" className={"form-control " + (!this.State.error.firstName.isValid && " is-invalid ") + (!this.State.validForm && " is-invalid")} id="firstName" name="firstName" placeholder=""  onChange={this.onHandleChange}/>
-                        <span className="invalid-feedback">{this.State.error.firstName.message}</span>
+                        <input type="text" className={"form-control " + (!this.state.error.firstName.isValid && " is-invalid ")} id="firstName" name="firstName" placeholder=""  onChange={this.onHandleChange}/>
+                        <span className="invalid-feedback">{this.state.error.firstName.message}</span>
                      
                         
                     </div>
                     <div className="col-md-6 mb-3">
                         <label htmlFor="lastName">Last name</label>
-                        <input type="text" className={"form-control " + (!this.State.error.lastName.isValid && " is-invalid ") + (!this.State.validForm && " is-invalid")} id="lastName" name="lastName" placeholder=""   onChange={this.onHandleChange}/>
-                        <span className="invalid-feedback">{this.State.error.lastName.message}</span>
+                        <input type="text" className={"form-control " + (!this.state.error.lastName.isValid && " is-invalid ")} id="lastName" name="lastName" placeholder=""   onChange={this.onHandleChange}/>
+                        <span className="invalid-feedback">{this.state.error.lastName.message}</span>
                     </div>
 
               </div>
@@ -157,17 +152,17 @@ render(){
                         <div className="input-group-prepend">
                         <span className="input-group-text">@</span>
                         </div>
-                        <input type="text" className={"form-control " + (!this.State.error.userName.isValid && " is-invalid ") + (!this.State.validForm && "is-invalid")} id="userName" placeholder="userName"  name="userName"  onChange={this.onHandleChange}/>
+                        <input type="text" className={"form-control " + (!this.state.error.userName.isValid && " is-invalid ")} id="userName" placeholder="userName"  name="userName"  onChange={this.onHandleChange}/>
                         <div className="invalid-feedback">
-                       {this.State.error.userName.message}
+                       {this.state.error.userName.message}
                         </div>
                     </div>
               </div>
                 
               <div className="mb-3">
                     <label htmlFor="address">Address</label>
-                    <input type="text"  className={"form-control " + (!this.State.error.address.isValid && "is-invalid ") +(!this.State.error.address.isValid && "is-invalid")} id="address" name="address" placeholder="1234 Main St" onChange={this.onHandleChange}/>
-                    <span className="invalid-feedback">   {this.State.error.address.message}  </span>
+                    <input type="text"  className={"form-control " + (!this.state.error.address.isValid && "is-invalid ")} id="address" name="address" placeholder="1234 Main St" onChange={this.onHandleChange}/>
+                    <span className="invalid-feedback">   {this.state.error.address.message}  </span>
                 
                </div>
 
@@ -176,7 +171,7 @@ render(){
                         <label htmlFor="country">Governorates</label>
                         <select className="custom-select d-block w-100" id="country" >
                         <option value="">Choose...</option>
-                        <option>United States</option>
+                        <option>United states</option>
                         </select>
                         <span className="invalid-feedback">  Please select a valid country.</span>
              
@@ -247,7 +242,7 @@ render(){
                        </div>
                     </div>
                     <hr className="mb-4"/>
-                    <button className="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+                    <button className="btn btn-primary btn-lg btn-block"  onClick={this.validation}>Continue to checkout</button>
                   
             </form>
         </div>
