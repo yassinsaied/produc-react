@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import * as actionTypes from "../../Store/ActionsAddToCart";
+import * as actionTypes from "../../../Store/ActionsAddToCart";
 
 import { connect } from "react-redux";
 

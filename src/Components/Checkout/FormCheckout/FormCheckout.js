@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from "axios"
 import "./FormCheckout.css"
 
 const validEmailRegex = RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
@@ -20,10 +21,32 @@ class formCheckout extends Component{
             address: {isValid :true , message:"" ,   touched: false},
        }, 
 
-      validForm : true
+       validForm: true,
+       gouvernourat : {}
     
   
    }
+    
+    
+    
+    componentDidMount() {
+
+        axios.get("https://raw.githubusercontent.com/marwein/tunisia/master/tunisia.json")
+            .then(request => {
+                const gouvernerate = request.data
+                this.setState({ gouvernourat: gouvernerate });
+                 console.log(this.state.gouvernourat)
+                
+            }).catch(error => {
+                
+                    console.log(error.message)
+            })
+    
+    }
+    
+    
+   
+    
      
     onHandleChange = (event) => {
         
@@ -120,7 +143,19 @@ class formCheckout extends Component{
 
 
 
-render(){
+    render() {
+        const gouvernerats = this.state.gouvernourat 
+        
+        if(this.state.gouvernourat!== null ){
+            const listOfGouvernerat = Object.entries(gouvernerats).forEach(gouvernerat => {
+      
+                return gouvernerat;
+
+            });
+               console.log(listOfGouvernerat)
+            }
+
+    
    
     return ( <>
 
@@ -128,19 +163,19 @@ render(){
             <h4 className="d-flex justify-content-between align-items-center mb-3">
               <span className="text-muted">Confirm your order</span>
             </h4>             
-            
+      
             <form className="needs-validation" onSubmit={this.onHandelSubmit}>
                 <div className="row">
                     <div className="col-md-6 mb-3">
                         <label htmlFor="firstName">First name</label>
-                        <input type="text" className={"form-control " + (!this.state.error.firstName.isValid && " is-invalid ")} id="firstName" name="firstName" placeholder=""  onChange={this.onHandleChange}/>
+                        <input type="text" className={"form-control " + (!this.state.error.firstName.isValid && " is-invalid ")} id="firstName" name="firstName" placeholder="" value={this.state.order.firstName} onChange={this.onHandleChange}/>
                         <span className="invalid-feedback">{this.state.error.firstName.message}</span>
                      
                         
                     </div>
                     <div className="col-md-6 mb-3">
                         <label htmlFor="lastName">Last name</label>
-                        <input type="text" className={"form-control " + (!this.state.error.lastName.isValid && " is-invalid ")} id="lastName" name="lastName" placeholder=""   onChange={this.onHandleChange}/>
+                        <input type="text" className={"form-control " + (!this.state.error.lastName.isValid && " is-invalid ")} id="lastName" name="lastName" placeholder="" value={this.state.order.lastName}   onChange={this.onHandleChange}/>
                         <span className="invalid-feedback">{this.state.error.lastName.message}</span>
                     </div>
 
@@ -152,7 +187,7 @@ render(){
                         <div className="input-group-prepend">
                         <span className="input-group-text">@</span>
                         </div>
-                        <input type="text" className={"form-control " + (!this.state.error.userName.isValid && " is-invalid ")} id="userName" placeholder="userName"  name="userName"  onChange={this.onHandleChange}/>
+                        <input type="text" className={"form-control " + (!this.state.error.userName.isValid && " is-invalid ")} id="userName" placeholder="userName"  name="userName" value={this.state.order.userName}  onChange={this.onHandleChange}/>
                         <div className="invalid-feedback">
                        {this.state.error.userName.message}
                         </div>
@@ -161,7 +196,7 @@ render(){
                 
               <div className="mb-3">
                     <label htmlFor="address">Address</label>
-                    <input type="text"  className={"form-control " + (!this.state.error.address.isValid && "is-invalid ")} id="address" name="address" placeholder="1234 Main St" onChange={this.onHandleChange}/>
+                    <input type="text"  className={"form-control " + (!this.state.error.address.isValid && "is-invalid ")} id="address" name="address" placeholder="1234 Main St" value={this.state.order.address}  onChange={this.onHandleChange}/>
                     <span className="invalid-feedback">   {this.state.error.address.message}  </span>
                 
                </div>
@@ -171,7 +206,7 @@ render(){
                         <label htmlFor="country">Governorates</label>
                         <select className="custom-select d-block w-100" id="country" >
                         <option value="">Choose...</option>
-                        <option>United states</option>
+                           
                         </select>
                         <span className="invalid-feedback">  Please select a valid country.</span>
              

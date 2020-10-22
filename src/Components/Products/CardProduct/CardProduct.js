@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./CardProduct.css";
-import Modal from "../../Modal/Modal";
+import DetailsProduct from "../DetailsProduct/DetailsProduct";
 
 const CardProduct = ({ product }) => {
   const [promoProduct, setPromoProduct] = useState({
@@ -80,7 +80,7 @@ const CardProduct = ({ product }) => {
           </div>
         </div>
       </div>
-      <Modal product={product} newPrice={promoProduct.newPrice} />
+      <DetailsProduct product={product} newPrice={promoProduct.newPrice} />
     </>
   );
 };
