@@ -11,7 +11,9 @@ class formCheckout extends Component{
             firstName: "",
             lastName:"",
             userName:"",
-            address:"",
+            address: "",
+            state: "",
+            city : "" ,
        },
  
        error: {
@@ -22,7 +24,8 @@ class formCheckout extends Component{
        }, 
 
        validForm: true,
-       gouvernourat : {}
+       location: {},
+       listeOfVill : []
     
   
    }
@@ -34,13 +37,15 @@ class formCheckout extends Component{
         axios.get("https://raw.githubusercontent.com/marwein/tunisia/master/tunisia.json")
             .then(request => {
                 const gouvernerate = request.data
-                this.setState({ gouvernourat: gouvernerate });
-                 console.log(this.state.gouvernourat)
+                this.setState({ location: gouvernerate });
+                console.log(this.state.location)
                 
             }).catch(error => {
                 
                     console.log(error.message)
             })
+        
+       
     
     }
     
@@ -101,17 +106,21 @@ class formCheckout extends Component{
                     error.userName.message = "";
                     error.userName.isValid = true
                 }
-                break;
-        
+               break;
+           case "state": 
+            
+               
+               break;
             default:
                 break;
         }
 
         this.setState({
-           ...this.state,
+            ...this.state,
             error, order: { [name]: value }
             
-        })
+        });
+             console.log(this.state.order)
     }
     
     onHandelSubmit = (event) => {
@@ -144,18 +153,16 @@ class formCheckout extends Component{
 
 
     render() {
-        const gouvernerats = this.state.gouvernourat 
-        
-        if(this.state.gouvernourat!== null ){
-            const listOfGouvernerat = Object.entries(gouvernerats).forEach(gouvernerat => {
-      
-                return gouvernerat;
-
-            });
-               console.log(listOfGouvernerat)
+        const gouvernerats = this.state.location 
+        const listOfStates = [];
+          if (this.state.location !== null) {
+            
+                Object.entries(gouvernerats).forEach(gouvernerat => {
+                            listOfStates.push(gouvernerat[0])
+                    });
+              
             }
 
-    
    
     return ( <>
 
@@ -203,20 +210,22 @@ class formCheckout extends Component{
 
                 <div className="row">
                     <div className="col-md-5 mb-3">
-                        <label htmlFor="country">Governorates</label>
-                        <select className="custom-select d-block w-100" id="country" >
+                        <label htmlFor="state">Governorates</label>
+                        <select className="custom-select d-block w-100" id="state" name="state" onChange={this.onHandleChange} value={this.state.order.state}>
                         <option value="">Choose...</option>
-                           
+                            {listOfStates.map(state => { 
+                                return (<option key={state} value={state}>{state}</option>)
+                           })}
                         </select>
                         <span className="invalid-feedback">  Please select a valid country.</span>
              
                     </div>
 
                     <div className="col-md-4 mb-3">
-                        <label htmlFor="state">Town</label>
-                        <select className="custom-select d-block w-100" id="state" >
+                        <label htmlFor="city">Town</label>
+                        <select className="custom-select d-block w-100" id="city" name="city" >
                         <option value="">Choose...</option>
-                        <option>California</option>
+                       
                         </select>
                         <span className="invalid-feedback">  Please provide a valid state. </span>
                    
