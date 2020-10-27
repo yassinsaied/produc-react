@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import axios from "axios"
 import "./FormCheckout.css"
 
-const validEmailRegex = RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
+const validEmailRegex = RegExp(/^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i);
+ // eslint-disable-next-line
+
 class formCheckout extends Component{
     
    
@@ -13,7 +15,8 @@ class formCheckout extends Component{
             userName:"",
             address: "",
             state: "",
-            city : "" ,
+            city: "",
+            zipCode : ""
        },
  
        error: {
@@ -24,11 +27,9 @@ class formCheckout extends Component{
        }, 
 
        validForm: true,
-       location: {},
-       listeOfVill : []
-    
-  
-   }
+       listeOfstates: [],
+       allLoction : {}
+    }
     
     
     
@@ -36,18 +37,26 @@ class formCheckout extends Component{
 
         axios.get("https://raw.githubusercontent.com/marwein/tunisia/master/tunisia.json")
             .then(request => {
-                const gouvernerate = request.data
-                this.setState({ location: gouvernerate });
-                console.log(this.state.location)
+                const gouvernerats = request.data
+                const listOfStates = [...this.state.listeOfstates];
+                Object.entries(gouvernerats).forEach(gouvernerat => {
+                            listOfStates.push(gouvernerat[0])
+                });
                 
+                this.setState({
+                    ...this.state,
+                    listeOfstates: listOfStates,
+                    allLoction: gouvernerats
+                });
+                                
             }).catch(error => {
                 
                     console.log(error.message)
             })
-        
-       
-    
+             
     }
+
+
     
     
    
@@ -55,8 +64,10 @@ class formCheckout extends Component{
      
     onHandleChange = (event) => {
         
-       const { name, value } = event.target;
-       const error = this.state.error;
+        const { name, value } = event.target;
+        const error = this.state.error;
+     
+       
        switch (name) {
            case "firstName":
                  error.firstName.touched = true
@@ -107,20 +118,27 @@ class formCheckout extends Component{
                     error.userName.isValid = true
                 }
                break;
-           case "state": 
-            
-               
+           case "state":
+
+              
+       
+           
                break;
+               
             default:
                 break;
-        }
-
+       }
+     
         this.setState({
             ...this.state,
-            error, order: { [name]: value }
+            order: {[name]: value},
+            error,
+          
+          
+           
             
         });
-             console.log(this.state.order)
+        console.log(this.state.order);
     }
     
     onHandelSubmit = (event) => {
@@ -153,145 +171,158 @@ class formCheckout extends Component{
 
 
     render() {
-        const gouvernerats = this.state.location 
-        const listOfStates = [];
-          if (this.state.location !== null) {
+
+
+               const location = { ...this.state.allLoction};
+               const state = this.state.order.state
+               let listeOfCity = []
+               Object.entries(location).forEach(loc => {
+                    console.log(this.state.order.state)
+                   if (loc[0] === state) {
+                        loc[1].map(city =>  listeOfCity.push(city.localite))
             
-                Object.entries(gouvernerats).forEach(gouvernerat => {
-                            listOfStates.push(gouvernerat[0])
-                    });
-              
-            }
+                   }
+               }); 
 
-   
-    return ( <>
 
-        <div className="col-md-8 order-md-1">
-            <h4 className="d-flex justify-content-between align-items-center mb-3">
-              <span className="text-muted">Confirm your order</span>
-            </h4>             
-      
-            <form className="needs-validation" onSubmit={this.onHandelSubmit}>
-                <div className="row">
-                    <div className="col-md-6 mb-3">
-                        <label htmlFor="firstName">First name</label>
-                        <input type="text" className={"form-control " + (!this.state.error.firstName.isValid && " is-invalid ")} id="firstName" name="firstName" placeholder="" value={this.state.order.firstName} onChange={this.onHandleChange}/>
-                        <span className="invalid-feedback">{this.state.error.firstName.message}</span>
-                     
+
+
+
+
+
+
+
+
+
+
+        return ( <>
+
+            <div className="col-md-8 order-md-1">
+                <h4 className="d-flex justify-content-between align-items-center mb-3">
+                <span className="text-muted">Confirm your order</span>
+                </h4>             
+        
+                <form className="needs-validation" onSubmit={this.onHandelSubmit}>
+                    <div className="row">
+                        <div className="col-md-6 mb-3">
+                            <label htmlFor="firstName">First name</label>
+                            <input type="text" className={"form-control " + (!this.state.error.firstName.isValid && " is-invalid ")} id="firstName" name="firstName" placeholder="" value={this.state.order.firstName} onChange={this.onHandleChange}/>
+                            <span className="invalid-feedback">{this.state.error.firstName.message}</span>
                         
-                    </div>
-                    <div className="col-md-6 mb-3">
-                        <label htmlFor="lastName">Last name</label>
-                        <input type="text" className={"form-control " + (!this.state.error.lastName.isValid && " is-invalid ")} id="lastName" name="lastName" placeholder="" value={this.state.order.lastName}   onChange={this.onHandleChange}/>
-                        <span className="invalid-feedback">{this.state.error.lastName.message}</span>
-                    </div>
-
-              </div>
-
-              <div className="mb-3">
-                    <label htmlFor="username">Username</label>
-                    <div className="input-group">
-                        <div className="input-group-prepend">
-                        <span className="input-group-text">@</span>
+                            
                         </div>
-                        <input type="text" className={"form-control " + (!this.state.error.userName.isValid && " is-invalid ")} id="userName" placeholder="userName"  name="userName" value={this.state.order.userName}  onChange={this.onHandleChange}/>
-                        <div className="invalid-feedback">
-                       {this.state.error.userName.message}
+                        <div className="col-md-6 mb-3">
+                            <label htmlFor="lastName">Last name</label>
+                            <input type="text" className={"form-control " + (!this.state.error.lastName.isValid && " is-invalid ")} id="lastName" name="lastName" placeholder="" value={this.state.order.lastName}   onChange={this.onHandleChange}/>
+                            <span className="invalid-feedback">{this.state.error.lastName.message}</span>
                         </div>
-                    </div>
-              </div>
-                
-              <div className="mb-3">
-                    <label htmlFor="address">Address</label>
-                    <input type="text"  className={"form-control " + (!this.state.error.address.isValid && "is-invalid ")} id="address" name="address" placeholder="1234 Main St" value={this.state.order.address}  onChange={this.onHandleChange}/>
-                    <span className="invalid-feedback">   {this.state.error.address.message}  </span>
-                
-               </div>
-
-                <div className="row">
-                    <div className="col-md-5 mb-3">
-                        <label htmlFor="state">Governorates</label>
-                        <select className="custom-select d-block w-100" id="state" name="state" onChange={this.onHandleChange} value={this.state.order.state}>
-                        <option value="">Choose...</option>
-                            {listOfStates.map(state => { 
-                                return (<option key={state} value={state}>{state}</option>)
-                           })}
-                        </select>
-                        <span className="invalid-feedback">  Please select a valid country.</span>
-             
-                    </div>
-
-                    <div className="col-md-4 mb-3">
-                        <label htmlFor="city">Town</label>
-                        <select className="custom-select d-block w-100" id="city" name="city" >
-                        <option value="">Choose...</option>
-                       
-                        </select>
-                        <span className="invalid-feedback">  Please provide a valid state. </span>
-                   
-                    </div>
-
-                    <div className="col-md-3 mb-3">
-                        <label htmlFor="zip">Zip</label>
-                        <input type="text" className="form-control" id="zip" placeholder="" />
-                        <span className="invalid-feedback">   Zip code required.</span>
-           
-                    </div>
 
                 </div>
 
-                <hr className="mb-4"/>
-
-                    <h4 className="mb-3">Payment</h4>
-                    <div className="d-block my-3">
-
-                        <div className="custom-control custom-radio">
-                            <input id="credit" name="paymentMethod" type="radio" className="custom-control-input" />
-                            <label className="custom-control-label" htmlFor="credit">Credit card</label>
+                <div className="mb-3">
+                        <label htmlFor="username">Username</label>
+                        <div className="input-group">
+                            <div className="input-group-prepend">
+                            <span className="input-group-text">@</span>
+                            </div>
+                            <input type="text" className={"form-control " + (!this.state.error.userName.isValid && " is-invalid ")} id="userName" placeholder="userName"  name="userName" value={this.state.order.userName}  onChange={this.onHandleChange}/>
+                            <div className="invalid-feedback">
+                        {this.state.error.userName.message}
+                            </div>
                         </div>
+                </div>
                     
-                        <div className="custom-control custom-radio">
-                            <input id="paypal" name="paymentMethod" type="radio" className="custom-control-input" />
-                            <label className="custom-control-label" htmlFor="paypal">PayPal</label>
-                        </div>
-
-                    </div>
-
-                    <div className="row">
-                        <div className="col-md-6 mb-3">
-                            <label htmlFor="cc-name">Name on card</label>
-                            <input type="text" className="form-control" id="cc-name" placeholder="" />
-                            <small className="text-muted">Full name as displayed on card</small>
-                            <span className="invalid-feedback">Name on card is required  </span>
-                        </div>
-
-                        <div className="col-md-6 mb-3">
-                            <label htmlFor="cc-number">Credit card number</label>
-                            <input type="text" className="form-control" id="cc-number" placeholder=""/>
-                            <span className="invalid-feedback">Credit card number is required</span>
-          
-                       </div>
-                    </div>
+                <div className="mb-3">
+                        <label htmlFor="address">Address</label>
+                        <input type="text"  className={"form-control " + (!this.state.error.address.isValid && "is-invalid ")} id="address" name="address" placeholder="1234 Main St" value={this.state.order.address}  onChange={this.onHandleChange}/>
+                        <span className="invalid-feedback">   {this.state.error.address.message}  </span>
+                    
+                </div>
 
                     <div className="row">
+                        <div className="col-md-5 mb-3">
+                            <label htmlFor="state">State</label>
+                            <select className="custom-select d-block w-100" id="state" name="state" onChange={this.onHandleChange} value={this.state.order.state}>
+                                <option key="choose State" value="choose State">choose State</option>
+                                {this.state.listeOfstates.map(state => { 
+                                    return (<option key={state} value={state}>{state}</option>)
+                            })}
+                            </select>
+                            <span className="invalid-feedback">  Please select a valid state.</span>
+                
+                        </div>
+
+                        <div className="col-md-4 mb-3">
+                            <label htmlFor="city">Town</label>
+                            <select className="custom-select d-block w-100" id="city" name="city"  onChange={this.onHandleChange} value={this.state.order.city} >
+                                 <option key="choose City" value="choose City ">choose City</option>
+                                {listeOfCity.map((city, i) => { return (<option key={i + city} value={city}>{city}</option>) })}
+                            </select>
+                            <span className="invalid-feedback">  Please provide a valid town. </span>
+                    
+                        </div>
+
                         <div className="col-md-3 mb-3">
-                            <label htmlFor="cc-expiration">Expiration</label>
-                            <input type="text" className="form-control" id="cc-expiration" placeholder="" />
-                            <span className="invalid-feedback">  Expiration date required</span>
-                        </div> 
-                       <div className="col-md-3 mb-3">
-                            <label htmlFor="cc-cvv">CVV</label>
-                            <input type="text" className="form-control" id="cc-cvv" placeholder="" />
-                            <span className="invalid-feedback">   Security code required</span>
-                       </div>
-                    </div>
-                    <hr className="mb-4"/>
-                    <button className="btn btn-primary btn-lg btn-block"  onClick={this.validation}>Continue to checkout</button>
-                  
-            </form>
-        </div>
+                            <label htmlFor="zip">Zip</label>
+                            <input type="text" className="form-control" id="zip" placeholder="" />
+                            <span className="invalid-feedback">   Zip code required.</span>
+            
+                        </div>
 
-    </> )
+                    </div>
+
+                    <hr className="mb-4"/>
+
+                        <h4 className="mb-3">Payment</h4>
+                        <div className="d-block my-3">
+
+                            <div className="custom-control custom-radio">
+                                <input id="credit" name="paymentMethod" type="radio" className="custom-control-input" />
+                                <label className="custom-control-label" htmlFor="credit">Credit card</label>
+                            </div>
+                        
+                            <div className="custom-control custom-radio">
+                                <input id="paypal" name="paymentMethod" type="radio" className="custom-control-input" />
+                                <label className="custom-control-label" htmlFor="paypal">PayPal</label>
+                            </div>
+
+                        </div>
+
+                        <div className="row">
+                            <div className="col-md-6 mb-3">
+                                <label htmlFor="cc-name">Name on card</label>
+                                <input type="text" className="form-control" id="cc-name" placeholder="" />
+                                <small className="text-muted">Full name as displayed on card</small>
+                                <span className="invalid-feedback">Name on card is required  </span>
+                            </div>
+
+                            <div className="col-md-6 mb-3">
+                                <label htmlFor="cc-number">Credit card number</label>
+                                <input type="text" className="form-control" id="cc-number" placeholder=""/>
+                                <span className="invalid-feedback">Credit card number is required</span>
+            
+                        </div>
+                        </div>
+
+                        <div className="row">
+                            <div className="col-md-3 mb-3">
+                                <label htmlFor="cc-expiration">Expiration</label>
+                                <input type="text" className="form-control" id="cc-expiration" placeholder="" />
+                                <span className="invalid-feedback">  Expiration date required</span>
+                            </div> 
+                        <div className="col-md-3 mb-3">
+                                <label htmlFor="cc-cvv">CVV</label>
+                                <input type="text" className="form-control" id="cc-cvv" placeholder="" />
+                                <span className="invalid-feedback">   Security code required</span>
+                        </div>
+                        </div>
+                        <hr className="mb-4"/>
+                        <button className="btn btn-primary btn-lg btn-block"  onClick={this.validation}>Continue to checkout</button>
+                    
+                </form>
+            </div>
+
+        </> )
     
         };
 }
