@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import axios from "axios"
+import SelectListe from "../../../Ui/SelectListe/SelectListe"
+import Input from "../../../Ui/Input/Input"
 import "./FormCheckout.css"
 
 const validEmailRegex = RegExp(/^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i);
  // eslint-disable-next-line
+const zipCodRegex = RegExp(/^\d{4}$/);
 
 class formCheckout extends Component{
     
@@ -16,18 +19,24 @@ class formCheckout extends Component{
             address: "",
             state: "",
             city: "",
-            zipCode : ""
+            zipCode: "",
+            paymentMethod : ""
        },
  
        error: {
             firstName: {isValid :true , message:"" , touched: false },
             lastName: {isValid :true , message:"" ,  touched: false},
             userName: {isValid :true , message:"" ,  touched: false},
-            address: {isValid :true , message:"" ,   touched: false},
+            address:  {isValid: true, message: "", touched: false },
+            state:    {isValid: true, message: "", touched: false },
+            city:     {isValid: true, message: "", touched: false },
+            zipCode: { isValid: true, message: "", touched: false },
+            paymentMethod : {isValid: true, message: "", touched: false }
        }, 
 
        validForm: true,
        listeOfstates: [],
+       listeOfCitys: [],
        allLoction : {}
     }
     
@@ -38,14 +47,14 @@ class formCheckout extends Component{
         axios.get("https://raw.githubusercontent.com/marwein/tunisia/master/tunisia.json")
             .then(request => {
                 const gouvernerats = request.data
-                const listOfStates = [...this.state.listeOfstates];
+                const listeOfstates = [...this.state.listeOfstates];
                 Object.entries(gouvernerats).forEach(gouvernerat => {
-                            listOfStates.push(gouvernerat[0])
+                            listeOfstates.push(gouvernerat[0])
                 });
                 
                 this.setState({
                     ...this.state,
-                    listeOfstates: listOfStates,
+                    listeOfstates: listeOfstates,
                     allLoction: gouvernerats
                 });
                                 
@@ -63,7 +72,8 @@ class formCheckout extends Component{
     
      
     onHandleChange = (event) => {
-        
+        let  listeOfCitys = [...this.state.listeOfCitys];
+        const allLoction = { ...this.state.allLoction };
         const { name, value } = event.target;
         const error = this.state.error;
      
@@ -118,21 +128,69 @@ class formCheckout extends Component{
                     error.userName.isValid = true
                 }
                break;
-           case "state":
-
-              
-       
+           case 'state':
+                   error.state.touched = true
+               if (value === "choose state") {
+                   error.state.message = " the state ise required"
+                   error.state.isValid = false
+                       
+               } else {
+                   listeOfCitys = []
+                   Object.entries(allLoction).forEach(loc => {
+                  
+                       if (loc[0] === value) {
+                           loc[1].map(option => listeOfCitys.push(option.localite))
            
+                       }
+                   });
+                   error.state.message = "";
+                   error.state.isValid = true;
+               }          
                break;
+           case "city":
+               error.city.touched = true;
+               if (value === "choose city") {
+                   error.city.message = "city is required";
+                   error.city.isValid = false;
+                   
+               } else {
+                    error.city.message = "";
+                    error.city.isValid = true; 
+               }
                
+               
+               break;
+           
+            case "zipCode":
+               error.zipCode.touched = true;
+               if (value.trim() === "" || !zipCodRegex.test(value)) {
+                   error.zipCode.message = "Zip Code invalid";
+                   error.zipCode.isValid = false;
+                   
+               } else {
+                    error.zipCode.message = "";
+                    error.zipCode.isValid = true; 
+               }
+               
+               
+               break;
+           case "paymentMethod":
+                error.zipCode.touched = true;
+               
+               
+               break;
+                       
             default:
                 break;
        }
-     
+       
         this.setState({
             ...this.state,
-            order: {[name]: value},
+            order: { [name]: value},
+            listeOfCitys: listeOfCitys,
+           
             error,
+            
           
           
            
@@ -173,16 +231,7 @@ class formCheckout extends Component{
     render() {
 
 
-               const location = { ...this.state.allLoction};
-               const state = this.state.order.state
-               let listeOfCity = []
-               Object.entries(location).forEach(loc => {
-                    console.log(this.state.order.state)
-                   if (loc[0] === state) {
-                        loc[1].map(city =>  listeOfCity.push(city.localite))
-            
-                   }
-               }); 
+              
 
 
 
@@ -205,84 +254,46 @@ class formCheckout extends Component{
                 <form className="needs-validation" onSubmit={this.onHandelSubmit}>
                     <div className="row">
                         <div className="col-md-6 mb-3">
-                            <label htmlFor="firstName">First name</label>
-                            <input type="text" className={"form-control " + (!this.state.error.firstName.isValid && " is-invalid ")} id="firstName" name="firstName" placeholder="" value={this.state.order.firstName} onChange={this.onHandleChange}/>
-                            <span className="invalid-feedback">{this.state.error.firstName.message}</span>
-                        
+
+                            <Input label="First name" name="firstName" id="firstName" type="text" placeholder="" inputValue={this.state.order.firstName} changeInput={(event) => { this.onHandleChange(event) }} inputValid={this.state.error.firstName.isValid} errorMessage={this.state.error.firstName.message} />
                             
                         </div>
                         <div className="col-md-6 mb-3">
-                            <label htmlFor="lastName">Last name</label>
-                            <input type="text" className={"form-control " + (!this.state.error.lastName.isValid && " is-invalid ")} id="lastName" name="lastName" placeholder="" value={this.state.order.lastName}   onChange={this.onHandleChange}/>
-                            <span className="invalid-feedback">{this.state.error.lastName.message}</span>
-                        </div>
 
-                </div>
-
-                <div className="mb-3">
-                        <label htmlFor="username">Username</label>
-                        <div className="input-group">
-                            <div className="input-group-prepend">
-                            <span className="input-group-text">@</span>
-                            </div>
-                            <input type="text" className={"form-control " + (!this.state.error.userName.isValid && " is-invalid ")} id="userName" placeholder="userName"  name="userName" value={this.state.order.userName}  onChange={this.onHandleChange}/>
-                            <div className="invalid-feedback">
-                        {this.state.error.userName.message}
-                            </div>
+                            <Input label="Last name" name="lastName" id="lastName" typeInput="text" placeholder="" inputValue={this.state.order.lastName} changeInput={(event) => { this.onHandleChange(event) }} inputValid={this.state.error.lastName.isValid} errorMessage={this.state.error.lastName.message} />
+                            
                         </div>
-                </div>
+                    </div>
+
+                    <div className="mb-3">
+
+                         <Input label="Username" name="userName" id="userName" typeInput="email" placeholder="Username" inputValue={this.state.order.userName} changeInput={(event) => { this.onHandleChange(event) }} inputValid={this.state.error.userName.isValid} errorMessage={this.state.error.userName.message}/>
+               
+                    </div>
                     
-                <div className="mb-3">
-                        <label htmlFor="address">Address</label>
-                        <input type="text"  className={"form-control " + (!this.state.error.address.isValid && "is-invalid ")} id="address" name="address" placeholder="1234 Main St" value={this.state.order.address}  onChange={this.onHandleChange}/>
-                        <span className="invalid-feedback">   {this.state.error.address.message}  </span>
-                    
-                </div>
+                    <div className="mb-2">
+                        
+                        <Input label="Address" name="address" id="address" typeInput="text" placeholder="" inputValue={this.state.order.address} changeInput={(event) => { this.onHandleChange(event) }} inputValid={this.state.error.address.isValid} errorMessage={this.state.error.address.message} />
+               
+                    </div>
 
                     <div className="row">
-                        <div className="col-md-5 mb-3">
-                            <label htmlFor="state">State</label>
-                            <select className="custom-select d-block w-100" id="state" name="state" onChange={this.onHandleChange} value={this.state.order.state}>
-                                <option key="choose State" value="choose State">choose State</option>
-                                {this.state.listeOfstates.map(state => { 
-                                    return (<option key={state} value={state}>{state}</option>)
-                            })}
-                            </select>
-                            <span className="invalid-feedback">  Please select a valid state.</span>
-                
+                        <SelectListe label="state" id="state" name="state" changeSelect={(event) => { this.onHandleChange(event) }} valueSelect={this.state.order.state} listeOfOptions={this.state.listeOfstates} errorMessage={this.state.error.state.message} inputValid={this.state.error.state.isValid}/>
+                        <SelectListe label="City" id="city" name="city" changeSelect={(event) => { this.onHandleChange(event) }} valueSelect={this.state.order.city} listeOfOptions={this.state.listeOfCitys} parametrSelect ={this.state.order.state} errorMessage={this.state.error.city.message} inputValid={this.state.error.city.isValid} />
+                        <div className="col-md-2 mb-3">
+                        <Input label="Zip code" name="zipCode" id="zipCode" typeInput="text" placeholder="" inputValue={this.state.order.zipCode} changeInput={(event) => { this.onHandleChange(event) }} inputValid={this.state.error.zipCode.isValid} errorMessage={this.state.error.zipCode.message}/>
                         </div>
-
-                        <div className="col-md-4 mb-3">
-                            <label htmlFor="city">Town</label>
-                            <select className="custom-select d-block w-100" id="city" name="city"  onChange={this.onHandleChange} value={this.state.order.city} >
-                                 <option key="choose City" value="choose City ">choose City</option>
-                                {listeOfCity.map((city, i) => { return (<option key={i + city} value={city}>{city}</option>) })}
-                            </select>
-                            <span className="invalid-feedback">  Please provide a valid town. </span>
-                    
-                        </div>
-
-                        <div className="col-md-3 mb-3">
-                            <label htmlFor="zip">Zip</label>
-                            <input type="text" className="form-control" id="zip" placeholder="" />
-                            <span className="invalid-feedback">   Zip code required.</span>
-            
-                        </div>
-
                     </div>
 
                     <hr className="mb-4"/>
 
                         <h4 className="mb-3">Payment</h4>
                         <div className="d-block my-3">
-
-                            <div className="custom-control custom-radio">
-                                <input id="credit" name="paymentMethod" type="radio" className="custom-control-input" />
-                                <label className="custom-control-label" htmlFor="credit">Credit card</label>
-                            </div>
+                          <Input label="Credit card" name="paymentMethod" id="credit" typeInput="radio"  inputValue="Credit card" changeInput={(event) => { this.onHandleChange(event) }} />
+                       
                         
                             <div className="custom-control custom-radio">
-                                <input id="paypal" name="paymentMethod" type="radio" className="custom-control-input" />
+                                <input id="paypal" name="paymentMethod" type="radio" value="PayPal" className="custom-control-input" onChange={this.onHandleChange}/>
                                 <label className="custom-control-label" htmlFor="paypal">PayPal</label>
                             </div>
 
