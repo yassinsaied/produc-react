@@ -5,7 +5,7 @@
             "price": 1.5,
             "unite": "kg",
             "pic": "lime.jpg",
-            "type": "fruits",
+            "type": "Fruits",
             "promo": 20
         },
 
@@ -15,7 +15,7 @@
             "price": 2,
             "unite": "kg",
             "pic": "peach.jpg",
-            "type": "fruits",
+            "type": "Fruits",
             "promo": 0
         },
         {
@@ -24,7 +24,7 @@
             "price": 3.5,
             "unite": "kg",
             "pic": "pomegranate.jpg",
-            "type": "fruits",
+            "type": "Fruits",
             "promo": 30
         },
         {
@@ -33,7 +33,7 @@
             "price": 2.5,
             "unite": "kg",
             "pic": "strawberries.jpg",
-            "type": "fruits",
+            "type": "Fruits",
             "promo": 0
         },
         {
@@ -42,7 +42,7 @@
             "price": 2,
             "unite": "piece",
             "pic": "ananas.jpg",
-            "type": "fruits",
+            "type": "Fruits",
             "promo": 0
         },
         {
@@ -51,7 +51,7 @@
             "price": 3,
             "unite": "kg",
             "pic": "apple.jpg",
-            "type": "fruits",
+            "type": "Fruits",
             "promo": 0
         },
         {
@@ -60,7 +60,7 @@
             "price": 2,
             "unite": "kg",
             "pic": "banana.jpg",
-            "type": "fruits",
+            "type": "Fruits",
             "promo": 0
         },
         {
@@ -69,7 +69,7 @@
             "price": 1.5,
             "unite": "kg",
             "pic": "orange.jpg",
-            "type": "fruits",
+            "type": "Fruits",
             "promo": 50
         },
         {
@@ -78,7 +78,7 @@
             "price": 3.5,
             "unite": "piece",
             "pic": "coconut.jpg",
-            "type": "fruits",
+            "type": "Fruits",
             "promo": 0
         },
 
@@ -88,7 +88,7 @@
             "price": 1.5,
             "unite": "kg",
             "pic": "tomatoes.jpg",
-            "type": "vegetables",
+            "type": "Vegetables",
             "promo": 0
         },
 
@@ -98,7 +98,7 @@
             "price": 3.5,
             "unite": "kg",
             "pic": "potatoes.jpg",
-            "type": "vegetables",
+            "type": "Vegetables",
             "promo": 15
         },
         {
@@ -107,7 +107,7 @@
             "price": 3.5,
             "unite": "kg",
             "pic": "garlic.jpg",
-            "type": "vegetables",
+            "type": "Vegetables",
             "promo": 0
         },
         {
@@ -116,7 +116,7 @@
             "price": 3.5,
             "unite": "piece",
             "pic": "artichokes.jpg",
-            "type": "vegetables",
+            "type": "Vegetables",
             "promo": 0
         },
         {
@@ -125,7 +125,7 @@
             "price": 2,
             "unite": "piece",
             "pic": "carrots.jpg",
-            "type": "vegetables",
+            "type": "Vegetables",
             "promo": 20
         },
         {
@@ -134,7 +134,7 @@
             "price": 3.5,
             "unite": "piece",
             "pic": "mashroom.jpg",
-            "type": "vegetables",
+            "type": "Vegetables",
             "promo": 0
         },
 
@@ -144,7 +144,7 @@
             "price": 3.5,
             "unite": "kg",
             "pic": "beef_braising_steak.jpg",
-            "type": "meat",
+            "type": "Meat",
             "promo": 0
         },
 
@@ -154,7 +154,7 @@
             "price": 2.5,
             "unite": "piece",
             "pic": "beef_fillet_steak.jpg",
-            "type": "meat",
+            "type": "Meat",
             "promo": 20
         },
 
@@ -164,7 +164,7 @@
             "price": 3.5,
             "unite": "piece",
             "pic": "beef_steak.jpg",
-            "type": "meat",
+            "type": "Meat",
             "promo": 0
         },
 
@@ -174,7 +174,7 @@
             "price": 3,
             "unite": "piece",
             "pic": "prime_beef_ribeye-steak.jpg",
-            "type": "meat",
+            "type": "Meat",
             "promo": 0
         },
 
@@ -184,7 +184,7 @@
             "price": 3.5,
             "unite": "piece",
             "pic": "sliced_beef.jpg",
-            "type": "meat",
+            "type": "Meat",
             "promo": 0
         },
         {
@@ -193,7 +193,7 @@
             "price": 2,
             "unite": "kg",
             "pic": "minced_meat.jpg",
-            "type": "meat",
+            "type": "Meat",
             "promo": 0
         }
 
@@ -203,7 +203,7 @@
             "price": 2,
             "unite": "kg",
             "pic": "salami_beef.jpg",
-            "type": "meat",
+            "type": "Meat",
             "promo": 0
         }
     ]

@@ -19,10 +19,10 @@ function App() {
         <NavBarwithRouter />
 
         <div className="row m-0 pt-3">
-          <div className="col-sm-2">
+          <div className="col-12 col-sm-3 col-md-3 col-lg-2">
             <SideMenu />
           </div>
-          <div className="col-10">
+          <div className="col-12 col-sm-9 col-md-9 col-lg-10">
             <Switch>
           
               <Route

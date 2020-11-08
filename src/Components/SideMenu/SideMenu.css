@@ -2,16 +2,31 @@
     padding-left: 30px;
 }
 
-.nav a {
-    font-size: 18px;
+.nav a,
+.nav li {
+    font-size: 16px;
     font-weight: 400;
     color: #6cc3d5;
+    cursor: pointer;
 }
 
-.nav a:hover {
+.nav a:hover,
+.nav li:hover {
     color: #4eb7cd;
 }
 
 .nav .active {
     color: #ffc241;
+}
+
+.fa-caret-down {
+    margin-left: 5px;
+}
+
+.nav .sub-menu {
+    margin-left: 0px;
+}
+
+.nav .sub-menu a {
+    padding: 2px
 }
