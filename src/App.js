@@ -35,9 +35,9 @@ function App() {
               <Route path="/checkout" component={Checkout}/>
               
               <Route
-                path="/:product"
+                path="/:idCategory/:categoryName"
                 render={(props) => (
-                  <ListProducts allProducts={dataProduct} {...props} />
+                  <ListProducts  {...props} />
                 )}
               />
               <Route

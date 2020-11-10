@@ -5,77 +5,55 @@ import "./ListProducts.css";
 
 const ListProduct = (props) => {
   const [products, setProducts] = useState([]);
-  const typeProduct = props.match.params.product;
-
+  const typeProduct = props.match.params.idCategory;
+ 
 
   useEffect(() => {
 
-    fetchAllProduct();
+    fetchAllProduct(typeProduct);
 
-
-
-
-
-
-
-
-
-
-
-
-
-    const fetchProductType = () => {
-      setProducts(
-        props.allProducts.products.filter((product) => {
-
-         if (typeProduct === undefined) {
-           
-            return product.promo >0
-         } else {
-
-           return product.type === typeProduct;
-         }
-         
-        })
-      );
-    };
-
-    fetchProductType();
   }, [typeProduct]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  const connectApi = async (linkOfApi) =>{
+
+    const request = await axios.get(linkOfApi).catch(error => {
+      console.log(error.message)
+    });
+      setProducts(request.data["hydra:member"])
+
+  }
+
+  const fetchAllProduct = (typeProduct) => {
+    let linkOfApi = "";
+    if (typeProduct === undefined) { 
+
+     linkOfApi = "http://127.0.0.1:8000/api/products?promo[gt]=0&page=1&itemsPerPage=25"
+     connectApi(linkOfApi)
+
+    } else {
+
+      linkOfApi = "http://127.0.0.1:8000/api/categories/" + typeProduct + "/products?page=1&itemsPerPage=30";
+      connectApi(linkOfApi)
+
+    }
+ }
 
 
-  const fetchAllProduct = () => {
+ 
   
-    axios.get("http://127.0.0.1:8000/api/products?page=3&itemsPerPage=30")
-      .then(request => {
-       // console.log(request.data["hydra:member"])
-        request.data["hydra:member"].map(product => {
-          console.log(product.category.name)
 
-        })
-     
-      })
-      .catch()
-
-}
-
-
-
-
-
-
-  const listp = products.map((product) => {
-    return <CardProduct product={product} key={product.ref} />;
-  });
-
-  // const titleProduct =
-  //   typeProduct.charAt(0).toUpperCase() + typeProduct.slice(1);
 
   return (
     <>
-     
-      <div className="row result-row">{listp}</div>
+      <div className="row result-row">
+                
+        {
+          products.map((product) => {
+            return (<CardProduct product={product} key={product.ref} />)
+        })
+    }
+            
+      </div>
     </>
   );
 };

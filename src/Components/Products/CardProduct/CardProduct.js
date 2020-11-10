@@ -43,7 +43,7 @@ const CardProduct = ({ product }) => {
             src={
               process.env.PUBLIC_URL +
               "/assets/img/" +
-              product.type +
+              product.category.name +
               "/" +
               product.pic
             }

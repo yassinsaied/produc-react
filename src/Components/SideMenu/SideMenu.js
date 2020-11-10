@@ -29,7 +29,7 @@ const SidMenu = (props) => {
        listCategory = categorys.map(category => {
          if(category.children.length === 0) {
             return (
-              <NavLink key={category.id + category.name} to={"/" + category.name} className="nav-link" activeClassName="active">
+              <NavLink key={category.id + category.name} to={"/"+category.id +"/"+ category.name} className="nav-link" activeClassName="active">
               {category.name}
               </NavLink>
               )
@@ -43,7 +43,7 @@ const SidMenu = (props) => {
                 <ul class="sub-menu collapse" id={"cat"+category.id}>
                     {category.children.map(cheld => {
                    return (
-                    <NavLink key={cheld.id} to={"/" + cheld.name} className="nav-link" activeClassName="active">{cheld.name}</NavLink>
+                    <NavLink key={cheld.id} to={"/"+cheld.id +"/"+ cheld.name} className="nav-link" activeClassName="active">{cheld.name}</NavLink>
                     )
             
                    })
