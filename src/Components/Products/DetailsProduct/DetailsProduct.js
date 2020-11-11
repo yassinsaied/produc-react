@@ -9,7 +9,7 @@ class Modal extends Component {
     return (
       <div
         className="modal "
-        id={`${this.props.product.ref}`}
+        id={`det${this.props.product.id}`}
         tabIndex="-1"
         role="dialog"
         aria-labelledby="exampleModalLabel"
@@ -37,7 +37,7 @@ class Modal extends Component {
                     src={
                       process.env.PUBLIC_URL +
                       "/assets/img/" +
-                      this.props.product.type +
+                      this.props.product.category.name +
                       "/" +
                       this.props.product.pic
                     }
@@ -56,7 +56,7 @@ class Modal extends Component {
                       className="btn btn-info"
                       onClick={() =>
                         this.props.incdecQte(
-                          this.props.product.ref,
+                          this.props.product.id,
                           this.props.newPrice,
                           "minus"
                         )
@@ -70,7 +70,7 @@ class Modal extends Component {
                       className="btn btn-info"
                       onClick={() =>
                         this.props.incdecQte(
-                          this.props.product.ref,
+                          this.props.product.id,
                           this.props.newPrice,
                           "plus"
                         )
@@ -101,7 +101,7 @@ class Modal extends Component {
                     this.props.amount,
                     this.props.count,
                     this.props.product.name,
-                    this.props.product.type,
+                    this.props.product.category.name,
                     this.props.product.pic,
                     this.props.newPrice,
                     this.props.product.unite

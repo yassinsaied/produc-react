@@ -71,7 +71,7 @@ const CardProduct = ({ product }) => {
               <button
                 className="btn btn-info mt-3 cart "
                 data-toggle="modal"
-                data-target={`#${product.ref}`}
+                data-target={`#det${product.id}`}
               >
                 {/* <i className="fa fa-shopping-cart"></i> Add to Cart  */}
                 <i className="fa fa-shopping-cart cart"></i>

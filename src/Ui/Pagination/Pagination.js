@@ -16,7 +16,7 @@ const Pagination = (props) => {
     return(
 
   <ul className="pagination">
-    <li className={"page-item" + (props.currentPage === 1 && " disabled")}>
+    <li className={"page-item " + (props.currentPage === 1 && " disabled")}>
       <button  className="page-link" onClick={()=>props.clickPage(props.typeProduct ,props.currentPage - 1)} >&laquo;</button>
     </li>
 
@@ -31,7 +31,7 @@ const Pagination = (props) => {
          })
     }
     
-    <li className={"page-item" + (props.currentPage === pagesCount && " disabled")}>
+    <li className={"page-item "  + (props.currentPage === pagesCount && " disabled")}>
       <button className="page-link" onClick={()=>props.clickPage(props.typeProduct ,props.currentPage + 1)} >&raquo;</button>
     </li>
   </ul>

@@ -1,3 +1,10 @@
+ul.pagination {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+}
+
 .page-link {
     background-color: #6cc3d5;
     border-color: #6cc3d5;
@@ -6,6 +13,7 @@
 .page-item.active .page-link {
     background-color: #ffce67;
     border-color: #ffce67;
+    border: 1px solid #ffce67;
 }
 
 .page-link:hover {

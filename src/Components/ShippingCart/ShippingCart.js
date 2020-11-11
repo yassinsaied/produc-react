@@ -12,7 +12,7 @@ class shippingCart extends Component {
      totalArray.push(parseFloat(product.amountProduct))
      return (
           <>
-          <div className="row" key={product.refProduct}>
+          <div className="row" key={product.id}>
                         <div className="col-sm-12 col-md-4 col-lg-2 text-center">
                           <img
                             className="img-responsive"
