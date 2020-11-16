@@ -6,6 +6,7 @@ import ListProducts from "./Components/Products/ListProducts/ListProducts";
 import SearchResult from "./Components/Products/SearchProducts/SearchProducts";
 import ShippingCart from "./Components/ShippingCart/ShippingCart";
 import Checkout from "./Components/Checkout/CheckoutContainer"
+import Login from './Components/User/Login/Login'
 import dataProduct from "./data.json";
 
 
@@ -33,7 +34,7 @@ function App() {
               />
               <Route path="/shippingcart" component={ShippingCart} />
               <Route path="/checkout" component={Checkout}/>
-              
+               <Route path="/login" component={Login}/>
               <Route
                 path="/:idCategory/:categoryName"
                 render={(props) => (
@@ -48,7 +49,7 @@ function App() {
               />
 
 
-
+                
 
 
 

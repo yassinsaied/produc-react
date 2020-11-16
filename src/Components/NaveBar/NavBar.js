@@ -31,13 +31,24 @@ const NavBar = (props) => {
 
   return (
     <>
-      <nav className=" d-flex navbar navbar-expand-lg navbar-dark bg-info">
+      <nav className=" d-flex navbar navbar-expand-lg navbar-dark bg-info   d-flex justify-content-between">
         <NavLink className="navbar-brand" to="/">
           Bio Market
           <i className="fa fa-shopping-cart ml-2"></i>
         </NavLink>
-        <div className=" collapse navbar-collapse" id="navbarColor01">
-          <form className="ml-auto form-inline my-2 my-lg-0">
+         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+
+
+     
+
+              
+
+      <div className="d-flex justify-content-center" >
+
+          <form className="form-inline my-2 my-lg-0">
             <input
               className="form-control mr-sm-2"
               type="search"
@@ -48,10 +59,24 @@ const NavBar = (props) => {
             />
           </form>
 
-          <NavLink className="btn btn-warning pannier" to="/shippingcart">
-            <i className="fa fa-shopping-cart mr-2"></i>
-            <span className="badge badge-light">{props.nbrOrder}</span>
-          </NavLink>
+  
+
+          <ul class="nav navbar-nav ml-auto">
+
+             <NavLink className="btn btn-warning pannier" to="/shippingcart">
+              <i className="fa fa-shopping-cart mr-2"></i>
+             <span className="badge badge-light">{props.nbrOrder}</span>
+             </NavLink>
+
+              <li class="nav-item">
+               <NavLink className="nav-link" to="/login">Login</NavLink>
+              </li>
+              <li class="nav-item">
+                <NavLink className="nav-link" to="/" >Register</NavLink>
+              </li>
+          </ul>
+
+
         </div>
       </nav>
     </>

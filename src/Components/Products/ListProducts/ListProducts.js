@@ -87,7 +87,7 @@ const ListProduct = (props) => {
                         
             {
               products.map((product) => {
-                return (<CardProduct product={product} key={product.ref} />)
+                return (<CardProduct product={product} key={product.id} />)
             })
         }
             <div className="row pagination m-4">

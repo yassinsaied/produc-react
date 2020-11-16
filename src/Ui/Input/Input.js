@@ -1,7 +1,7 @@
 import React from "react"
 
 const input = (props) => {
-    
+    console.log(props.inputValid)
     return (
             <>
         

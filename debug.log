@@ -13,3 +13,4 @@
 [1108/220025.820:ERROR:directory_reader_win.cc(43)] FindFirstFile: Le chemin d’accès spécifié est introuvable. (0x3)
 [1109/223939.865:ERROR:directory_reader_win.cc(43)] FindFirstFile: Le chemin d’accès spécifié est introuvable. (0x3)
 [1109/223939.899:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\USER\AppData\Local\Google\Chrome\User Data\Crashpad\attachments\06ed5dbe-9f39-4d56-8c8f-965e69fc87b0: Le chemin d’accès spécifié est introuvable. (0x3)
+[1111/223336.863:ERROR:directory_reader_win.cc(43)] FindFirstFile: Le chemin d’accès spécifié est introuvable. (0x3)

@@ -3,6 +3,10 @@ import "./CardProduct.css";
 import DetailsProduct from "../DetailsProduct/DetailsProduct";
 
 const CardProduct = ({ product }) => {
+
+ 
+
+
   const [promoProduct, setPromoProduct] = useState({
     newPrice: product.price,
     oldPrice: 0,
