@@ -112,7 +112,7 @@ const [formValid , setFormValid] =useState(true)
                     <Input typeInput="password" placeholder="Your Password" inputValue={credentials.password} changeInput={(event) => {onHhandleChange(event) }}  label="Password" name="password" id="password"  inputValid={errors.password.isValid} errorMessage={errors.password.message }/>
                         </div>
                         <div className="form-group">
-                           <button type="submit" class="btn btn-info">Login</button>
+                           <button type="submit" className="btn btn-info">Login</button>
                         </div>
                         <div className="form-group">
                             <span>Forget Password?</span>

@@ -40,8 +40,8 @@ const NavBar = (props) => {
           Bio Market
           <i className="fa fa-shopping-cart ml-2"></i>
         </NavLink>
-         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
         </button>
 
 
@@ -65,20 +65,20 @@ const NavBar = (props) => {
 
   
 
-          <ul class="nav navbar-nav ml-auto">
+          <ul className="nav navbar-nav ml-auto">
 
              <NavLink className="btn btn-warning pannier" to="/shippingcart">
               <i className="fa fa-shopping-cart mr-2"></i>
              <span className="badge badge-light">{props.nbrOrder}</span>
              </NavLink>
 
-              <li class="nav-item">
+              <li className="nav-item">
                <NavLink className="nav-link" to="/login">Login</NavLink>
             </li>
-            <li class="nav-item">
+            <li className="nav-item">
                 <span className="nav-link" onClick={onHandelLogout}>Logout</span>
               </li>
-              <li class="nav-item">
+              <li className="nav-item">
                 <NavLink className="nav-link" to="/" >Register</NavLink>
               </li>
           </ul>
