@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import {connect} from "react-redux"
-
+import AuthApi from "../../Services/authApi"
 import "./NavBar.css";
 
 const NavBar = (props) => {
@@ -28,6 +28,10 @@ const NavBar = (props) => {
       props.history.push("/");
     }
   };
+
+ const  onHandelLogout =() => {
+   AuthApi.logout();
+  }
 
   return (
     <>
@@ -70,6 +74,9 @@ const NavBar = (props) => {
 
               <li class="nav-item">
                <NavLink className="nav-link" to="/login">Login</NavLink>
+            </li>
+            <li class="nav-item">
+                <span className="nav-link" onClick={onHandelLogout}>Logout</span>
               </li>
               <li class="nav-item">
                 <NavLink className="nav-link" to="/" >Register</NavLink>

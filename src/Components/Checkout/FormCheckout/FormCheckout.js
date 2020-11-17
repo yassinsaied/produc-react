@@ -229,21 +229,7 @@ class formCheckout extends Component{
 
 
     render() {
-
-
-              
-
-
-
-
-
-
-
-
-
-
-
-
+  
         return ( <>
 
             <div className="col-md-8 order-md-1">
@@ -328,7 +314,7 @@ class formCheckout extends Component{
                         </div>
                         </div>
                         <hr className="mb-4"/>
-                        <button className="btn btn-primary btn-lg btn-block"  onClick={this.validation}>Continue to checkout</button>
+                        <button  type="submit" className="btn btn-primary btn-lg btn-block"  >Continue to checkout</button>
                     
                 </form>
             </div>

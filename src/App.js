@@ -8,8 +8,9 @@ import ShippingCart from "./Components/ShippingCart/ShippingCart";
 import Checkout from "./Components/Checkout/CheckoutContainer"
 import Login from './Components/User/Login/Login'
 import dataProduct from "./data.json";
+import AuthApi from "./Services/authApi"
 
-
+AuthApi.setup();
 
 function App() {
   const NavBarwithRouter = withRouter(NavBar);
