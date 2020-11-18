@@ -97,7 +97,7 @@ class shippingCart extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return { listProducts: state.listProducts };
+  return { listProducts: state.cartR.listProducts };
 };
 
 const mapActionToState = (dispatch) => {

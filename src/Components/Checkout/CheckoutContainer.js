@@ -19,7 +19,7 @@ const checkout = (props) => {
 
 }
 const mapStateToProps = (state) => {
-  return { listProducts: state.listProducts };
+  return { listProducts: state.cartR.listProducts };
 };
 
 export default connect(mapStateToProps)(checkout);

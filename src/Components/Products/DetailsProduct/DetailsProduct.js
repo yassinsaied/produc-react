@@ -69,7 +69,7 @@ class Modal extends Component {
                       type="button"
                       className="btn btn-info"
                       onClick={() =>
-                        this.props.incdecQte(
+                         this.props.incdecQte(
                           this.props.product.id,
                           this.props.newPrice,
                           "plus"
@@ -128,9 +128,9 @@ class Modal extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    count: state.count,
-    amount: state.amount,
-    refProduct: state.refProduct,
+    count: state.cartR.count,
+    amount: state.cartR.amount,
+    refProduct: state.cartR.refProduct,
   };
 };
 

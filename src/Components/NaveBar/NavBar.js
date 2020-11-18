@@ -92,7 +92,7 @@ const NavBar = (props) => {
 const mapStateToProps = (state) =>{
 
   return {
-  nbrOrder: state.listProducts.length,
+  nbrOrder: state.cartR.listProducts.length,
 
   }
 
