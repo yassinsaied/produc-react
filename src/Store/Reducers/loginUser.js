@@ -79,21 +79,26 @@ const reducer = (state=initialState , action ) =>{
           
         if (allFormValid) {
        
-              const data =  AuthApi.authenticate(state.credentials)
-              console.log(data)
-        
+            const data = AuthApi.authenticate(state.credentials);
+            console.log(data)
            
-                errorsFormForSubmit.username.message = "error.response.data.message";
-                errorsFormForSubmit.password.message = "error.response.data.message";
-              
-             
-        
+                // Object.entries(errorsFormForSubmit).forEach((error) => {
+                // console.log(error)      
+                // errorsFormForSubmit[error[0]].message = error[0] + " credentials invalid";
+                // errorsFormForSubmit[error[0]].isValid = false;
+       
+                //  });
+      
+          
+            
+  
          
         }
 
            return {
                ...state,
                errors: errorsFormForSubmit ,
+    
                validForm : allFormValid
               }
    

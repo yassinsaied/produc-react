@@ -13,6 +13,7 @@ const SidMenu = (props) => {
     axios.get("http://127.0.0.1:8000/api/categorybyparent")
       .then((request) => {
         setCategorys(request.data["hydra:member"]);
+       
         
         })
           .catch((error) => {
