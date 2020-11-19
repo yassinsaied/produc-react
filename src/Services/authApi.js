@@ -10,12 +10,9 @@ function logout()
 }
 
 
-const authenticate = (credentials) => {
-   let data  ;
-   try {
-
-    return  axios.post("http://127.0.0.1:8000/api/login_check", credentials).then(response => {
-        //console.log(response);
+const authenticate = async(credentials) => {
+ 
+return await  axios.post("http://127.0.0.1:8000/api/login_check", credentials).then(response => {
        
          return response.data.token
        
@@ -23,18 +20,13 @@ const authenticate = (credentials) => {
          
          window.localStorage.setItem("authToken", token);
          axios.defaults.headers["Authorization"] = "Bearer " + token;
+         return token
             
         
-     })
+     }).catch (error=>{
+       return error.response 
        
-   } catch (error) {
-         console.log(error.response )
-         data = error.response
-   }
-  
-     return data ;
-   
-  
+   })
 }
 
 

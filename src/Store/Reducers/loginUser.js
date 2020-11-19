@@ -15,12 +15,13 @@ const initialState = {
               },
     user :{},
     login: false ,
-    validForm : true
+    validForm: true ,
+    token : "" 
 
 }
-
+   
 const reducer = (state=initialState , action ) =>{
- 
+  console.log(state.token)
    switch (action.type) {
        case actionTypes.ONHANDELCHANGE:
            const value = action.payload.event.currentTarget.value;  
@@ -31,7 +32,7 @@ const reducer = (state=initialState , action ) =>{
             case "username":
                 errorsForm.username.touched = true;
                 if (!validEmailRegex.test(value) || value.trim() === "") {
-                    errorsForm.username.message = "username must be 3 charcter long"
+                    errorsForm.username.message = "email Invalid"
                     errorsForm.username.isValid = false;
                 } else {
                   errorsForm.username.message = "";
@@ -62,10 +63,10 @@ const reducer = (state=initialState , action ) =>{
        
        
        case actionTypes.ONHANDELSUBMIT:
-
+        let token =""
         action.payload.event.preventDefault();
-        let  allFormValid = state.validForm;
-        const errorsFormForSubmit = {...state.errors} 
+        let  allFormValid = true;
+        let errorsFormForSubmit = {...state.errors} 
         Object.entries(errorsFormForSubmit).forEach((error) => {
        
             if ((!error[1].isValid && error[1].touched )|| (error[1].isValid && !error[1].touched)) {
@@ -78,28 +79,20 @@ const reducer = (state=initialState , action ) =>{
         });  
           
         if (allFormValid) {
-       
-            const data = AuthApi.authenticate(state.credentials);
-            console.log(data)
            
-                // Object.entries(errorsFormForSubmit).forEach((error) => {
-                // console.log(error)      
-                // errorsFormForSubmit[error[0]].message = error[0] + " credentials invalid";
-                // errorsFormForSubmit[error[0]].isValid = false;
-       
-                //  });
+            AuthApi.authenticate(state.credentials).then(data => {
+    
       
-          
-            
-  
-         
+            })
+              
+              
         }
 
            return {
                ...state,
                errors: errorsFormForSubmit ,
-    
-               validForm : allFormValid
+               validForm: allFormValid,
+               token : token
               }
    
        default:
