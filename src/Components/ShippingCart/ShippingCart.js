@@ -6,6 +6,12 @@ import "./ShippingCart.css";
 
 class shippingCart extends Component {
 
+
+  componentDidMount() {
+    
+    console.log(this.props.token)
+  }
+
   render() {
     const totalArray = [];
     const listProducts = this.props.listProducts.map(product => {
@@ -97,7 +103,12 @@ class shippingCart extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return { listProducts: state.cartR.listProducts };
+  return {
+    listProducts: state.cartR.listProducts,
+        token: state.loginR.token,
+        user: state.loginR.user,
+        logged : state.loginR.logged,
+  };
 };
 
 const mapActionToState = (dispatch) => {

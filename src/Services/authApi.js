@@ -14,19 +14,13 @@ const authenticate = async(credentials) => {
  
 return await  axios.post("http://127.0.0.1:8000/api/login_check", credentials).then(response => {
        
-         return response.data.token
-       
-     }).then(token => {
-         
+        let token = response.data.token
          window.localStorage.setItem("authToken", token);
          axios.defaults.headers["Authorization"] = "Bearer " + token;
-         return token
-            
-        
-     }).catch (error=>{
-       return error.response 
+      return response
+    
        
-   })
+     })
 }
 
 
