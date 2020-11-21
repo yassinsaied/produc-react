@@ -97,8 +97,12 @@ class Login extends Component{
 render() {
      
      if (this.state.validForm === true) {
-         console.log(this.state.credentials)
+        
          this.props.onLogin(this.state.credentials)
+         this.setState({
+             ...this.state,
+             validForm : null
+         })
           
      
    }
@@ -141,7 +145,6 @@ const mapDispatcheToProps = (dispatch) => {
 
         onLogin: (credentials) => {
             dispatch(login(credentials))
-          
         }  
      
 

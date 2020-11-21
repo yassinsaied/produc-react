@@ -1,5 +1,6 @@
 import {
-   LOGINSUCCESS
+    LOGINSUCCESS,
+    LOGINFAILD
 } from "./types"
 import athApi from "../../Services/authApi"
 
@@ -11,7 +12,10 @@ export const login = (credentials) => (dispatch) =>{
                     payload: { user: res },
            }); 
         }).catch(error => {
-            console.log(error)
+               dispatch({
+                    type: LOGINFAILD,
+                    payload: { errorResponse: error },
+           });
         })
 
 }

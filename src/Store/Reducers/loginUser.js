@@ -10,28 +10,29 @@ const initialState = {
 }
    
 const reducer = (state=initialState , action ) =>{
- 
+  let tempToken;
+  let tempLogged;
         
    switch (action.type) {
-     
-       
-    
-       
+
        case actionTypes.LOGINSUCCESS:
-           let tempToken;
-           let tempLogged;
+          
            let response = action.payload.user
-               if (response.status === 200) {
-                   console.log(response)
-                       tempToken = response.data.token;
-                       tempLogged = true
-                       
-                } else {
-                       tempToken = null;
-                       tempLogged = false;
-                       
-                   } 
-           
+         
+            tempToken = response.data.token;
+            tempLogged = true
+                   
+           return {
+              ...state,
+               token: tempToken,
+               logged : tempLogged
+           }
+
+          
+       case actionTypes.LOGINFAILD:
+           tempToken = null;
+            tempLogged = false;
+   
            return {
                
                ...state,

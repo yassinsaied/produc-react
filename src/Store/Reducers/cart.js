@@ -1,4 +1,4 @@
-import * as actionTypes from "../ActionsAddToCart";
+import * as actionTypes from "../actions/types";
 
 const initialState = {
   listProducts: [],

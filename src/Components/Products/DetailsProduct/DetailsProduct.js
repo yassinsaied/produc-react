@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import * as actionTypes from "../../../Store/ActionsAddToCart";
-
+import {incdecQte , cancel ,addToCart} from "../../../Store/actions/actionCartUser";
 import { connect } from "react-redux";
 
 class Modal extends Component {
@@ -136,27 +135,10 @@ const mapStateToProps = (state) => {
 
 const mapDispacheToProps = (dispatche) => {
   return {
-    incdecQte: (ref, newPrice , operator) =>
-      dispatche({
-        type: actionTypes.INCDECREMENTQT,
-        payload: { productRef: ref, price: newPrice , operator },
-      }),
-   
-    cancel: () => dispatche({ type: actionTypes.CANCEL }),
-    addToCart: (ref, amount, count, name, type, pic , price, unit) =>
-      dispatche({
-        type: actionTypes.ADDTOCART,
-        payload: {
-          refProduct: ref,
-          amount: amount,
-          count: count,
-          nameProduct: name,
-          typeProduct: type,
-          picProduct: pic,
-          priceProduct: price,
-          unitProduct : unit
-        },
-      }),
+    incdecQte: (ref, newPrice , operator) => dispatche(incdecQte(ref, newPrice , operator)),
+    cancel: () => dispatche(cancel()),
+    addToCart: (ref, amount, count, name, type, pic , price, unit) => dispatche(addToCart(ref, amount, count, name, type, pic , price, unit)),
+     
   };
 };
 

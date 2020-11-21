@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import * as actionTypes from "../../Store/ActionsAddToCart"
+import {editQt ,deleteProduct } from "../../Store/actions/actionCartUser"
 
 import "./ShippingCart.css";
 
@@ -115,8 +115,8 @@ const mapActionToState = (dispatch) => {
   
   return {
     
-    editQt: (ref , operator) => dispatch({ type: actionTypes.EDITQTPRODUCT, payload: { refProduct: ref , operator : operator } }),
-    deleteProduct : (ref) => dispatch({type : actionTypes.DELETEPRODUCT , payload : {refProduct : ref}})
+    editQt: (ref , operator) => dispatch(editQt(ref , operator)),
+    deleteProduct :(ref ) => dispatch(deleteProduct(ref))
 
   }
 
