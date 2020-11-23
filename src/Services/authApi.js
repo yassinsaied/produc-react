@@ -24,13 +24,24 @@ return await  axios.post("http://127.0.0.1:8000/api/login_check", credentials).t
 }
 
 
+const getUserByUserName = async(token) => {
+const {username}= JwdDecode(token) 
+return await  axios.get("http://127.0.0.1:8000/api/users?email="+username).then(user => {
+         
+      return user
+           
+     })
+}
+
 
 
 function setup()
 {
     const token = window.localStorage.getItem("authToken");
-    if(token){
+    if (token) {
+        
         const { exp: experation } = JwdDecode(token)
+
         if (experation * 1000 > new Date().getTime()) {
             axios.defaults.headers["Authorization"] = "Bearer " + token; 
         }
@@ -40,5 +51,6 @@ function setup()
 export default {
     authenticate,
     logout,
-    setup
+    setup,
+    getUserByUserName
 }
