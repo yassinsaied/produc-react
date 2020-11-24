@@ -1,7 +1,6 @@
 import React, { Component}from 'react';
 import "./Login.css";
 import Input from "../../../Ui/Input/Input";
-//import AuthApi from "../../../Services/authApi"
 import { connect } from "react-redux";
 import {login , onChange , onSubmit}from "../../../Store/actions/actionLoginUser"
 
@@ -13,21 +12,19 @@ import {login , onChange , onSubmit}from "../../../Store/actions/actionLoginUser
 class Login extends Component{
   
       
-    // handelLogin = (event) => { 
-    //     event.preventDefault();
-     //if (this.props.validForm === true) {
-           // this.props.onLogin(this.props.credentials)
-         //}
-    //     }   
-    
+      componentWillUpdate(nextProps, nextState) {
+        if (nextProps.validForm === true && (this.props.validForm === false || this.props.validForm === null  )) {
+           this.props.onLogin(this.props.credentials) ;
+         
+        }
+
+      }
     
 
 
     render() {
     
-     if (this.props.validForm === true) {
-            this.props.onLogin(this.props.credentials)
-         }
+    
 
     return (<>
       <div className="login-container">
@@ -35,11 +32,11 @@ class Login extends Component{
             <form className="mx-auto formLogin" onSubmit={(event) => { this.props.onHandelSubmit(event) }}>
                       <div className="form-group">
                     
-                      <Input typeInput="email" placeholder="Your Email"   inputValue={this.props.credentials.username}  changeInput={(event) => {this.props.onHandleChange(event) }}  label="Email" name="username" id="email"     inputValid={this.props.errors.username.isValid} errorMessage={this.props.errors.username.message }/>
+                      <Input typeInput="email" placeholder="Your Email"   inputValue={this.props.credentials.username}  changeInput={(event) => {this.props.onHandleChange(event) }}  label="" name="username" id="email"     inputValid={this.props.errors.username.isValid} errorMessage={this.props.errors.username.message }/>
                            
                         </div>
                         <div className="form-group">
-                    <Input typeInput="password" placeholder="Your Password" inputValue={this.props.credentials.password} changeInput={(event) => {this.props.onHandleChange(event) }}  label="Password" name="password" id="password"  inputValid={this.props.errors.password.isValid} errorMessage={this.props.errors.password.message }/>
+                    <Input typeInput="password" placeholder="Your Password" inputValue={this.props.credentials.password} changeInput={(event) => {this.props.onHandleChange(event) }}  label="" name="password" id="password"  inputValid={this.props.errors.password.isValid} errorMessage={this.props.errors.password.message }/>
                         </div>
                         <div className="form-group">
                            <button type="submit" className="btn btn-info">Login</button>
@@ -65,7 +62,7 @@ const mapStateToProps = (state) => {
 
    } 
 }
- const mapDispatcheToProps = (dispatch) => {
+ const mapDispatchToProps = (dispatch) => {
      return {
         
      onHandleChange : (event) => dispatch(onChange(event)) ,
@@ -77,4 +74,4 @@ const mapStateToProps = (state) => {
    }
  }
 
-export default connect(mapStateToProps , mapDispatcheToProps)(Login) ;
+export default connect(mapStateToProps , mapDispatchToProps)(Login) ;

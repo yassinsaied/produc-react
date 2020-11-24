@@ -22,6 +22,7 @@ const reducer = (state=initialState , action ) =>{
     let tempLogged;
     let event;
     let errorsForm; 
+    let user;
         
    switch (action.type) {
 
@@ -99,7 +100,7 @@ const reducer = (state=initialState , action ) =>{
  
        case actionTypes.LOGINSUCCESS:
           
-           let response = action.payload.user
+           let response = action.payload.dataToken
             tempToken = response.data.token;
             tempLogged = true
                    
@@ -111,7 +112,6 @@ const reducer = (state=initialState , action ) =>{
 
           
        case actionTypes.LOGINFAILD:
-           console.log("zezeze")
            errorsForm = { ...state.errors }
            tempToken = "invalid token";
            tempLogged = false;
@@ -131,12 +131,46 @@ const reducer = (state=initialState , action ) =>{
            }
        
        case actionTypes.SETCURRENTUSER:
-           let user = action.payload.user
+           user = action.payload.user
            console.log(user)
            return {
                ...state,
                user : user
  
+           }
+
+       case actionTypes.VALIDATIONSESSION :
+      
+         tempLogged = action.payload.validSession
+         console.log(tempLogged)
+        if(!tempLogged){
+            user = null ;
+            tempToken = "";
+        }else {
+            user = {...state.user}
+            tempToken = state.token
+        }
+        
+           
+       
+       return {
+         ...state,
+         user : user,
+         token : tempToken,
+         logged :tempLogged
+
+
+       }
+
+
+       case actionTypes.LOGOUT :
+
+           return{
+             ...state,
+             token :"",
+             user :{},
+             logged: false
+            
            }
        
        default:

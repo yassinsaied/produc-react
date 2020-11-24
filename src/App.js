@@ -1,4 +1,4 @@
-import React from "react";
+import React , {Component} from "react";
 import { HashRouter, Switch, Route, withRouter } from "react-router-dom";
 import NavBar from "./Components/NaveBar/NavBar";
 import SideMenu from "./Components/SideMenu/SideMenu";
@@ -8,17 +8,31 @@ import ShippingCart from "./Components/ShippingCart/ShippingCart";
 import Checkout from "./Components/Checkout/CheckoutContainer"
 import Login from './Components/User/Login/Login'
 import dataProduct from "./data.json";
-import AuthApi from "./Services/authApi"
+import { connect } from "react-redux";
+import { validationSession } from "./Store/actions/actionLoginUser"
+//import athApi from "./Services/authApi"
+//import AuthApi from "./Services/authApi"
 
-AuthApi.setup();
+//AuthApi.setup();
+const NavBarwithRouter = withRouter(NavBar);
 
-function App() {
-  const NavBarwithRouter = withRouter(NavBar);
+
+class App extends Component {
+  
+  componentDidMount() {
+
+    this.props.validationSession();
+    // console.log(this.props.user , this.props.token)
+    //athApi.logout()
+}
+  
+render() {
+
 
   return (
     <>
       <HashRouter>
-        <NavBarwithRouter />
+        <NavBarwithRouter/>
 
         <div className="row m-0 pt-3">
           <div className="col-12 col-sm-3 col-md-3 col-lg-2">
@@ -61,6 +75,28 @@ function App() {
       </HashRouter>
     </>
   );
+                }
 }
 
-export default App;
+// const mapStateToProps = (state) => {
+//  return {
+    
+ 
+  
+//  }
+
+
+// }
+
+const mapDispatchToProps = (dispatch) => {
+
+    return {
+
+       validationSession: () => dispatch(validationSession())
+
+    }
+
+
+}
+
+export default connect(null, mapDispatchToProps)(App);

@@ -36,21 +36,23 @@ return await  axios.get("http://127.0.0.1:8000/api/users?email="+username).then(
 
 
 function setup()
-{
+{   let validation = false
     const token = window.localStorage.getItem("authToken");
     if (token) {
-        
-        const { exp: experation } = JwdDecode(token)
+           const { exp : experation } = JwdDecode(token)
 
         if (experation * 1000 > new Date().getTime()) {
             axios.defaults.headers["Authorization"] = "Bearer " + token; 
+            validation = true
         }
     }
+    return validation
 }
 
 export default {
     authenticate,
     logout,
     setup,
-    getUserByUserName
+    getUserByUserName,
+    
 }

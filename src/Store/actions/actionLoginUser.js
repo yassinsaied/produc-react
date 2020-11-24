@@ -4,7 +4,9 @@ import {
     SETCURRENTUSER,
     ONCHANGE,
     ONSUBMIT,
-    ONLOGIN
+    ONLOGIN,
+    VALIDATIONSESSION,
+    LOGOUT
 } from "./types"
 import athApi from "../../Services/authApi"
 
@@ -19,7 +21,7 @@ export const login = (credentials) => (dispatch) => {
            
         dispatch({
                 type: LOGINSUCCESS,
-                payload: { user: res },
+                payload: { dataToken: res },
             });
          return res.data.token
         }).then(token => {
@@ -56,6 +58,32 @@ export const onSubmit = (event ,credentials) => (dispatch) => {
         type: ONSUBMIT,
         payload: { event: event , credentials :credentials }
       })
+
+}
+
+export const validationSession = () => (dispatch) => {
+  let validSession  = athApi.setup()
+ 
+  dispatch({
+    type: VALIDATIONSESSION,
+    payload : {validSession : validSession}
+    
+  })
+
+
+}
+
+
+export const logout = () => (dispatch) => {
+  
+  dispatch({
+    type: LOGOUT,
+      
+  })
+  return athApi.setup()
+ 
+  
+
 
 }
 

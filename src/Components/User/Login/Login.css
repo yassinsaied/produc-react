@@ -3,11 +3,6 @@
     box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
 }
 
-.login-container h4 {
-    text-align: center;
-}
+.login-container h4 {}
 
-.formLogin {
-    margin: auto;
-    width: 50%;
-}
+.formLogin {}
