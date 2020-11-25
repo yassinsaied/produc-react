@@ -26,10 +26,10 @@ export const login = (credentials) => (dispatch) => {
          return res.data.token
         }).then(token => {
                return athApi.getUserByUserName(token).then(
-               res => {
+               user => {
                     dispatch({
                         type: SETCURRENTUSER,
-                        payload: { user: res }
+                        payload: { user: user }
 
                     })
                        
@@ -75,15 +75,14 @@ export const validationSession = () => (dispatch) => {
 
 
 export const logout = () => (dispatch) => {
-  
-  dispatch({
-    type: LOGOUT,
-      
-  })
-  return athApi.setup()
- 
-  
 
+  // dispatch({
+  //   type: LOGOUT
+   
+  // })
+ 
+
+athApi.logout()
 
 }
 

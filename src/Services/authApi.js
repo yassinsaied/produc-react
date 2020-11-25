@@ -39,7 +39,7 @@ function setup()
 {   let validation = false
     const token = window.localStorage.getItem("authToken");
     if (token) {
-           const { exp : experation } = JwdDecode(token)
+           const { exp  : experation } = JwdDecode(token)
 
         if (experation * 1000 > new Date().getTime()) {
             axios.defaults.headers["Authorization"] = "Bearer " + token; 

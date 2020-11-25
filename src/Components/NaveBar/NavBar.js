@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import {connect} from "react-redux"
 import{logout} from "../../Store/actions/actionLoginUser"
@@ -6,40 +6,37 @@ import Login from "../User/Login/Login"
 
 import "./NavBar.css";
 
-const NavBar = (props) => {
-  const [searchText, setSearchText] = useState("");
+class NavBar  extends Component {
+  // const [searchText, setSearchText] = useState("");
 
-  useEffect(() => {
-    onHandelKeyUp();
-  }, [searchText]); // eslint-disable-line react-hooks/exhaustive-deps
+  // useEffect(() => {
+  //   onHandelKeyUp();
+  // }, [searchText]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  useEffect(() => {
-    console.log(props.logged)
-  } , [props.logged]); 
+ 
   
   
-  const onHandelChange = (event) => {
-    const value = event.currentTarget.value;
-    setSearchText(value);
-  };
+  // const onHandelChange = (event) => {
+  //   const value = event.currentTarget.value;
+  //   setSearchText(value);
+  // };
 
-  const onHandelKeyUp = (event) => {
-    if (searchText) {
-      let text = searchText;
-      props.history.push({
-        pathname: "/search/" + text,
-        state: { searchText: text },
-      });
-    } else {
-      props.history.push("/");
-    }
-  };
-
- const  onHandelLogout = () => {
-     props.logout()
-     console.log(props.logged)
+  // const onHandelKeyUp = (event) => {
+  //   if (searchText) {
+  //     let text = searchText;
+  //     props.history.push({
+  //       pathname: "/search/" + text,
+  //       state: { searchText: text },
+  //     });
+  //   } else {
+  //     props.history.push("/");
+  //   }
+  // };
+ onHandelLogout = () => {
+   // logout()
+     console.log(this.props.logged)
   }
-
+render() {
   return (
     <>
           
@@ -60,9 +57,9 @@ const NavBar = (props) => {
                       className="form-control mr-sm-2"
                       type="search"
                       placeholder="Search"
-                      onChange={onHandelChange}
-                      onKeyUp={onHandelKeyUp}
-                      value={searchText}
+                      // onChange={onHandelChange}
+                      // onKeyUp={onHandelKeyUp}
+                      // value={searchText}
                     />
           </form>
 
@@ -72,10 +69,10 @@ const NavBar = (props) => {
           <li className="nav-item">
                 <NavLink className="btn btn-warning pannier" to="/shippingcart">
                     <i className="fa fa-shopping-cart mr-2"></i>
-                  <span className="badge badge-light">{props.nbrOrder}</span>
+                  <span className="badge badge-light">{this.props.nbrOrder}</span>
                   </NavLink>
           </li>   
-         {!props.logged ?
+         {!this.props.logged ?
             <>        
                 <li className="nav-item dropdown">
                     <span className="nav-link dropdown-toggle" id="login-subemenu" data-toggle="dropdown"
@@ -103,7 +100,7 @@ const NavBar = (props) => {
                 :
 
             <>
-              <li className="nav-item" onClick={onHandelLogout}>
+              <li className="nav-item" onClick={this.onHandelLogout}>
                   <span className="nav-link" >
                     Logout
                     <i className="fa fa-sign-out"></i>
@@ -153,6 +150,8 @@ const NavBar = (props) => {
 
 
   );
+
+}
 };
 const mapStateToProps = (state) =>{
 
@@ -170,11 +169,11 @@ const mapStateToProps = (state) =>{
 const mapDispatchToProps = (dispatch) =>{
 
 return {
-  logout : () => dispatch(logout())
  
-
+  logout: () =>  dispatch(logout())
+ 
 }
 
 }
 
-export default connect(mapStateToProps , mapDispatchToProps)(NavBar);
+export default connect(mapStateToProps)(NavBar);

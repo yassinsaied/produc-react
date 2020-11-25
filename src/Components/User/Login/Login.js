@@ -68,8 +68,7 @@ const mapStateToProps = (state) => {
      onHandleChange : (event) => dispatch(onChange(event)) ,
      onHandelSubmit : (event) => dispatch(onSubmit(event ))  ,  
      onLogin: (credentials) =>  dispatch(login(credentials))
-//            
-//        }  
+ 
     
    }
  }

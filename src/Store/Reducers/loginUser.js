@@ -11,7 +11,7 @@ const initialState = {
             password: { isValid: true, message: "", touched: false },
             },
     validForm: null ,
-    user: {},
+    user: null,
     logged: false ,
     token : "" 
 
@@ -22,7 +22,7 @@ const reducer = (state=initialState , action ) =>{
     let tempLogged;
     let event;
     let errorsForm; 
-    let user;
+    let user = null;
         
    switch (action.type) {
 
@@ -147,7 +147,7 @@ const reducer = (state=initialState , action ) =>{
             user = null ;
             tempToken = "";
         }else {
-            user = {...state.user}
+            
             tempToken = state.token
         }
         
@@ -155,20 +155,19 @@ const reducer = (state=initialState , action ) =>{
        
        return {
          ...state,
-         user : user,
+        
          token : tempToken,
          logged :tempLogged
-
-
        }
 
 
        case actionTypes.LOGOUT :
-
+          console.log("sdsdssd");
+          user= null
            return{
              ...state,
              token :"",
-             user :{},
+             user : null,
              logged: false
             
            }

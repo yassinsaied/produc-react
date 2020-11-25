@@ -10,7 +10,7 @@ import Login from './Components/User/Login/Login'
 import dataProduct from "./data.json";
 import { connect } from "react-redux";
 import { validationSession } from "./Store/actions/actionLoginUser"
-//import athApi from "./Services/authApi"
+import athApi from "./Services/authApi"
 //import AuthApi from "./Services/authApi"
 
 //AuthApi.setup();
@@ -21,7 +21,7 @@ class App extends Component {
   
   componentDidMount() {
 
-    this.props.validationSession();
+     // this.props.validationSession();
     // console.log(this.props.user , this.props.token)
     //athApi.logout()
 }
