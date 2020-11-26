@@ -26,7 +26,9 @@ export const login = (credentials) => (dispatch) => {
          return res.data.token
         }).then(token => {
                return athApi.getUserByUserName(token).then(
-               user => {
+               userData => {
+
+                   let user = userData.data['hydra:member'][0]
                     dispatch({
                         type: SETCURRENTUSER,
                         payload: { user: user }
@@ -75,14 +77,14 @@ export const validationSession = () => (dispatch) => {
 
 
 export const logout = () => (dispatch) => {
-
-  // dispatch({
-  //   type: LOGOUT
+   athApi.logout()
+   dispatch({
+    type: LOGOUT
    
-  // })
+  })
  
 
-athApi.logout()
+
 
 }
 

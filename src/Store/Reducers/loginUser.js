@@ -22,7 +22,7 @@ const reducer = (state=initialState , action ) =>{
     let tempLogged;
     let event;
     let errorsForm; 
-    let user = null;
+    let user = {};
         
    switch (action.type) {
 
@@ -102,12 +102,12 @@ const reducer = (state=initialState , action ) =>{
           
            let response = action.payload.dataToken
             tempToken = response.data.token;
-            tempLogged = true
+            
                    
            return {
               ...state,
                token: tempToken,
-               logged : tempLogged
+               logged : true
            }
 
           
@@ -135,39 +135,41 @@ const reducer = (state=initialState , action ) =>{
            console.log(user)
            return {
                ...state,
-               user : user
+               user: user,
+               logged: true 
  
            }
 
        case actionTypes.VALIDATIONSESSION :
       
          tempLogged = action.payload.validSession
-         console.log(tempLogged)
+     
         if(!tempLogged){
-            user = null ;
+            user = {} ;
             tempToken = "";
         }else {
             
             tempToken = state.token
+            user = {...user}
         }
         
            
        
        return {
          ...state,
+           token: tempToken,
+           logged: tempLogged,
+           user :user
         
-         token : tempToken,
-         logged :tempLogged
        }
 
 
        case actionTypes.LOGOUT :
-          console.log("sdsdssd");
-          user= null
+  
            return{
              ...state,
              token :"",
-             user : null,
+             user : {},
              logged: false
             
            }
@@ -176,10 +178,7 @@ const reducer = (state=initialState , action ) =>{
            break;
    }
 
-    
-    
-       
-
+ 
     return state;
 
 

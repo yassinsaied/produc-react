@@ -7,11 +7,6 @@ import "./ShippingCart.css";
 class shippingCart extends Component {
 
 
-  componentDidMount() {
-    
-    console.log(this.props.token)
-  }
-
   render() {
     const totalArray = [];
     const listProducts = this.props.listProducts.map(product => {

@@ -47,8 +47,7 @@ const ListProduct = (props) => {
 
      let linkOfApi = "";
      setCurrentPage(currentPage) ;
-     console.log(currentPage)
-
+  
     if (typeProduct === undefined) { 
 
      linkOfApi = "http://127.0.0.1:8000/api/products?promo[gt]=0&page="+currentPage+"&itemsPerPage=10"
@@ -63,13 +62,6 @@ const ListProduct = (props) => {
  }
 
  
- 
- 
-
- 
-  
-
-
   return (
     <>
       <div className="row result-row">

@@ -6,7 +6,8 @@ import Login from "../User/Login/Login"
 
 import "./NavBar.css";
 
-class NavBar  extends Component {
+class NavBar extends Component {
+
   // const [searchText, setSearchText] = useState("");
 
   // useEffect(() => {
@@ -32,14 +33,17 @@ class NavBar  extends Component {
   //     props.history.push("/");
   //   }
   // };
- onHandelLogout = () => {
-   // logout()
-     console.log(this.props.logged)
-  }
+
+
+ onHandelLogout = () =>{
+      this.props.logout() 
+      console.log(this.props.logged)
+ }
+  
 render() {
   return (
     <>
-          
+       
     <nav className="mb-1 d-flex navbar navbar-expand-lg navbar-dark bg-info">
       
        <NavLink className="navbar-brand" to="/">
@@ -72,7 +76,7 @@ render() {
                   <span className="badge badge-light">{this.props.nbrOrder}</span>
                   </NavLink>
           </li>   
-         {!this.props.logged ?
+    { !this.props.logged ?
             <>        
                 <li className="nav-item dropdown">
                     <span className="nav-link dropdown-toggle" id="login-subemenu" data-toggle="dropdown"
@@ -86,10 +90,10 @@ render() {
                     </div>
                 </li>
                 <li className="nav-item dropdown">
-                    <a className="nav-link dropdown-toggle" id="register-subemenu" data-toggle="dropdown">
+                    <span className="nav-link dropdown-toggle" id="register-subemenu" data-toggle="dropdown">
                     Register
                       <i className="fa fa-user-plus"></i>
-                    </a>
+                    </span>
                     <div className="dropdown-menu dropdown-menu-right dropdown-default"
                       aria-labelledby="register-subemenu">
                     
@@ -97,19 +101,23 @@ render() {
 
               </li>
             </> 
-                :
+      
+:
+              <>
+               <li className="nav-item">
+                  <span className="nav-link"> {this.props.user.firstName && ("hi ," + this.props.user.firstName)}</span>                    
+              </li>  
 
-            <>
-              <li className="nav-item" onClick={this.onHandelLogout}>
-                  <span className="nav-link" >
-                    Logout
+              <li className="nav-item">
+                  <button className="nav-link btn btn-link" onClick={this.onHandelLogout} >
+                    Logout 
                     <i className="fa fa-sign-out"></i>
-                </span>
+                </button>
                     
               </li>  
             </>
-       }
-
+    
+}
 
         </ul>
       </div>
@@ -176,4 +184,4 @@ return {
 
 }
 
-export default connect(mapStateToProps)(NavBar);
+export default connect(mapStateToProps , mapDispatchToProps)(NavBar);

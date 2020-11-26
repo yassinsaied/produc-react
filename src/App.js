@@ -20,10 +20,8 @@ const NavBarwithRouter = withRouter(NavBar);
 class App extends Component {
   
   componentDidMount() {
-
-     // this.props.validationSession();
-    // console.log(this.props.user , this.props.token)
-    //athApi.logout()
+     this.props.validationSession();
+  
 }
   
 render() {
