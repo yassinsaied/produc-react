@@ -7,11 +7,11 @@ import SearchResult from "./Components/Products/SearchProducts/SearchProducts";
 import ShippingCart from "./Components/ShippingCart/ShippingCart";
 import Checkout from "./Components/Checkout/CheckoutContainer"
 import Login from './Components/User/Login/Login'
+import Register from "./Components/User/Register/Register"
 import dataProduct from "./data.json";
 import { connect } from "react-redux";
 import { validationSession } from "./Store/actions/actionLoginUser"
-import athApi from "./Services/authApi"
-//import AuthApi from "./Services/authApi"
+
 
 //AuthApi.setup();
 const NavBarwithRouter = withRouter(NavBar);
@@ -48,6 +48,7 @@ render() {
               <Route path="/shippingcart" component={ShippingCart} />
               <Route path="/checkout" component={Checkout}/>
                <Route path="/login" component={Login}/>
+               <Route path="/register" component={Register}/>
               <Route
                 path="/:idCategory/:categoryName"
                 render={(props) => (

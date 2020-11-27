@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import {connect} from "react-redux"
 import{logout} from "../../Store/actions/actionLoginUser"
 import Login from "../User/Login/Login"
+import Register from "../User/Register/Register"
 
 import "./NavBar.css";
 
@@ -79,24 +80,24 @@ render() {
     { !this.props.logged ?
             <>        
                 <li className="nav-item dropdown">
-                    <span className="nav-link dropdown-toggle" id="login-subemenu" data-toggle="dropdown"
+                    <button className="nav-link dropdown-toggle  btn btn-link" id="login-subemenu" data-toggle="dropdown"
                       aria-haspopup="true" aria-expanded="false">
                       Login
                       <i className="fa fa-user"></i>
-                    </span>
+                    </button>
                     <div className="dropdown-menu dropdown-menu-right dropdown-default"
                       aria-labelledby="login-subemenu">
                     <Login/>
                     </div>
                 </li>
                 <li className="nav-item dropdown">
-                    <span className="nav-link dropdown-toggle" id="register-subemenu" data-toggle="dropdown">
+                    <button className="nav-link dropdown-toggle btn btn-link" id="register-subemenu" data-toggle="dropdown">
                     Register
                       <i className="fa fa-user-plus"></i>
-                    </span>
+                    </button>
                     <div className="dropdown-menu dropdown-menu-right dropdown-default"
                       aria-labelledby="register-subemenu">
-                    
+                    <Register/>
                     </div>
 
               </li>

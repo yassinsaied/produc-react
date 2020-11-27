@@ -6,7 +6,15 @@ const initialState = {
             username: "",
             password : ""
         },
+    registerCredentials :{
+        firstName : "" ,
+        lastName : "",
+        username: "",
+        password : ""
+    }   , 
     errors: {
+            firstName: { isValid: true, message: "", touched: false },
+            lastName: { isValid: true, message: "", touched: false },
             username: { isValid: true, message: "", touched: false },
             password: { isValid: true, message: "", touched: false },
             },
@@ -33,6 +41,34 @@ const reducer = (state=initialState , action ) =>{
            errorsForm = { ...state.errors };
       
            switch (name) {
+
+               case "firstName":
+                    errorsForm.firstName.touched = true
+                    if (value.length < 3 || value.trim() === "") {
+                        errorsForm.firstName.message = "First Name must be 3 characters long!";
+                        errorsForm.firstName.isValid = false;
+                        
+                    } else {
+                        errorsForm.firstName.message = "";
+                        errorsForm.firstName.isValid = true;
+                    
+                    }
+               
+               break;
+              case "lastName":
+                errorsForm.lastName.touched = true;
+                    if (value.length < 3 || value.trim() === "") {
+                        errorsForm.lastName.message = "LastName Must be 3 characters long!";
+                        errorsForm.lastName.isValid = false;
+                        
+                        
+                    } else {
+                        errorsForm.lastName.message = "";
+                        errorsForm.lastName.isValid = true;
+                        
+                    }
+
+                    break;
                case "username":
                    errorsForm.username.touched = true;
                    if (!validEmailRegex.test(value) || value.trim() === "") {
@@ -54,7 +90,8 @@ const reducer = (state=initialState , action ) =>{
                        errorsForm.password.isValid = true
                    }
                    break;
-    
+
+                   
                default:
                    break;
            }

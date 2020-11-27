@@ -14,7 +14,7 @@ class Login extends Component{
       
       componentWillUpdate(nextProps, nextState) {
         if (nextProps.validForm === true && (this.props.validForm === false || this.props.validForm === null  )) {
-           this.props.onLogin(this.props.credentials) ;
+             this.props.onLogin(this.props.credentials) ;
          
         }
 
@@ -27,16 +27,15 @@ class Login extends Component{
     
 
     return (<>
-      <div className="login-container">
-                    <h4>Login </h4>
-            <form className="mx-auto formLogin" onSubmit={(event) => { this.props.onHandelSubmit(event) }}>
-                      <div className="form-group">
+      <div className="login-form">
                     
-                      <Input typeInput="email" placeholder="Your Email"   inputValue={this.props.credentials.username}  changeInput={(event) => {this.props.onHandleChange(event) }}  label="" name="username" id="email"     inputValid={this.props.errors.username.isValid} errorMessage={this.props.errors.username.message }/>
-                           
-                        </div>
+            <form className="mx-auto formLogin" onSubmit={(event) => { this.props.onHandelSubmit(event) }}>
+                      <h4>Login </h4>
+                      <div className="form-group">
+                          <Input typeInput="email" placeholder="Your Email"   inputValue={this.props.credentials.username}  changeInput={(event) => {this.props.onHandleChange(event) }}  label="" name="username" id="email"     inputValid={this.props.errors.username.isValid} errorMessage={this.props.errors.username.message }/>
+                      </div>
                         <div className="form-group">
-                    <Input typeInput="password" placeholder="Your Password" inputValue={this.props.credentials.password} changeInput={(event) => {this.props.onHandleChange(event) }}  label="" name="password" id="password"  inputValid={this.props.errors.password.isValid} errorMessage={this.props.errors.password.message }/>
+                           <Input typeInput="password" placeholder="Your Password" inputValue={this.props.credentials.password} changeInput={(event) => {this.props.onHandleChange(event) }}  label="" name="password" id="password"  inputValid={this.props.errors.password.isValid} errorMessage={this.props.errors.password.message }/>
                         </div>
                         <div className="form-group">
                            <button type="submit" className="btn btn-info">Login</button>
@@ -45,7 +44,7 @@ class Login extends Component{
                             <span>Forget Password?</span>
                         </div>
                     </form>
-                </div>
+    </div>
     </>)
     }
 
