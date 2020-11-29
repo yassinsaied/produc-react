@@ -1,67 +1,79 @@
 import React, { Component } from "react"
 import "./Register.css"
 import Input from "../../../Ui/Input/Input"
-import { onChange } from "../../../Store/actions/actionLoginUser"
+import Spinner from "../../../Ui/Spinner/Spinner"
+import { onChange, onSubmit, register } from "../../../Store/actions/actionLoginUser"
+
 import { connect } from "react-redux";
 
 class Register extends Component {
+   
+    componentWillUpdate(nextProps, nextState) {
+        if (nextProps.formType === "registerCredentials" && nextProps.formType !== this.props.formType) {
+            
+                if (nextProps.validForm === true ) {
+                    const userRegister = { 
+                        email: this.props.registerCredentials.usernameRegister ,
+                        password:  this.props.registerCredentials.passwordRegister ,
+                        firstName:  this.props.registerCredentials.firstName,
+                        lastName :  this.props.registerCredentials.lastName
 
-
+                    }
+                    this.props.onRegister(userRegister) ;
+                
+                }
+        }
+      }
+      
 
     render() {
 
-        return (<>
-{/*         
-              <div className="register-container">
-                    <h4>Sign up </h4>
-            <form className="mx-auto formLogin">
-                      <div className="form-group">
-                    
-                      <Input typeInput="email" placeholder="Your Email"  />
-                           
-                        </div>
-                        <div className="form-group">
-                    <Input typeInput="password" placeholder="Your Password" />
-                        </div>
-                        <div className="form-group">
-                           <button type="submit" className="btn btn-info">Login</button>
-                        </div>
-                        <div className="form-group">
-                            <span>Forget Password?</span>
-                        </div>
-                    </form>
+  
+ return (<>      
+   
+
+  <div className="signup-form">
+           
+         <form onSubmit={(event) => { this.props.onHandelSubmit(event, "registerCredentials") }}>
+      { !this.props.loding ?             
+       <> 
+          <h4>Register</h4>
+           { !this.props.registred ?        
+               <> <div className="form-group">
+                                <Input typeInput="text" placeholder="Your Fist Name" label="" name="firstName" id="firstName" InputValue={this.props.registerCredentials.firstName} changeInput={(event)=> {this.props.onHandleChange(event , "registerCredentials")}} inputValid={this.props.errors.firstName.isValid}  errorMessage={this.props.errors.firstName.message }/>
                 </div>
-         */}
-
-
-    <div class="signup-form">
-       <form >
-		<h4>Register</h4>
-		 <div class="form-group">
-         <Input typeInput="text" placeholder="Your Fist Name"  label="" name="fistName" id="fistName" InputValue={this.props.registerCredentials.firstName}  inputValid={this.props.errors.fistName.isValid} changeInput={(event)=> {this.props.onHandleChange(event)}}  errorMessage={this.props.errors.firstName.message }/>
-	    </div>
-        <div class="form-group">
-             <Input typeInput="text" placeholder="Your Last Name"  label="" name="lastName" id="lastName" InputValue={this.props.registerCredentials.lastName} inputValid={this.props.errors.lastName.isValid}  changeInput={(event)=> {this.props.onHandleChange(event)}} errorMessage={this.props.errors.lastName.message } />
-        </div>
-        <div class="form-group">
-       
-            <Input typeInput="email" placeholder="Your Email"  label="" name="username" id="email" InputValue={this.props.registerCredentials.username}  inputValid={this.props.errors.username.isValid}   changeInput={(event)=> {this.props.onHandleChange(event)}}  errorMessage={this.props.errors.username.message }/>
-            {/* <Input typeInput="email" placeholder="Your Email"   inputValue={this.props.credentials.username}  changeInput={(event) => {this.props.onHandleChange(event) }}  label="" name="username" id="email"     inputValid={this.props.errors.username.isValid} errorMessage={this.props.errors.username.message }/> */}
-        </div>
-		<div class="form-group">
-           <Input typeInput="password" placeholder="Your Password"  label="" name="password" id="password" InputValue={this.props.registerCredentials.password}  inputValid={this.props.errors.password.isValid}  changeInput={(event)=> {this.props.onHandleChange(event)}} errorMessage={this.props.errors.password.message }/>
-        </div>
-		<div class="form-group">
-            <Input typeInput="password" placeholder="Confirm Your Password"  label="" name="confirmPassword" id="confirmPassword"/>
-        </div>        
-        <div class="form-group">
-			<label class="form-check-label"><Input typeInput="checkbox" name="terms" id="terms" /> I accept the <span href="#">Terms of Use</span> &amp; <span href="#">Privacy Policy</span></label>
-		</div>
-		<div class="form-group">
-            <button type="submit" class="btn btn-success btn-lg btn-block">Register Now</button>
-        </div>
+                <div className="form-group">
+                                <Input typeInput="text" placeholder="Your Last Name" label="" name="lastName" id="lastName" InputValue={this.props.registerCredentials.lastName}  changeInput={(event)=> {this.props.onHandleChange(event , "registerCredentials")}} inputValid={this.props.errors.lastName.isValid} errorMessage={this.props.errors.lastName.message } />
+                </div>
+                <div className="form-group">
+            
+                    <Input typeInput="email" placeholder="Your Email"  label="" name="usernameRegister" id="usernameRegister" InputValue={this.props.registerCredentials.usernameRegister}  inputValid={this.props.errors.usernameRegister.isValid}   changeInput={(event)=> {this.props.onHandleChange(event , "registerCredentials")}}  errorMessage={this.props.errors.usernameRegister.message }/>
+                    {/* <Input typeInput="email" placeholder="Your Email"   inputValue={this.props.credentials.username}  changeInput={(event) => {this.props.onHandleChange(event) }}  label="" name="username" id="email"     inputValid={this.props.errors.username.isValid} errorMessage={this.props.errors.username.message }/> */}
+                </div>
+                <div className="form-group">
+                <Input typeInput="password" placeholder="Your Password"  label="" name="passwordRegister" id="passwordRegister" InputValue={this.props.registerCredentials.passwordRegister}  inputValid={this.props.errors.passwordRegister.isValid}  changeInput={(event)=> {this.props.onHandleChange(event , "registerCredentials")}} errorMessage={this.props.errors.passwordRegister.message }/>
+                </div>
+                <div className="form-group">
+                    <Input typeInput="password" placeholder="Confirm Your Password"  label="" name="confirmPassword" id="confirmPassword" InputValue={this.props.registerCredentials.confirmPassword}  inputValid={this.props.errors.confirmPassword.isValid}  changeInput={(event)=> {this.props.onHandleChange(event , "registerCredentials")}} errorMessage={this.props.errors.confirmPassword.message }/>
+                </div>        
+                <div className="form-group">
+                    <label className="form-check-label"><Input typeInput="checkbox" name="terms" id="terms" /> I accept the <span href="#">Terms of Use</span> &amp; <span href="#">Privacy Policy</span></label>
+                </div>
+                <div className="form-group">
+                    <button type="submit" className="btn btn-success btn-lg btn-block">Register Now</button>
+                             </div></>
+                         :
+                   <p>You must actived your acount from you'r email</p>        
+                
+                } 
+    </>
+                 :
+    <>          
+        <Spinner/>
+   </>  
+           }
     </form>
-	
+	 
 </div>
         
         
@@ -76,14 +88,20 @@ const mapStateToProps = (state) =>{
   return {
 
     registerCredentials : state.loginR.registerCredentials,
-    errors              : state.loginR.errors,
+    errors: state.loginR.errors,
+    validForm: state.loginR.validForm ,
+    formType: state.loginR.formType,
+    loding: state.loginR.loding,
+    registred :state.loginR.registred
   }
 
 
 }
 const mapDispatchToProps = (dispatch) =>{
  return {
-    onHandleChange : (event) => dispatch(onChange(event)) ,
+     onHandleChange: (event, cridentialsType) => dispatch(onChange(event, cridentialsType)),
+     onHandelSubmit: (event, cridentialsType) => dispatch(onSubmit(event, cridentialsType)),
+     onRegister : (event ,cridentialsRegiter) => dispatch(register(event,cridentialsRegiter))
 
  }
 
@@ -94,3 +112,7 @@ const mapDispatchToProps = (dispatch) =>{
 
 
 export default  connect(mapStateToProps,mapDispatchToProps)(Register) ;
+
+
+
+

@@ -5,40 +5,52 @@ const initialState = {
     credentials: {
             username: "",
             password : ""
-        },
+    },
+    
     registerCredentials :{
         firstName : "" ,
         lastName : "",
-        username: "",
-        password : ""
+        usernameRegister: "",
+        passwordRegister : ""
     }   , 
     errors: {
-            firstName: { isValid: true, message: "", touched: false },
-            lastName: { isValid: true, message: "", touched: false },
-            username: { isValid: true, message: "", touched: false },
-            password: { isValid: true, message: "", touched: false },
+            username: { isValid: true, message: "", touched: false , formName: "credentials"},
+            password: { isValid: true, message: "", touched: false , formName: "credentials" },
+            firstName: { isValid: true, message: "", touched: false ,formName: "registerCredentials" },
+            lastName: { isValid: true, message: "", touched: false, formName: "registerCredentials" },
+            usernameRegister: { isValid: true, message: "", touched: false , formName: "registerCredentials"},
+            passwordRegister: { isValid: true, message: "", touched: false , formName: "registerCredentials" },
+            confirmPassword: { isValid: true, message: "", touched: false , formName: "registerCredentials" },
             },
-    validForm: null ,
+    validForm: false,
+    formType : "",
     user: null,
     logged: false ,
-    token : "" 
+    token: "" ,
+    registred: false,
+    loding : false
 
 }
    
 const reducer = (state=initialState , action ) =>{
-  let tempToken;
+    let tempToken;
     let tempLogged;
     let event;
     let errorsForm; 
     let user = {};
+    let cridentialsType
+    let response
         
    switch (action.type) {
 
        case actionTypes.ONCHANGE:
+         
            event = action.payload.event
            const value = event.currentTarget.value;
            const name = event.currentTarget.name;
+           cridentialsType = action.payload.cridentialsType
            errorsForm = { ...state.errors };
+            
       
            switch (name) {
 
@@ -70,24 +82,38 @@ const reducer = (state=initialState , action ) =>{
 
                     break;
                case "username":
-                   errorsForm.username.touched = true;
+               case "usernameRegister":    
+                   errorsForm[name].touched = true;
                    if (!validEmailRegex.test(value) || value.trim() === "") {
-                       errorsForm.username.message = "email invalid"
-                       errorsForm.username.isValid = false
+                       errorsForm[name].message = "email invalid"
+                       errorsForm[name].isValid = false
                    } else {
-                       errorsForm.username.message = ""
-                       errorsForm.username.isValid = true
+                       errorsForm[name].message = ""
+                       errorsForm[name].isValid = true
                    }
        
                    break;
+                             
                case "password":
-                   errorsForm.password.touched = true;
+               case "passwordRegister":    
+                   errorsForm[name].touched = true;
                    if (value.length < 6 || value.trim() === "") {
-                       errorsForm.password.message = "password must be 6 charcter long"
-                       errorsForm.password.isValid = false
+                       errorsForm[name].message = "password must be 6 charcter long"
+                       errorsForm[name].isValid = false
                    } else {
-                       errorsForm.password.message = ""
-                       errorsForm.password.isValid = true
+                       errorsForm[name].message = ""
+                       errorsForm[name].isValid = true
+                   }
+                   break;
+               
+               case "confirmPassword":
+                   errorsForm.confirmPassword.touched = true;
+                   if (value !== state.registerCredentials.passwordRegister) {
+                       errorsForm.confirmPassword.message = "Passwords don't match"
+                       errorsForm.confirmPassword.isValid = false
+                   } else {
+                       errorsForm.confirmPassword.message = ""
+                       errorsForm.confirmPassword.isValid = true
                    }
                    break;
 
@@ -98,119 +124,162 @@ const reducer = (state=initialState , action ) =>{
        
            return {
                ...state,
-               credentials: { ...state.credentials, [name]: value },
+               [cridentialsType]: { ...state[cridentialsType] , [name]: value },
                errors: errorsForm,
            }
        
-       case actionTypes.ONSUBMIT:
-         event = action.payload.event
-         event.preventDefault();
-         let     allFormValid;
-         errorsForm = {...state.errors}
-         Object.entries(errorsForm).forEach((error) => {
-       
-            if ((!error[1].isValid && error[1].touched )|| (error[1].isValid && !error[1].touched)) {
-                allFormValid = false  
-                errorsForm[error[0]].message = error[0] + " is Required ";
-                errorsForm[error[0]].isValid = false;
-            } else {
-                
-                allFormValid = true;  
-            }
+        case actionTypes.ONSUBMIT:
+            let allFormValid;
+            event = action.payload.event
+            cridentialsType = action.payload.cridentialsType
+            errorsForm = { ...state.errors }
+            event.preventDefault();
+            console.log(cridentialsType)
+            Object.entries(errorsForm).forEach((error) => {
+                    if (error[1].formName === cridentialsType) {
+                        
+                        if ((!error[1].isValid && error[1].touched) || (error[1].isValid && !error[1].touched)) {
+                            
+                            allFormValid = false
+                            errorsForm[error[0]].message = error[0] + " is Required ";
+                            errorsForm[error[0]].isValid = false;
+                        
+                        } else {
+
+                            allFormValid = true;
+                        
+                        }
+                    }
+                    
         });
-           
-           return {
-               ...state,
-               errors: errorsForm,
-               validForm: allFormValid ,
-          
-           }
-       
-       case actionTypes.ONLOGIN:
-           
-           return {
-               ...state,
-               validForm : null
-            
+                        
+            return {
+                ...state,
+                errors: errorsForm,
+                validForm: allFormValid,
+                formType : cridentialsType
+            }
+        
+        case actionTypes.ONLOGIN:
+                
+            return {
+                ...state,
+                validForm: true,
+                formType: "",
+                loding:true
+            }
+    
+        case actionTypes.LOGINSUCCESS:
 
-           }
- 
-       case actionTypes.LOGINSUCCESS:
-          
-           let response = action.payload.dataToken
+            response = action.payload.dataToken
             tempToken = response.data.token;
-            
-                   
-           return {
-              ...state,
-               token: tempToken,
-               logged : true
-           }
 
-          
-       case actionTypes.LOGINFAILD:
-           errorsForm = { ...state.errors }
-           tempToken = "invalid token";
-           tempLogged = false;
+            return {
+                ...state,
+                token: tempToken,
+                logged: true,
+                loding:false
+            }
+
+        case actionTypes.LOGINFAILD:
+
+            errorsForm = { ...state.errors }
+            tempToken = "invalid token";
+            tempLogged = false;
            errorsForm.username.message = " invalid credentials";
+           errorsForm.username.isValid = false
            errorsForm.password.message = " invalid credentials";
-   
-           return {
-               ...state,
-               token: tempToken,
-               logged: tempLogged,
-               errors: {
-                   ...errorsForm,
-                   username: { message: errorsForm.username.message },
-                   password: { message: errorsForm.password.message }
-                   
-               }
-           }
-       
-       case actionTypes.SETCURRENTUSER:
-           user = action.payload.user
-           console.log(user)
-           return {
-               ...state,
-               user: user,
-               logged: true 
- 
-           }
-
-       case actionTypes.VALIDATIONSESSION :
-      
-         tempLogged = action.payload.validSession
-     
-        if(!tempLogged){
-            user = {} ;
-            tempToken = "";
-        }else {
+           errorsForm.password.isValid = false
             
-            tempToken = state.token
-            user = {...user}
+            return {
+                ...state,
+                token: tempToken,
+                logged: tempLogged,
+                errors:errorsForm ,
+                validForm: false, 
+                loding:false
+            }
+        
+        case actionTypes.SETCURRENTUSER:
+
+            user = action.payload.user
+            
+            return {
+                ...state,
+                user: user,
+                logged: true ,
+                credentials: {
+                    username: "",
+                    password :""
+                }
+                }
+
+        case actionTypes.VALIDATIONSESSION:
+            
+            tempLogged = action.payload.validSession
+            
+            if (!tempLogged) {
+                    
+                    user = {} ;
+                    tempToken = "";
+
+                }else {
+                    
+                    tempToken = state.token
+                    user = {...user}
+                }
+    
+        return {
+            ...state,
+            token: tempToken,
+            logged: tempLogged,
+            user :user
+            
         }
-        
-           
-       
-       return {
-         ...state,
-           token: tempToken,
-           logged: tempLogged,
-           user :user
-        
-       }
 
 
-       case actionTypes.LOGOUT :
-  
-           return{
-             ...state,
-             token :"",
-             user : {},
-             logged: false
-            
-           }
+        case actionTypes.LOGOUT :
+    
+            return{
+                ...state,
+                token :"",
+                user : {},
+                logged: false
+                
+            }
+            case actionTypes.ONREGISTER :
+             
+            return{
+                ...state,
+                validForm: true,
+                formType: "",
+                loding:true
+            }
+        
+        case actionTypes.REGISTERSUCCESS:
+           response = action.payload.successRegister
+           console.log(response)
+            return{
+                ...state,
+                loding: false,
+                registred :true
+                
+            }
        
+         case actionTypes.REGISTERFAILD:
+           response = action.payload.errorRegister
+           errorsForm = { ...state.errors } 
+           errorsForm.usernameRegister.message = "This email adrealy existe"
+              errorsForm.usernameRegister.isValid = false
+           console.log(response ,  errorsForm)
+            return{
+                ...state,
+                errors : errorsForm,
+                loding: false,
+                registred:false
+                
+            }
+        
        default:
            break;
    }

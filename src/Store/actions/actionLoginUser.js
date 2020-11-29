@@ -6,9 +6,13 @@ import {
     ONSUBMIT,
     ONLOGIN,
     VALIDATIONSESSION,
-    LOGOUT
+    LOGOUT,
+    ONREGISTER,
+    REGISTERSUCCESS,
+    REGISTERFAILD
 } from "./types"
 import athApi from "../../Services/authApi"
+import registerApi from "../../Services/registerApi"
 
 export const login = (credentials) => (dispatch) => {
    dispatch({
@@ -47,19 +51,49 @@ export const login = (credentials) => (dispatch) => {
 
 }
 
-export const onChange = (event) => (dispatch) => {
+export const register = (registerCredentials) => (dispatch) => {
+    
+    dispatch({
+        type: ONREGISTER,
+       
+
+    })
+    return registerApi.registerUser(registerCredentials).then(res=>{
+
+        dispatch({
+            type: REGISTERSUCCESS,
+            payload : {successRegister : res}
+
+       })
+
+    }).catch(error => {
+
+        dispatch({
+           
+            type: REGISTERFAILD,
+            payload : {errorRegister : error}
+       })
+
+    })
+
+
+}
+
+export const onChange = (event , cridentialsType) => (dispatch) => {
       dispatch({
         type: ONCHANGE,
-        payload: { event: event }
+        payload: { event: event , cridentialsType: cridentialsType }
     });
 
 }
 
-export const onSubmit = (event ,credentials) => (dispatch) => {
+export const onSubmit = (event , cridentialsType ) => (dispatch) => {
       dispatch({
         type: ONSUBMIT,
-        payload: { event: event , credentials :credentials }
+        payload: { event: event , cridentialsType: cridentialsType }
       })
+
+   
 
 }
 

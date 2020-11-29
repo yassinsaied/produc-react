@@ -9,7 +9,10 @@ import "./NavBar.css";
 
 class NavBar extends Component {
 
-  // const [searchText, setSearchText] = useState("");
+  state = {
+     searchText : ""
+
+  }
 
   // useEffect(() => {
   //   onHandelKeyUp();
@@ -18,22 +21,26 @@ class NavBar extends Component {
  
   
   
-  // const onHandelChange = (event) => {
-  //   const value = event.currentTarget.value;
-  //   setSearchText(value);
-  // };
+   onHandelChange = (event) => {
+     const value = event.currentTarget.value;
+     this.setState({
+      searchText : value
+       
+     })
+   
+  };
 
-  // const onHandelKeyUp = (event) => {
-  //   if (searchText) {
-  //     let text = searchText;
-  //     props.history.push({
-  //       pathname: "/search/" + text,
-  //       state: { searchText: text },
-  //     });
-  //   } else {
-  //     props.history.push("/");
-  //   }
-  // };
+   onHandelKeyUp = (event) => {
+     if (this.state.searchText) {
+      
+        this.props.history.push({
+        pathname: "/search/" + this.state.searchText,
+        state: { searchText: this.state.searchText },
+      });
+    } else {
+      this.props.history.push("/");
+    }
+  };
 
 
  onHandelLogout = () =>{
@@ -62,13 +69,13 @@ render() {
                       className="form-control mr-sm-2"
                       type="search"
                       placeholder="Search"
-                      // onChange={onHandelChange}
-                      // onKeyUp={onHandelKeyUp}
-                      // value={searchText}
+                       onChange={this.onHandelChange}
+                      onKeyUp={this.onHandelKeyUp}
+                      value={this.state.searchText}
                     />
           </form>
 
-      
+         
         <ul className="navbar-nav ml-auto nav-flex-icons">
           
           <li className="nav-item">
@@ -77,11 +84,12 @@ render() {
                   <span className="badge badge-light">{this.props.nbrOrder}</span>
                   </NavLink>
           </li>   
-    { !this.props.logged ?
-            <>        
+    { !this.props.logged &&
+              <>  
+            
                 <li className="nav-item dropdown">
                     <button className="nav-link dropdown-toggle  btn btn-link" id="login-subemenu" data-toggle="dropdown"
-                      aria-haspopup="true" aria-expanded="false">
+                      aria-haspopup="true" aria-expanded="true">
                       Login
                       <i className="fa fa-user"></i>
                     </button>
@@ -97,14 +105,18 @@ render() {
                     </button>
                     <div className="dropdown-menu dropdown-menu-right dropdown-default"
                       aria-labelledby="register-subemenu">
-                    <Register/>
+                    {<Register/>}
                     </div>
 
-              </li>
-            </> 
-      
-:
-              <>
+                  </li>
+          
+              </> 
+            }
+            {this.props.logged &&
+          
+            
+                <>
+              
                <li className="nav-item">
                   <span className="nav-link"> {this.props.user.firstName && ("hi ," + this.props.user.firstName)}</span>                    
               </li>  
@@ -115,10 +127,16 @@ render() {
                     <i className="fa fa-sign-out"></i>
                 </button>
                     
-              </li>  
+                  </li>  
+               
             </>
+
+            
+          }
+
+          
     
-}
+
 
         </ul>
       </div>
