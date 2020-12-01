@@ -4,6 +4,7 @@ import {connect} from "react-redux"
 import{logout} from "../../Store/actions/actionLoginUser"
 import Login from "../User/Login/Login"
 import Register from "../User/Register/Register"
+import Input from "../../Ui/Input/Input"
 
 import "./NavBar.css";
 
@@ -17,29 +18,34 @@ class NavBar extends Component {
   // useEffect(() => {
   //   onHandelKeyUp();
   // }, [searchText]); // eslint-disable-line react-hooks/exhaustive-deps
-
+  componentDidMount() {
+     this.onHandelKeyUp()
+  }
  
   
   
    onHandelChange = (event) => {
      const value = event.currentTarget.value;
+     console.log("ddd"+ value)
      this.setState({
-      searchText : value
-       
+     searchText : value
      })
    
   };
 
-   onHandelKeyUp = (event) => {
-     if (this.state.searchText) {
-      
-        this.props.history.push({
-        pathname: "/search/" + this.state.searchText,
-        state: { searchText: this.state.searchText },
-      });
+  onHandelKeyUp = (event) => {
+     
+    if (this.state.searchText !== "") {
+
+         this.props.history.push({
+         pathname: "/search/" + this.state.searchText,
+         state: { searchText: this.state.searchText },
+         });
+       
     } else {
-      this.props.history.push("/");
-    }
+      
+           this.props.history.push("/");
+     }
   };
 
 
@@ -65,14 +71,17 @@ render() {
       <div className="collapse navbar-collapse" id="navbarSupportedContent-333">
 
         <form className="form-inline navbar-nav mr-auto">
-            <input
+         {/* <Input  placeholder="Search"/> */}
+            <Input typeInput="search" placeholder="Search" inputValue={this.state.searchText} changeInput={(event) => { this.onHandelChange(event) }} label="" name="search" id="search" KeyUpInput={(event) => this.onHandelKeyUp(event)} inputValid={ true}/>
+            
+            {/* <input 
                       className="form-control mr-sm-2"
                       type="search"
                       placeholder="Search"
-                       onChange={this.onHandelChange}
+                      onChange={this.onHandelChange}
                       onKeyUp={this.onHandelKeyUp}
                       value={this.state.searchText}
-                    />
+                    /> */}
           </form>
 
          
