@@ -12,7 +12,7 @@ const input = (props) => {
                             <span className="input-group-text">@</span>
                     </div>  
                 )} 
-         <input type={props.typeInput} className={"form-control " + (!props.inputValid && " is-invalid ")} id={props.id} name={props.name} placeholder={props.placeholder} value={props.inputValue} onChange={props.changeInput} onKeyUp={props.KeyUpInput} />
+         <input type={props.typeInput} className={"form-control " + (!props.inputValid && " is-invalid ")} id={props.id} name={props.name} placeholder={props.placeholder} value={props.inputValue} onChange={props.changeInput} onKeyUp={props.KeyUpInput}/>
          <span className="invalid-feedback">{props.errorMessage}</span>
         </div>
         

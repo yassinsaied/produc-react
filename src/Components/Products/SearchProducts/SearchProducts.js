@@ -39,21 +39,18 @@ const SearchResult = (props) => {
 
         const searchText = props.location.state.searchText;
         const dataResult = await fastSearchProducts(searchText, currentPage, pagination.itemsPerPage)
-        console.log( dataResult["hydra:member"])
+       
         const resultSearch = dataResult["hydra:member"]
         const totalitemResult = dataResult["hydra:totalItems"]
         setSearch({ searchText: searchText, searchResults: resultSearch });
         setPagination({
-     
+          
           totalItems: totalitemResult,
           currentPage: currentPage ,
           loding: false,
-          itemsPerPage : 2
+          itemsPerPage : 10
                  
         })
-    } else {
-      
-
     }
 
 
@@ -83,11 +80,13 @@ const SearchResult = (props) => {
               search.searchResults.map((product) => {
                 return (<CardProduct product={product} key={product.id} />)
             })
-        }
+           }
+
+           {pagination.totalItems > pagination.itemsPerPage &&
             <div className="row pagination m-4">
                   <Pagination itemsPerPage={pagination.itemsPerPage} totalItems={pagination.totalItems} currentPage={pagination.currentPage}  typeProduct={undefined} clickPage={handleSearch} />
             </div>      
-
+          }
           </div>
         } 
 

@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import CardProduct from "../CardProduct/CardProduct";
 import Pagination from "../../../Ui/Pagination/Pagination"
 import Spinner from "../../../Ui/Spinner/Spinner"
+import {fetchAllProducts}  from "../../../Services/fetchProductsAPI"
 import "./ListProducts.css";
 
 const ListProduct = (props) => {
   const [products, setProducts] = useState([]);
   const [totalItems , setTotalItems] = useState(0);
   const [currentPage , setCurrentPage] = useState(1)
-  const [loding , setLoding] = useState(true)
+  const [loading , setLoading] = useState(true)
   const itemsPerPage = 10 ;
   const typeProduct = props.match.params.idCategory;
 
@@ -17,56 +17,39 @@ const ListProduct = (props) => {
 
   useEffect(() => {
 
-    fetchAllProduct(typeProduct , 1);
+    handleProducts(typeProduct , 1 , itemsPerPage);
 
   }, [typeProduct]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const connectApi = async (linkOfApi) =>{
+  const handleProducts = async (typeProduct , currentPage ,itemsPerPage ) =>{
 
-    setLoding(true);
+    setLoading(true);
 
-    const request = await axios.get(linkOfApi).catch(error => {
-      console.log(error.message)
+    const dataProducts = await fetchAllProducts(typeProduct, currentPage ,itemsPerPage)
+   // console.log(dataProducts)
+    if(dataProducts){
+      setProducts(dataProducts["hydra:member"]);
+      setTotalItems(dataProducts["hydra:totalItems"]);
+      setCurrentPage(currentPage)
+      setLoading(false) ;
 
-    });
+    } else {
 
-    if(!request.error){
-      setProducts(request.data["hydra:member"]);
-      setTotalItems(request.data["hydra:totalItems"]);
-      setLoding(false) ;
-    }else {
-
-      setLoding(true);
+      setLoading(true);
 
     }
      
 
   }
 
-  const fetchAllProduct = (typeProduct , currentPage) => {
 
-     let linkOfApi = "";
-     setCurrentPage(currentPage) ;
-  
-    if (typeProduct === undefined) { 
-
-     linkOfApi = "http://127.0.0.1:8000/api/products?promo[gt]=0&page="+currentPage+"&itemsPerPage=10"
-     connectApi(linkOfApi)
-
-    } else {
-
-      linkOfApi = "http://127.0.0.1:8000/api/categories/" + typeProduct + "/products?page="+currentPage+"&itemsPerPage=10";
-      connectApi(linkOfApi)
-
-    }
- }
 
  
   return (
     <>
       <div className="row result-row">
 
-       {  loding ? 
+       {  loading ? 
 
           <div className="row spinner">
            <Spinner/>
@@ -82,11 +65,13 @@ const ListProduct = (props) => {
                 return (<CardProduct product={product} key={product.id} />)
             })
         }
+        {  totalItems > itemsPerPage &&
             <div className="row pagination m-4">
-                  <Pagination itemsPerPage={itemsPerPage} totalItems={totalItems} currentPage={currentPage} typeProduct={typeProduct} clickPage={fetchAllProduct} />
+                  <Pagination itemsPerPage={itemsPerPage} totalItems={totalItems} currentPage={currentPage} typeProduct={typeProduct} clickPage={handleProducts} />
             </div>      
-
-          </div>
+          }
+           </div>
+        
         } 
 
     </div>

@@ -53,6 +53,8 @@ class NavBar extends Component {
       this.props.logout() 
       console.log(this.props.logged)
  }
+
+
   
 render() {
   return (
@@ -71,9 +73,9 @@ render() {
       <div className="collapse navbar-collapse" id="navbarSupportedContent-333">
 
         <form className="form-inline navbar-nav mr-auto">
-         {/* <Input  placeholder="Search"/> */}
-            <Input typeInput="search" placeholder="Search" inputValue={this.state.searchText} changeInput={(event) => { this.onHandelChange(event) }} label="" name="search" id="search" KeyUpInput={(event) => this.onHandelKeyUp(event)} inputValid={ true}/>
-            
+      
+            <Input typeInput="search" placeholder="Search" inputValue={this.state.searchText} changeInput={(event) => { this.onHandelChange(event) }} label="" name="search" id="search" KeyUpInput={(event) => this.onHandelKeyUp(event)} inputValid={true} />
+        
             {/* <input 
                       className="form-control mr-sm-2"
                       type="search"
