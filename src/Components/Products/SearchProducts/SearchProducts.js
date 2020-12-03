@@ -17,7 +17,7 @@ const SearchResult = (props) => {
     totalItems: 0,
     currentPage: 1 ,
     loding: true,
-    itemsPerPage : 2
+    itemsPerPage : 10
 
   })
 

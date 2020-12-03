@@ -8,7 +8,8 @@ import ShippingCart from "./Components/ShippingCart/ShippingCart";
 import Checkout from "./Components/Checkout/CheckoutContainer"
 import Login from './Components/User/Login/Login'
 import Register from "./Components/User/Register/Register"
-import dataProduct from "./data.json";
+import ProtectRoute from "./Ui/ProtectRoute/ProtectRoute"
+
 import { connect } from "react-redux";
 import { validationSession } from "./Store/actions/actionLoginUser"
 
@@ -42,13 +43,14 @@ render() {
               <Route
                 path="/search/:search"
                 render={(props) => (
-                  <SearchResult allProducts={dataProduct} {...props} />
+                  <SearchResult {...props} />
                 )}
               />
               <Route path="/shippingcart" component={ShippingCart} />
-              <Route path="/checkout" component={Checkout}/>
-               <Route path="/login" component={Login}/>
-               <Route path="/register" component={Register}/>
+              <ProtectRoute path="/checkout" component={Checkout} logged={this.props.logged}/>
+           
+              <Route path="/login" component={Login} />
+              <Route path="/register" component={Register}/>
               <Route
                 path="/:idCategory/:categoryName"
                 render={(props) => (
@@ -58,7 +60,7 @@ render() {
               <Route
                 path="/"
                 render={(props) => (
-                  <ListProducts allProducts={dataProduct} {...props} />
+                  <ListProducts {...props} />
                 )}
               />
 
@@ -77,25 +79,23 @@ render() {
                 }
 }
 
-// const mapStateToProps = (state) => {
-//  return {
+const mapStateToProps = (state) => {
+ return {
     
- 
+ logged :  state.loginR.logged
   
-//  }
+ }
 
 
-// }
+}
 
 const mapDispatchToProps = (dispatch) => {
 
     return {
 
        validationSession: () => dispatch(validationSession())
-
     }
-
 
 }
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

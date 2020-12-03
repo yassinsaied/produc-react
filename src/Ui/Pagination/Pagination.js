@@ -3,7 +3,7 @@ import "./Pagination.css"
 
 
 const Pagination = (props) => {
-    console.log(props.totalItems , props.itemsPerPage)
+  
     const pagesCount = Math.ceil(props.totalItems/props.itemsPerPage) ;
     const pages = [] ;
   

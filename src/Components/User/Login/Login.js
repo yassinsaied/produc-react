@@ -1,4 +1,5 @@
-import React, { Component}from 'react';
+import React, { Component } from 'react';
+import { withRouter } from "react-router-dom";
 import "./Login.css";
 import Input from "../../../Ui/Input/Input";
 import Spinner from "../../../Ui/Spinner/Spinner"
@@ -11,16 +12,31 @@ import {login , onChange , onSubmit}from "../../../Store/actions/actionLoginUser
 
 
 class Login extends Component{
+ 
+   componentDidMount() {
+     if ( this.props.logged) {
+              this.props.history.replace("/")
+        }
   
-      
-  componentWillUpdate(nextProps, nextState) {
+  } 
 
+
+   componentDidUpdate() {
+     if (this.props.logged) {
+              this.props.history.replace("/")
+        }
+
+  }    
+  componentWillUpdate(nextProps, nextState) {
+ 
      if (nextProps.formType === "credentials" && nextProps.formType !== this.props.formType) {
       if (nextProps.validForm === true && (this.props.validForm === false || (this.props.validForm === true && this.props.logged === false))) {
-           this.props.onLogin(this.props.credentials);
-         
+            this.props.onLogin(this.props.credentials);
+   
       }
     }
+
+   
 
   }
     
@@ -30,8 +46,10 @@ class Login extends Component{
     
     
 
-    return (<>
-      <div className="login-form">
+      return (<>
+ <div className="row justify-content-md-center">
+  <div className="login-form col-12 col-sm-12 col-md-6 col-lg-6">
+     
         <form className="mx-auto formLogin" onSubmit={(event) => { this.props.onHandelSubmit(event, "credentials") }}>
           {!this.props.loding ?             
             <> 
@@ -43,7 +61,7 @@ class Login extends Component{
                             <Input typeInput="password" placeholder="Your Password" inputValue={this.props.credentials.password} changeInput={(event) => {this.props.onHandleChange(event , "credentials") }}  label="" name="password" id="password"  inputValid={this.props.errors.password.isValid} errorMessage={this.props.errors.password.message }/>
                           </div>
                           <div className="form-group">
-                            <button type="submit" className="btn btn-info">Login</button>
+                            <button type="submit" className="btn btn-warning  btn-lg btn-block">Login</button>
                           </div>
                           <div className="form-group">
                               <span>Forget Password?</span>
@@ -56,7 +74,8 @@ class Login extends Component{
            } 
           </form>
           
-    </div>
+         </div>
+        </div>
     </>)
     }
 
@@ -86,4 +105,4 @@ const mapStateToProps = (state) => {
    }
  }
 
-export default connect(mapStateToProps , mapDispatchToProps)(Login) ;
+export default withRouter(connect(mapStateToProps , mapDispatchToProps)(Login)) ;

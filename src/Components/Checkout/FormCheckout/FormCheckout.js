@@ -10,7 +10,9 @@ const zipCodRegex = RegExp(/^\d{4}$/);
 
 class formCheckout extends Component{
     
-   
+     
+    
+    
    state = {
        order: {
             firstName: "",
@@ -43,7 +45,7 @@ class formCheckout extends Component{
     
     
     componentDidMount() {
-
+      
         axios.get("https://raw.githubusercontent.com/marwein/tunisia/master/tunisia.json")
             .then(request => {
                 const gouvernerats = request.data

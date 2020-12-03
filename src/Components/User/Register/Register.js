@@ -7,6 +7,15 @@ import { onChange, onSubmit, register } from "../../../Store/actions/actionLogin
 import { connect } from "react-redux";
 
 class Register extends Component {
+
+
+     componentDidMount() {
+     if ( this.props.logged) {
+              this.props.history.replace("/")
+        }
+    } 
+
+
    
     componentWillUpdate(nextProps, nextState) {
         if (nextProps.formType === "registerCredentials" && nextProps.formType !== this.props.formType) {
@@ -31,13 +40,13 @@ class Register extends Component {
   
  return (<>      
    
-
-  <div className="signup-form">
+<div className="row justify-content-md-center">
+  <div className="signup-form col-12 col-sm-12 col-md-6 col-lg-6">
            
          <form onSubmit={(event) => { this.props.onHandelSubmit(event, "registerCredentials") }}>
       { !this.props.loding ?             
        <> 
-          <h4>Register</h4>
+          <h4>Sign up</h4>
            { !this.props.registred ?        
                <> <div className="form-group">
                                 <Input typeInput="text" placeholder="Your Fist Name" label="" name="firstName" id="firstName" InputValue={this.props.registerCredentials.firstName} changeInput={(event)=> {this.props.onHandleChange(event , "registerCredentials")}} inputValid={this.props.errors.firstName.isValid}  errorMessage={this.props.errors.firstName.message }/>
@@ -60,7 +69,7 @@ class Register extends Component {
                     <label className="form-check-label"><Input typeInput="checkbox" name="terms" id="terms" /> I accept the <span href="#">Terms of Use</span> &amp; <span href="#">Privacy Policy</span></label>
                 </div>
                 <div className="form-group">
-                    <button type="submit" className="btn btn-success btn-lg btn-block">Register Now</button>
+                    <button type="submit" className="btn btn-warning  btn-lg btn-block">Register Now</button>
                              </div></>
                          :
                    <p>You must actived your acount from you'r email</p>        
@@ -72,11 +81,11 @@ class Register extends Component {
         <Spinner/>
    </>  
            }
-    </form>
+      </form>
 	 
-</div>
+    </div>
         
-        
+   </div>     
         </>)
 
 
@@ -92,7 +101,8 @@ const mapStateToProps = (state) =>{
     validForm: state.loginR.validForm ,
     formType: state.loginR.formType,
     loding: state.loginR.loding,
-    registred :state.loginR.registred
+    registred: state.loginR.registred,
+    logged:    state.loginR.logged,
   }
 
 
