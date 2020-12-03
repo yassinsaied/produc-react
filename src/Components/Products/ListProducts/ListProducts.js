@@ -21,7 +21,7 @@ const ListProduct = (props) => {
 
   }, [typeProduct]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const handleProducts = async (typeProduct , currentPage ,itemsPerPage ) =>{
+  const handleProducts = async (typeProduct , currentPage , itemsPerPage ) =>{
 
     setLoading(true);
 

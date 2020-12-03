@@ -7,6 +7,9 @@ import App from "./App";
 import cartReducer from "./Store/Reducers/cart";
 import loginReducer from "./Store/Reducers/loginUser"
 import * as serviceWorker from "./serviceWorker";
+import authApi from "./Services/authApi"
+
+const persisteData = authApi.loadState();
 
 const rootReducer = combineReducers({
   cartR : cartReducer,
@@ -14,7 +17,20 @@ const rootReducer = combineReducers({
 
 });
 
-const store = createStore(rootReducer , applyMiddleware(thunk));
+const store = createStore(rootReducer , persisteData ,applyMiddleware(thunk));
+
+ store.subscribe(()=>{
+
+  authApi.saveState({
+
+    cartR : store.getState().cartR,
+    loginR :  store.getState().loginR,
+
+
+  });
+
+})
+
 ReactDOM.render(
   <Provider store={store}>
     <App />
