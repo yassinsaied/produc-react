@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from "axios"
 import SelectListe from "../../../Ui/SelectListe/SelectListe"
 import Input from "../../../Ui/Input/Input"
+import RadioInput from "../../../Ui/Input/Input"
 import "./FormCheckout.css"
 
 const validEmailRegex = RegExp(/^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i);
@@ -276,15 +277,12 @@ class formCheckout extends Component{
                     <hr className="mb-4"/>
 
                         <h4 className="mb-3">Payment</h4>
-                        <div className="d-block my-3">
-                          <Input label="Credit card" name="paymentMethod" id="credit" typeInput="radio"  inputValue="Credit card" changeInput={(event) => { this.onHandleChange(event) }} />
-                       
-                        
-                            <div className="custom-control custom-radio">
-                                <input id="paypal" name="paymentMethod" type="radio" value="PayPal" className="custom-control-input" onChange={this.onHandleChange}/>
-                                <label className="custom-control-label" htmlFor="paypal">PayPal</label>
-                            </div>
+                        <div className="my-3 rowRadio">
+                           <RadioInput label="Credit card"  typeInput="radio" name="paymentMethod" id="credit"  inputValue="CreditCard"  changeInput={(event) => { this.onHandleChange(event) }} />
+                       </div>
 
+                        <div className="my-3 rowRadio">
+                           <RadioInput label="PayPal"  typeInput="radio" name="paymentMethod" id="paypal"  inputValue="paypal"  changeInput={(event) => { this.onHandleChange(event) }} />
                         </div>
 
                         <div className="row">

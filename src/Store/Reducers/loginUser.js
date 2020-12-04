@@ -24,7 +24,7 @@ const initialState = {
             },
     validForm: false,
     formType : "",
-    user: null,
+    user: {},
     logged: false ,
     token: "" ,
     registred: false,
@@ -214,29 +214,7 @@ const reducer = (state=initialState , action ) =>{
                 }
                 }
 
-        case actionTypes.VALIDATIONSESSION:
-            
-            tempLogged = action.payload.validSession
-            
-            if (!tempLogged) {
-                    
-                    user = {} ;
-                    tempToken = "";
-
-                }else {
-                    
-                    tempToken = state.token
-                    user = {...user}
-                }
-    
-        return {
-            ...state,
-            token: tempToken,
-            logged: tempLogged,
-            user :user
-            
-        }
-
+   
 
         case actionTypes.LOGOUT :
     

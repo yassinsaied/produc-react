@@ -5,3 +5,22 @@
     background-position: right calc(0.375em + 0.1875rem) center;
     background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
 }
+
+.rowRadio {
+    display: flex;
+}
+
+.rowRadio .input-group {
+    width: 6%;
+    border: none!important;
+}
+
+.rowRadio label {
+    width: 8%;
+}
+
+.form-control.is-invalid:focus,
+.was-validated .form-control:invalid:focus {
+    border-color: none;
+    box-shadow: none;
+}

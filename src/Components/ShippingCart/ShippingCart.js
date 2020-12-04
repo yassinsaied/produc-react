@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { NavLink } from "react-router-dom";
 import {editQt ,deleteProduct } from "../../Store/actions/actionCartUser"
 
 import "./ShippingCart.css";
@@ -73,7 +74,7 @@ class shippingCart extends Component {
           <div className="card-header bg-info text-light">
             <i className="fa fa-shopping-cart" aria-hidden="true"></i>
             Shipping cart
-            <span href="" className="btn btn-outline-info btn-sm pull-right">
+            <span  className="btn btn-outline-info btn-sm pull-right">
               Continiu shopping
             </span>
             <div className="clearfix"></div>
@@ -87,7 +88,7 @@ class shippingCart extends Component {
                 <span className="mr-2">
                   Total Ordres: <b>{(total).toFixed(2)}</b>
                 </span>
-                <span className="btn btn-success">Checkout</span>
+                <NavLink className="btn btn-warning" to="/checkout">Checkout</NavLink>
               </div>
             </div>
           </div>

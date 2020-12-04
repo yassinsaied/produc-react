@@ -5,8 +5,7 @@ import {
     ONCHANGE,
     ONSUBMIT,
     ONLOGIN,
-    VALIDATIONSESSION,
-    LOGOUT,
+     LOGOUT,
     ONREGISTER,
     REGISTERSUCCESS,
     REGISTERFAILD
@@ -97,17 +96,6 @@ export const onSubmit = (event , cridentialsType ) => (dispatch) => {
 
 }
 
-export const validationSession = () => (dispatch) => {
-  let validSession  = athApi.setup()
- 
-  dispatch({
-    type: VALIDATIONSESSION,
-    payload : {validSession : validSession}
-    
-  })
-
-
-}
 
 
 export const logout = () => (dispatch) => {

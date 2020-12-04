@@ -11,19 +11,15 @@ import Register from "./Components/User/Register/Register"
 import ProtectRoute from "./Ui/ProtectRoute/ProtectRoute"
 
 import { connect } from "react-redux";
-import { validationSession } from "./Store/actions/actionLoginUser"
 
 
-//AuthApi.setup();
+
+
 const NavBarwithRouter = withRouter(NavBar);
 
 
 class App extends Component {
-  
-  componentDidMount() {
-     this.props.validationSession();
-  
-}
+
   
 render() {
 
@@ -89,13 +85,5 @@ const mapStateToProps = (state) => {
 
 }
 
-const mapDispatchToProps = (dispatch) => {
 
-    return {
-
-       validationSession: () => dispatch(validationSession())
-    }
-
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps)(App);

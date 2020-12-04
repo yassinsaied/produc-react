@@ -14,7 +14,7 @@ const authenticate = async(credentials) => {
  
 return await  axios.post("http://127.0.0.1:8000/api/login_check", credentials).then(response => {
        
-        let token = response.data.token
+         let token = response.data.token
          window.localStorage.setItem("authToken", token);
          axios.defaults.headers["Authorization"] = "Bearer " + token;
       return response
@@ -68,14 +68,27 @@ const loadState = () => {
 }
 
 const saveState = (state) =>{
-
+  
     try {
      const serializedState = JSON.stringify(state) 
-     localStorage.setItem('state' ,serializedState)  
+     localStorage.setItem('state' ,serializedState)
+     const token = window.localStorage.getItem("authToken");  
+        if (token) {
+            const { exp : experation } = JwdDecode(token)
+
+                if (experation * 1000 > new Date().getTime()) {
+                    axios.defaults.headers["Authorization"] = "Bearer " + token;
+                }
+        }
+
+       
+
         
     } catch (error) {
         
     }
+
+   
 
 }
 
