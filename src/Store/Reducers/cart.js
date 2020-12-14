@@ -5,6 +5,13 @@ const initialState = {
   count: 0,
   amount: 0,
   refProduct: "",
+
+  order: {
+          sentAt : new Date() ,
+          addressDelivery: "",
+          user: "",
+          orderProduct : []
+     }
   
 };
 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from "axios"
+import { connect } from "react-redux";
 import SelectListe from "../../../Ui/SelectListe/SelectListe"
 import Input from "../../../Ui/Input/Input"
 import RadioInput from "../../../Ui/Input/Input"
@@ -134,7 +135,7 @@ class formCheckout extends Component{
            case 'state':
                    error.state.touched = true
                if (value === "choose state") {
-                   error.state.message = " the state ise required"
+                   error.state.message = " the state is required"
                    error.state.isValid = false
                        
                } else {
@@ -223,6 +224,24 @@ class formCheckout extends Component{
             error : errors ,
             validForm: formValid
         })
+
+
+        if (formValid) {
+            
+            this.props.listProducts.map(product => {
+                let newProduct = Object.assign({}, product, {
+                    product: product.refProduct,
+                    Qte: product.countProduct,
+                    amountProduct: product.amountProduct
+                })
+            this.props.order.orderProduct.concat(newProduct)
+
+            })
+
+              console.log(this.props.order.orderProduct)
+
+
+        }
     }
 
    
@@ -323,5 +342,13 @@ class formCheckout extends Component{
     
         };
 }
+
+
+const mapStateToProps = (state) => {
+    return {
+        listProducts: state.cartR.listProducts,
+        order : state.cartR.order
+    };
+};
  
-export default formCheckout;
+export default connect(mapStateToProps)(formCheckout);
