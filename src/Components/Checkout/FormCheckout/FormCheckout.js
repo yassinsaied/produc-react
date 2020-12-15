@@ -50,7 +50,7 @@ class formCheckout extends Component{
                 <span className="text-muted">Confirm your order</span>
                 </h4>             
         
-                <form className="needs-validation" onSubmit={this.onHandelSubmit}>
+                <form className="needs-validation" onSubmit={(event)=>{this.props.onHandelSubmit(event ,"orderCredentials")}}>
                     <div className="row">
                         <div className="col-md-6 mb-3">
 
@@ -88,11 +88,11 @@ class formCheckout extends Component{
 
                         <h4 className="mb-3">Payment</h4>
                         <div className="my-3 rowRadio">
-                           <RadioInput label="Credit card"  typeInput="radio" name="paymentMethod" id="credit"  inputValue="CreditCard" />
+                           <RadioInput label="Credit card"  typeInput="radio" name="paymentMethodOrder" id="credit" inputValue="credit" changeInput={(event) => {this.props.onHandleChange(event , "orderCredentials")}} errorMessage={this.props.errors.paymentMethodOrder.message} inputValid={this.props.errors.paymentMethodOrder.isValid}  checkedInput={this.props.paymentMethodOrder === "credit"}/>
                        </div>
 
                         <div className="my-3 rowRadio">
-                           <RadioInput label="PayPal"  typeInput="radio" name="paymentMethod" id="paypal"  inputValue="paypal"   />
+                           <RadioInput label="PayPal"  typeInput="radio"   name="paymentMethodOrder" id="paypal"   inputValue="paypal"   changeInput={(event) => {this.props.onHandleChange(event , "orderCredentials")}} errorMessage={this.props.errors.paymentMethodOrder.message} inputValid={this.props.errors.paymentMethodOrder.isValid}  checkedInput={this.props.paymentMethodOrder === "paypal"} />
                         </div>
 
                         <div className="row">

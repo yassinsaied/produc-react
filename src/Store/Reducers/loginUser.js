@@ -3,6 +3,14 @@ import * as actionTypes  from "../actions/types"
 
 const zipCodRegex = RegExp(/^\d{4}$/);
 const validEmailRegex = RegExp(/^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i);
+const acceptedCreditCards = {
+    visa: /^4[0-9]{12}(?:[0-9]{3})?$/,
+    mastercard: /^5[1-5][0-9]{14}$|^2(?:2(?:2[1-9]|[3-9][0-9])|[3-6][0-9][0-9]|7(?:[01][0-9]|20))[0-9]{12}$/,
+    amex: /^3[47][0-9]{13}$/,
+    discover: /^65[4-9][0-9]{13}|64[4-9][0-9]{13}|6011[0-9]{12}|(622(?:12[6-9]|1[3-9][0-9]|[2-8][0-9][0-9]|9[01][0-9]|92[0-5])[0-9]{10})$/,
+    diners_club: /^3(?:0[0-5]|[68][0-9])[0-9]{11}$/,
+    jcb: /^(?:2131|1800|35[0-9]{3})[0-9]{11}$/,
+  };
 
 const initialState = {
     credentials: {
@@ -25,8 +33,7 @@ const initialState = {
         stateOrder: "",
         cityOrder: "",
         zipCode: "",
-
-        // paymentMethod: "",
+        paymentMethodOrder: "",
         // nameOnCard: "",
         // CreditCardNumber: "",
         // expiration: "",
@@ -49,7 +56,7 @@ const initialState = {
             stateOrder:       { isValid: true, message: "", touched: false, formName: "orderCredentials" }, 
             cityOrder:        { isValid: true, message: "", touched: false, formName: "orderCredentials" }, 
             zipCode:          { isValid: true, message: "", touched: false, formName: "orderCredentials" }, 
-            // paymentMethod:    { isValid: true, message: "", touched: false, formName: "orderCredentials" }, 
+            paymentMethodOrder:    { isValid: true, message: "", touched: false, formName: "orderCredentials" }, 
             // nameOnCard:       { isValid: true, message: "", touched: false, formName: "orderCredentials" }, 
             // CreditCardNumber: { isValid: true, message: "", touched: false, formName: "orderCredentials" }, 
             // expiration:       { isValid: true, message: "", touched: false, formName: "orderCredentials" }, 
@@ -79,7 +86,7 @@ const reducer = (state=initialState , action ) =>{
     let response
     let tempState = []
     let tempAllLoc = {} 
-     let  tempListeOfCitys = []
+    
         
    switch (action.type) {
 
@@ -88,6 +95,7 @@ const reducer = (state=initialState , action ) =>{
            event = action.payload.event
            const value = event.currentTarget.value;
            const name = event.currentTarget.name;
+           const checked = event.currentTarget.checked;
            cridentialsType = action.payload.cridentialsType
            errorsForm = { ...state.errors };
             
@@ -97,7 +105,7 @@ const reducer = (state=initialState , action ) =>{
                case "firstName":
                case "firstNameOrder":    
                    
-                    errorsForm.firstName.touched = true
+                    errorsForm[name].touched = true
                     if (value.length < 3 || value.trim() === "") {
                         errorsForm[name].message = "First Name must be 3 characters long!";
                         errorsForm[name].isValid = false;
@@ -111,7 +119,7 @@ const reducer = (state=initialState , action ) =>{
                break;
                case "lastName":
                case "lastNameOrder":        
-                errorsForm.lastName.touched = true;
+                errorsForm[name].touched = true;
                     if (value.length < 3 || value.trim() === "") {
                         errorsForm[name].message = "LastName Must be 3 characters long!";
                         errorsForm[name].isValid = false;
@@ -218,7 +226,20 @@ const reducer = (state=initialState , action ) =>{
                     errorsForm.zipCode.message = "";
                     errorsForm.zipCode.isValid = true; 
                }
-                 break;    
+                 break; 
+                 
+             case "paymentMethodOrder":
+              // errorsForm.paymentMethodOrder.touched = true;
+               if (!checked) {
+                   errorsForm.zipCode.message = "Payment Method IS Required";
+                   errorsForm.zipCode.isValid = false;
+                   
+               } else {
+                    errorsForm.zipCode.message = "";
+                    errorsForm.zipCode.isValid = true; 
+               }
+                 break;  
+
                default:
                  
            }
