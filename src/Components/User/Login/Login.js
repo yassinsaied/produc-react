@@ -14,7 +14,7 @@ import {login , onChange , onSubmit}from "../../../Store/actions/actionLoginUser
 class Login extends Component{
  
    componentDidMount() {
-     if ( this.props.logged) {
+     if (this.props.logged) {
               this.props.history.replace("/")
         }
   

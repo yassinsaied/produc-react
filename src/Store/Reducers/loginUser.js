@@ -1,6 +1,9 @@
 import * as actionTypes  from "../actions/types"
-//import AuthApi from "../../Services/authApi"
+
+
+const zipCodRegex = RegExp(/^\d{4}$/);
 const validEmailRegex = RegExp(/^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i);
+
 const initialState = {
     credentials: {
             username: "",
@@ -13,22 +16,56 @@ const initialState = {
         usernameRegister: "",
         passwordRegister : ""
     }   , 
+
+    orderCredentials: {
+        firstNameOrder : "" ,
+        lastNameOrder: "",
+        usernameOrder: "",
+        adressOrder: "" ,
+        stateOrder: "",
+        cityOrder: "",
+        zipCode: "",
+
+        // paymentMethod: "",
+        // nameOnCard: "",
+        // CreditCardNumber: "",
+        // expiration: "",
+        // cvv:""
+  
+    },
+
     errors: {
-            username: { isValid: true, message: "", touched: false , formName: "credentials"},
-            password: { isValid: true, message: "", touched: false , formName: "credentials" },
-            firstName: { isValid: true, message: "", touched: false ,formName: "registerCredentials" },
-            lastName: { isValid: true, message: "", touched: false, formName: "registerCredentials" },
+            username:         { isValid: true, message: "", touched: false , formName: "credentials"},
+            password:         { isValid: true, message: "", touched: false , formName: "credentials" },
+            firstName:        { isValid: true, message: "", touched: false ,formName: "registerCredentials" },
+            lastName:         { isValid: true, message: "", touched: false, formName: "registerCredentials" },
             usernameRegister: { isValid: true, message: "", touched: false , formName: "registerCredentials"},
             passwordRegister: { isValid: true, message: "", touched: false , formName: "registerCredentials" },
-            confirmPassword: { isValid: true, message: "", touched: false , formName: "registerCredentials" },
-            },
+            confirmPassword:  { isValid: true, message: "", touched: false, formName: "registerCredentials" },
+            firstNameOrder :  { isValid: true, message: "", touched: false, formName: "orderCredentials" }, 
+            lastNameOrder:    { isValid: true, message: "", touched: false, formName: "orderCredentials" }, 
+            usernameOrder: { isValid: true, message: "", touched: false, formName: "orderCredentials" }, 
+            adressOrder:    { isValid: true, message: "", touched: false, formName: "orderCredentials" },
+            stateOrder:       { isValid: true, message: "", touched: false, formName: "orderCredentials" }, 
+            cityOrder:        { isValid: true, message: "", touched: false, formName: "orderCredentials" }, 
+            zipCode:          { isValid: true, message: "", touched: false, formName: "orderCredentials" }, 
+            // paymentMethod:    { isValid: true, message: "", touched: false, formName: "orderCredentials" }, 
+            // nameOnCard:       { isValid: true, message: "", touched: false, formName: "orderCredentials" }, 
+            // CreditCardNumber: { isValid: true, message: "", touched: false, formName: "orderCredentials" }, 
+            // expiration:       { isValid: true, message: "", touched: false, formName: "orderCredentials" }, 
+            // cvv:              { isValid: true, message: "", touched: false, formName: "orderCredentials" }, 
+    },
+    
     validForm: false,
     formType : "",
     user: {},
     logged: false ,
     token: "" ,
     registred: false,
-    loding : false
+    loding: false,
+    allLocation: {},
+    listeOfStates: [],
+    listeOfCitys : [],
 
 }
    
@@ -40,6 +77,9 @@ const reducer = (state=initialState , action ) =>{
     let user = {};
     let cridentialsType
     let response
+    let tempState = []
+    let tempAllLoc = {} 
+     let  tempListeOfCitys = []
         
    switch (action.type) {
 
@@ -55,34 +95,38 @@ const reducer = (state=initialState , action ) =>{
            switch (name) {
 
                case "firstName":
+               case "firstNameOrder":    
+                   
                     errorsForm.firstName.touched = true
                     if (value.length < 3 || value.trim() === "") {
-                        errorsForm.firstName.message = "First Name must be 3 characters long!";
-                        errorsForm.firstName.isValid = false;
+                        errorsForm[name].message = "First Name must be 3 characters long!";
+                        errorsForm[name].isValid = false;
                         
                     } else {
-                        errorsForm.firstName.message = "";
-                        errorsForm.firstName.isValid = true;
+                        errorsForm[name].message = "";
+                        errorsForm[name].isValid = true;
                     
                     }
                
                break;
-              case "lastName":
+               case "lastName":
+               case "lastNameOrder":        
                 errorsForm.lastName.touched = true;
                     if (value.length < 3 || value.trim() === "") {
-                        errorsForm.lastName.message = "LastName Must be 3 characters long!";
-                        errorsForm.lastName.isValid = false;
+                        errorsForm[name].message = "LastName Must be 3 characters long!";
+                        errorsForm[name].isValid = false;
                         
                         
                     } else {
-                        errorsForm.lastName.message = "";
-                        errorsForm.lastName.isValid = true;
+                        errorsForm[name].message = "";
+                        errorsForm[name].isValid = true;
                         
                     }
 
                     break;
                case "username":
-               case "usernameRegister":    
+               case "usernameRegister": 
+               case "usernameOrder":     
                    errorsForm[name].touched = true;
                    if (!validEmailRegex.test(value) || value.trim() === "") {
                        errorsForm[name].message = "email invalid"
@@ -116,16 +160,75 @@ const reducer = (state=initialState , action ) =>{
                        errorsForm.confirmPassword.isValid = true
                    }
                    break;
+               
+               case "adressOrder":
+                errorsForm.adressOrder.touched = true;
+                if (value.trim() === "") {
+                     errorsForm.adressOrder.message = "Please enter your shipping address. "
+                     errorsForm.adressOrder.isValid = false;
+                  
+                    } else {
+                    errorsForm.adressOrder.message = "";
+                    errorsForm.adressOrder.isValid = true;
+                }
 
+                 break;   
+              case 'stateOrder':
+                   errorsForm.stateOrder.touched = true
+               if (value === "choose state") {
+                   errorsForm.stateOrder.message = " the state is required"
+                   errorsForm.stateOrder.isValid = false
+                       
+               } else {
+                   state.listeOfCitys = []
+                   let allLoc = {...state.allLocation}
+                   Object.entries(allLoc).forEach(loc => {
+                  
+                       if (loc[0] === value) {
+                           loc[1].map(option =>  state.listeOfCitys.push(option.localite))
+           
+                       }
+                   });
+                   errorsForm.stateOrder.message = "";
+                   errorsForm.stateOrder.isValid = true;
+               }          
+                   break; 
+               
+               case "cityOrder":
+               errorsForm.cityOrder.touched = true;
+               if (value === "choose city") {
+                   errorsForm.cityOrder.message = "city is required";
+                   errorsForm.cityOrder.isValid = false;
                    
+               } else {
+                    errorsForm.cityOrder.message = "";
+                    errorsForm.cityOrder.isValid = true; 
+               }
+               
+               
+               break;
+               
+               case "zipCode":
+               errorsForm.zipCode.touched = true;
+               if (value.trim() === "" || !zipCodRegex.test(value)) {
+                   errorsForm.zipCode.message = "Zip Code invalid";
+                   errorsForm.zipCode.isValid = false;
+                   
+               } else {
+                    errorsForm.zipCode.message = "";
+                    errorsForm.zipCode.isValid = true; 
+               }
+                 break;    
                default:
-                   break;
+                 
            }
-       
+           
            return {
                ...state,
                [cridentialsType]: { ...state[cridentialsType] , [name]: value },
                errors: errorsForm,
+              
+
            }
        
         case actionTypes.ONSUBMIT:
@@ -256,6 +359,30 @@ const reducer = (state=initialState , action ) =>{
                 loding: false,
                 registred:false
                 
+            }
+       
+            
+        case actionTypes.LOCATIONSUCCESS:
+             tempAllLoc = action.payload.allLocation
+             Object.entries(tempAllLoc).forEach(itemState => {
+                           console.log(itemState)
+                           tempState.push(itemState[0])
+             });
+            
+            return {
+                ...state,
+                allLocation : tempAllLoc,
+                listeOfStates : tempState
+
+            }
+        
+        case actionTypes.LOCATIONFAILED:
+
+            return {
+                ...state,
+                allLocation : {},
+                gouvernorats : {}
+              
             }
         
        default:
