@@ -88,41 +88,26 @@ class formCheckout extends Component{
 
                         <h4 className="mb-3">Payment</h4>
                         <div className="my-3 rowRadio">
-                           <RadioInput label="Credit card"  typeInput="radio" name="paymentMethodOrder" id="credit" inputValue="credit" changeInput={(event) => {this.props.onHandleChange(event , "orderCredentials")}} errorMessage={this.props.errors.paymentMethodOrder.message} inputValid={this.props.errors.paymentMethodOrder.isValid}  checkedInput={this.props.paymentMethodOrder === "credit"}/>
+                           <RadioInput label="Credit card"  typeInput="radio" name="paymentMethodOrder" id="credit" inputValue="credit" changeInput={(event) => {this.props.onHandleChange(event , "orderCredentials")}} errorMessage={this.props.errors.paymentMethodOrder.message} inputValid={this.props.errors.paymentMethodOrder.isValid}  checkedInput={this.props.orderCredentials.paymentMethodOrder === "credit"}/>
                        </div>
 
                         <div className="my-3 rowRadio">
-                           <RadioInput label="PayPal"  typeInput="radio"   name="paymentMethodOrder" id="paypal"   inputValue="paypal"   changeInput={(event) => {this.props.onHandleChange(event , "orderCredentials")}} errorMessage={this.props.errors.paymentMethodOrder.message} inputValid={this.props.errors.paymentMethodOrder.isValid}  checkedInput={this.props.paymentMethodOrder === "paypal"} />
+                           <RadioInput label="PayPal"  typeInput="radio"   name="paymentMethodOrder" id="paypal"   inputValue="paypal"   changeInput={(event) => {this.props.onHandleChange(event , "orderCredentials")}} errorMessage={this.props.errors.paymentMethodOrder.message} inputValid={this.props.errors.paymentMethodOrder.isValid}  checkedInput={this.props.orderCredentials.paymentMethodOrder === "paypal"} />
                         </div>
 
                         <div className="row">
                             <div className="col-md-6 mb-3">
-                                <label htmlFor="cc-name">Name on card</label>
-                                <input type="text" className="form-control" id="cc-name" placeholder="" />
-                                <small className="text-muted">Full name as displayed on card</small>
-                                <span className="invalid-feedback">Name on card is required  </span>
+                                
+                            <Input label="Credit card number" name="creditCardNumber" id="CreditCardNumber" typeInput="text" placeholder="" inputValue={this.props.orderCredentials.creditCardNumber} changeInput={(event) => { this.props.onHandleChange(event , "orderCredentials") }} inputValid={this.props.errors.creditCardNumber.isValid} errorMessage={this.props.errors.creditCardNumber.message} />
+                                                
                             </div>
-
-                            <div className="col-md-6 mb-3">
-                                <label htmlFor="cc-number">Credit card number</label>
-                                <input type="text" className="form-control" id="cc-number" placeholder=""/>
-                                <span className="invalid-feedback">Credit card number is required</span>
-            
-                        </div>
-                        </div>
-
-                        <div className="row">
-                            <div className="col-md-3 mb-3">
-                                <label htmlFor="cc-expiration">Expiration</label>
-                                <input type="text" className="form-control" id="cc-expiration" placeholder="" />
-                                <span className="invalid-feedback">  Expiration date required</span>
-                            </div> 
                         <div className="col-md-3 mb-3">
-                                <label htmlFor="cc-cvv">CVV</label>
-                                <input type="text" className="form-control" id="cc-cvv" placeholder="" />
-                                <span className="invalid-feedback">   Security code required</span>
+                            
+                            <Input label="CVV" name="cvv" id="cvv" typeInput="text" placeholder="" inputValue={this.props.orderCredentials.cvv} changeInput={(event) => { this.props.onHandleChange(event , "orderCredentials") }} inputValid={this.props.errors.cvv.isValid} errorMessage={this.props.errors.cvv.message} />
+                                  
+                            </div>
                         </div>
-                        </div>
+                   
                         <hr className="mb-4"/>
                         <button  type="submit" className="btn btn-primary btn-lg btn-block"  >Continue to checkout</button>
                     

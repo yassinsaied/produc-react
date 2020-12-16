@@ -12,6 +12,54 @@ const acceptedCreditCards = {
     jcb: /^(?:2131|1800|35[0-9]{3})[0-9]{11}$/,
   };
 
+const validateCard =(valueInput) =>{
+  // remove all non digit characters
+  const value = valueInput.replace(/\D/g, '');
+  let sum = 0;
+  let shouldDouble = false;
+  // loop through values starting at the rightmost side
+  for (var i = value.length - 1; i >= 0; i--) {
+    let digit = parseInt(value.charAt(i));
+
+    if (shouldDouble) {
+      if ((digit *= 2) > 9) digit -= 9;
+    }
+
+    sum += digit;
+    shouldDouble = !shouldDouble;
+  }
+  
+  let valid = (sum % 10) === 0;
+  let accepted = false;
+  
+  // loop through the keys (visa, mastercard, amex, etc.)
+  Object.keys(acceptedCreditCards).forEach(function(key) {
+    var regex = acceptedCreditCards[key];
+    if (regex.test(value)) {
+      accepted = true;
+    }
+  });
+  
+  return valid && accepted;
+}
+
+const validateCVV = (cCard, cVv)=> {
+  // remove all non digit characters
+  const  creditCard = cCard.replace(/\D/g, '');
+  const  cvv = cVv.replace(/\D/g, '');
+  // american express and cvv is 4 digits
+  if ((acceptedCreditCards.amex).test(creditCard)) {
+    if((/^\d{4}$/).test(cvv))
+      return true;
+  } else if ((/^\d{3}$/).test(cvv)) { // other card & cvv is 3 digits
+    return true;
+  }
+  return false;
+}
+
+
+
+
 const initialState = {
     credentials: {
             username: "",
@@ -22,7 +70,7 @@ const initialState = {
         firstName : "" ,
         lastName : "",
         usernameRegister: "",
-        passwordRegister : ""
+        passwordRegister : "credit"
     }   , 
 
     orderCredentials: {
@@ -34,10 +82,8 @@ const initialState = {
         cityOrder: "",
         zipCode: "",
         paymentMethodOrder: "",
-        // nameOnCard: "",
-        // CreditCardNumber: "",
-        // expiration: "",
-        // cvv:""
+        creditCardNumber: "",
+        cvv:""
   
     },
 
@@ -57,10 +103,10 @@ const initialState = {
             cityOrder:        { isValid: true, message: "", touched: false, formName: "orderCredentials" }, 
             zipCode:          { isValid: true, message: "", touched: false, formName: "orderCredentials" }, 
             paymentMethodOrder:    { isValid: true, message: "", touched: false, formName: "orderCredentials" }, 
-            // nameOnCard:       { isValid: true, message: "", touched: false, formName: "orderCredentials" }, 
-            // CreditCardNumber: { isValid: true, message: "", touched: false, formName: "orderCredentials" }, 
-            // expiration:       { isValid: true, message: "", touched: false, formName: "orderCredentials" }, 
-            // cvv:              { isValid: true, message: "", touched: false, formName: "orderCredentials" }, 
+            creditCardNumber: { isValid: true, message: "", touched: false, formName: "orderCredentials" },
+            cvv:              { isValid: true, message: "", touched: false, formName: "orderCredentials" }, 
+            
+          
     },
     
     validForm: false,
@@ -229,16 +275,46 @@ const reducer = (state=initialState , action ) =>{
                  break; 
                  
              case "paymentMethodOrder":
-              // errorsForm.paymentMethodOrder.touched = true;
+                   errorsForm.paymentMethodOrder.touched = true;
+                 
                if (!checked) {
-                   errorsForm.zipCode.message = "Payment Method IS Required";
-                   errorsForm.zipCode.isValid = false;
+                   errorsForm.paymentMethodOrder.message = "Payment Method IS Required";
+                   errorsForm.paymentMethodOrder.isValid = false;
                    
                } else {
-                    errorsForm.zipCode.message = "";
-                    errorsForm.zipCode.isValid = true; 
+                    errorsForm.paymentMethodOrder.message = "";
+                    errorsForm.paymentMethodOrder.isValid = true; 
                }
-                 break;  
+                   break;  
+               
+               
+               
+             case "creditCardNumber":
+                   errorsForm.creditCardNumber.touched = true;
+                
+               if (!validateCard(value)) {
+                   errorsForm.creditCardNumber.message = "Card Number Invalid";
+                   errorsForm.creditCardNumber.isValid = false;
+                   
+               } else {
+                    errorsForm.creditCardNumber.message = "";
+                    errorsForm.creditCardNumber.isValid = true; 
+               }
+                   break;  
+               
+            case "cvv":
+                errorsForm.cvv.touched = true;
+                let currentCardNuber = state.orderCredentials.creditCardNumber
+               
+               if (!validateCVV(currentCardNuber , value) || !validateCard(currentCardNuber)) {
+                   errorsForm.cvv.message = "cvv Invalid";
+                   errorsForm.cvv.isValid = false;
+                   
+               } else {
+                    errorsForm.cvv.message = "";
+                    errorsForm.cvv.isValid = true; 
+               }
+                 break; 
 
                default:
                  
@@ -265,7 +341,7 @@ const reducer = (state=initialState , action ) =>{
                         if ((!error[1].isValid && error[1].touched) || (error[1].isValid && !error[1].touched)) {
                             
                             allFormValid = false
-                            errorsForm[error[0]].message = error[0] + " is Required ";
+                            errorsForm[error[0]].message = "This Field is Required ";
                             errorsForm[error[0]].isValid = false;
                         
                         } else {
