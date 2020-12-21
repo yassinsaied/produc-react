@@ -15,6 +15,7 @@ const persisteData = authApi.loadState();
 const rootReducer = combineReducers({
   cartR : cartReducer,
   loginR: loginReducer,
+  orderR : orderReducer
 
 
 });
@@ -27,6 +28,8 @@ const store = createStore(rootReducer , persisteData ,applyMiddleware(thunk));
 
     cartR :  store.getState().cartR,
     loginR: store.getState().loginR,
+    orderR: store.getState().orderR,
+    
   
 
   });

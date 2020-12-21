@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import {onSubmit, onChange} from "../../../Store/actions/actionLoginUser"
+import { onSubmit, onChange } from "../../../Store/actions/actionLoginUser"
+import {onAddOrder} from "../../../Store/actions/actionOrder"
 import SelectListe from "../../../Ui/SelectListe/SelectListe"
 import Input from "../../../Ui/Input/Input"
 import RadioInput from "../../../Ui/Input/Input"
@@ -8,39 +9,30 @@ import "./FormCheckout.css"
 
 class formCheckout extends Component{
     
+    componentDidMount() {
+       
+        console.log(this.props.user)
+   } 
     
+  componentDidUpdate() {
+ 
     
-    
+      if (this.props.validForm ) {
+           this.props.onHandelOrder(
+              this.props.orderCredentials.stateOrder,
+              this.props.orderCredentials.cityOrder,
+              this.props.orderCredentials.adressOrder,
+              this.props.user.id,
+              this.props.listProducts,
+              
+          );
+   
+      }
     
  
-
+  }
     
-    
-   
-    
-     
-   
-    
-  
-
-        // if (formValid) {
-            
-        //     this.props.listProducts.map(product => {
-        //         let newProduct = Object.assign({}, product, {
-        //             product: product.refProduct,
-        //             Qte: product.countProduct,
-        //             amountProduct: product.amountProduct
-        //         })
-        //         this.props.order.orderProduct.concat(newProduct)
-
-        //     })
-
-        //       console.log(this.props.order.orderProduct)
-
-
-        // }
-  
-
+ 
     render() {
   
         return ( <>
@@ -126,8 +118,11 @@ const mapStateToProps = (state) => {
         listeOfCitys : state.loginR.listeOfCitys,
         errors: state.loginR.errors,
         orderCredentials: state.loginR.orderCredentials,
-       
-  
+        user:      state.loginR.user,
+        validForm: state.loginR.validForm,
+        formType: state.loginR.formType,
+        loding : state.loginR.loding,
+         
     };
 };
 
@@ -136,7 +131,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
         
        onHandleChange : (event , cridentialsType ) => dispatch(onChange(event , cridentialsType)) ,
-       onHandelSubmit : (event , cridentialsType) => dispatch(onSubmit(event , cridentialsType ))  
+       onHandelSubmit: (event, cridentialsType) => dispatch(onSubmit(event, cridentialsType)),
+       onHandelOrder : (state , city , address , user , listProducts) => dispatch(onAddOrder(state , city , address , user , listProducts))
 
     }
 }

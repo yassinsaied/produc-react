@@ -1,10 +1,14 @@
 import {
-    ONLOADLOCATION,
+  
     LOCATIONSUCCESS,
-    LOCATIONFAILED
+    LOCATIONFAILED,
+    ONADDORDER,
+    ONSUCCESSORDER,
+    ONFAIILEDORDER
 }
     from "./types"
 import locationApi from "../../Services/fetchLocationApi"
+import orderApi from "../../Services/orderApi"
 
 
 
@@ -28,6 +32,37 @@ export const onLoadLocation = () => (dispatch) =>{
         })
 
     })
+}
+
+
+export const onAddOrder = (state , city , address , user , listProducts) => (dispatch , getState) => {
+
+    dispatch({
+        type: ONADDORDER, 
+        payload : { state:state , city: city, address:address , user :user, listProducts:listProducts}
+
+    })
+      const orderToPost = getState().orderR.order;
+      console.log(orderToPost)
+    return orderApi.postOrder(orderToPost).then(res => {
+        
+        dispatch({
+            type: ONSUCCESSORDER,
+            payload : {successOrder : res} 
+
+
+         })
+
+    }).catch(err => {
+        dispatch({
+            type: ONFAIILEDORDER,
+            payload :{errorOrder: err}
+        })
+
+    })
+    
+    
+
 }
 
 

@@ -341,7 +341,7 @@ const reducer = (state=initialState , action ) =>{
                         if ((!error[1].isValid && error[1].touched) || (error[1].isValid && !error[1].touched)) {
                             
                             allFormValid = false
-                            errorsForm[error[0]].message = "This Field is Required ";
+                            errorsForm[error[0]].message = "This Field is Required";
                             errorsForm[error[0]].isValid = false;
                         
                         } else {
@@ -462,8 +462,7 @@ const reducer = (state=initialState , action ) =>{
         case actionTypes.LOCATIONSUCCESS:
              tempAllLoc = action.payload.allLocation
              Object.entries(tempAllLoc).forEach(itemState => {
-                           console.log(itemState)
-                           tempState.push(itemState[0])
+                             tempState.push(itemState[0])
              });
             
             return {
