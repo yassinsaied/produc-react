@@ -13,7 +13,8 @@ import {login , onChange , onSubmit}from "../../../Store/actions/actionLoginUser
 
 class Login extends Component{
  
-   componentDidMount() {
+  componentDidMount() {
+     console.log(this.props.validForm)
      if (this.props.logged) {
               this.props.history.replace("/")
         }
@@ -21,32 +22,22 @@ class Login extends Component{
   } 
 
 
-   componentDidUpdate() {
+  componentDidUpdate() {
+    if (this.props.validForm) {
+      this.props.onLogin(this.props.credentials);
+    } 
+
      if (this.props.logged) {
               this.props.history.replace("/")
         }
 
   }    
-  componentWillUpdate(nextProps, nextState) {
- 
-     if (nextProps.formType === "credentials" && nextProps.formType !== this.props.formType) {
-      if (nextProps.validForm === true && (this.props.validForm === false || (this.props.validForm === true && this.props.logged === false))) {
-            this.props.onLogin(this.props.credentials);
-   
-      }
-    }
-
-   
-
-  }
-    
 
 
     render() {
     
     
-
-      return (<>
+return (<>
  <div className="row justify-content-md-center">
   <div className="login-form col-12 col-sm-12 col-md-6 col-lg-6">
      

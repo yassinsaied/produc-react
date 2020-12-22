@@ -57,11 +57,8 @@ const validateCVV = (cCard, cVv)=> {
   return false;
 }
 
-
-
-
-const initialState = {
-    credentials: {
+const iniitialState = {
+     credentials: {
             username: "",
             password : ""
     },
@@ -120,9 +117,12 @@ const initialState = {
     listeOfStates: [],
     listeOfCitys : [],
 
+
 }
-   
-const reducer = (state=initialState , action ) =>{
+
+
+const reducer = (state = iniitialState, action) => {
+    
     let tempToken;
     let tempLogged;
     let event;
@@ -133,7 +133,7 @@ const reducer = (state=initialState , action ) =>{
     let tempState = []
     let tempAllLoc = {} 
     
-        
+    
    switch (action.type) {
 
        case actionTypes.ONCHANGE:
@@ -325,6 +325,7 @@ const reducer = (state=initialState , action ) =>{
                [cridentialsType]: { ...state[cridentialsType] , [name]: value },
                errors: errorsForm,
               
+
            }
        
         case actionTypes.ONSUBMIT:
@@ -350,130 +351,16 @@ const reducer = (state=initialState , action ) =>{
                         }
                     }
                     
-            });
-           console.log(allFormValid)
+        });
                         
             return {
                 ...state,
                 errors: errorsForm,
                 validForm: allFormValid,
                 formType : cridentialsType
-            }
-        
-        case actionTypes.ONLOGIN:
-                
-            return {
-                ...state,
-                //loding:true
-                validForm: false,
-            }
-    
-        case actionTypes.LOGINSUCCESS:
-
-            response = action.payload.dataToken
-            tempToken = response.data.token;
-
-            return {
-                ...state,
-                token: tempToken,
-                logged: true,
-                loding:false
-            }
-
-        case actionTypes.LOGINFAILD:
-
-           errorsForm = { ...state.errors }
-           tempToken = "invalid token";
-           tempLogged = false;
-           errorsForm.username.message = " invalid credentials";
-           errorsForm.username.isValid = false
-           errorsForm.password.message = " invalid credentials";
-           errorsForm.password.isValid = false
-            
-            return {
-                ...state,
-                token: tempToken,
-                logged: tempLogged,
-                errors:errorsForm ,
-                loding:false
-            }
-        
-        case actionTypes.SETCURRENTUSER:
-
-            user = action.payload.user
-            
-            return {
-                ...state,
-                user: user,
-                logged: true ,
-               
-                }
-
-   
-
-        case actionTypes.LOGOUT :
-    
-            return{
-                ...state,
-                token :"",
-                user : {},
-                logged: false
-                
-            }
-            case actionTypes.ONREGISTER :
-             
-            return{
-                ...state,
-               loding:true
-            }
-        
-        case actionTypes.REGISTERSUCCESS:
-           response = action.payload.successRegister
-            return{
-                ...state,
-                loding: false,
-                registred :true
-                
-            }
+           }
        
-         case actionTypes.REGISTERFAILD:
-           response = action.payload.errorRegister
-           errorsForm = { ...state.errors } 
-           errorsForm.usernameRegister.message = "This email adrealy existe"
-              errorsForm.usernameRegister.isValid = false
-           console.log(response ,  errorsForm)
-            return{
-                ...state,
-                errors : errorsForm,
-                loding: false,
-                registred:false
-                
-            }
-       
-            
-        case actionTypes.LOCATIONSUCCESS:
-             tempAllLoc = action.payload.allLocation
-             Object.entries(tempAllLoc).forEach(itemState => {
-                             tempState.push(itemState[0])
-             });
-            
-            return {
-                ...state,
-                allLocation : tempAllLoc,
-                listeOfStates : tempState
-
-            }
-        
-        case actionTypes.LOCATIONFAILED:
-
-            return {
-                ...state,
-                allLocation : {},
-                gouvernorats : {}
-              
-            }
-        
-       default:
+           default:
            break;
    }
 
@@ -481,7 +368,4 @@ const reducer = (state=initialState , action ) =>{
     return state;
 
 
-
 }
-
-export default reducer;

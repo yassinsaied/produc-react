@@ -30,6 +30,7 @@ const reducer = (state= initialState , action) => {
                 listOrPr.push(newFromProduct);
               
             })
+            state.loginR.validForm = false
             
             return Object.assign({}, state, {
               ...state ,
