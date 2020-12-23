@@ -167,7 +167,7 @@ const reducer = (state=initialState , action ) =>{
            response = action.payload.errorRegister
            errorsForm = { ...state.errors } 
            errorsForm.usernameRegister.message = "This email adrealy existe"
-              errorsForm.usernameRegister.isValid = false
+           errorsForm.usernameRegister.isValid = false
            console.log(response ,  errorsForm)
             return{
                 ...state,

@@ -1,6 +1,9 @@
-/* LOGIN FUNCTION */
+/* FORM FUNCTION */
 export const ONSUBMIT = "ONSUBMIT"
 export const ONCHANGE = "ONCHANGE"
+export const ONERRORESPONSE ="ONERRORESPONSE"
+
+/* LOGIN FUNCTION */
 export const ONLOGIN = "ONLOGIN"
 export const LOGOUT = "LOGOUT"
 export const LOGINSUCCESS = "LOGINSUCCESS"

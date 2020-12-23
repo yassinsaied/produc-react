@@ -101,7 +101,9 @@ const iniitialState = {
             zipCode:          { isValid: true, message: "", touched: false, formName: "orderCredentials" }, 
             paymentMethodOrder:    { isValid: true, message: "", touched: false, formName: "orderCredentials" }, 
             creditCardNumber: { isValid: true, message: "", touched: false, formName: "orderCredentials" },
-            cvv:              { isValid: true, message: "", touched: false, formName: "orderCredentials" }, 
+            cvv: { isValid: true, message: "", touched: false, formName: "orderCredentials" },
+           
+            
             
           
     },
@@ -110,7 +112,9 @@ const iniitialState = {
     formType : "",
     allLocation: {},
     listeOfStates: [],
-    listeOfCitys : [],
+    listeOfCitys: [],
+    errorMessageOrder : ""
+  
 
 
 }
@@ -354,6 +358,32 @@ const reducer = (state = iniitialState, action) => {
                 formType : cridentialsType
            }
        
+       case actionTypes.ONERRORESPONSE :
+           errorsForm = { ...state.errors }
+           
+         if(action.payload.formType === "credentials"){  
+                errorsForm.username.message = " invalid credentials";
+                errorsForm.username.isValid = false
+                errorsForm.password.message = " invalid credentials";
+                errorsForm.password.isValid = false
+             
+             }else if (action.payload.formType === "registerCredentials") {
+          
+               errorsForm.usernameRegister.message = "This email adrealy existe"
+               errorsForm.usernameRegister.isValid = false
+     
+           }
+         else {
+             
+             
+             
+           }
+           
+           return {
+
+               
+           }
+       
            default:
            break;
    }
@@ -363,3 +393,6 @@ const reducer = (state = iniitialState, action) => {
 
 
 }
+
+
+export default reducer;
