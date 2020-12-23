@@ -61,56 +61,9 @@ const validateCVV = (cCard, cVv)=> {
 
 
 const initialState = {
-    credentials: {
-            username: "",
-            password : ""
-    },
-    
-    registerCredentials :{
-        firstName : "" ,
-        lastName : "",
-        usernameRegister: "",
-        passwordRegister : "credit"
-    }   , 
-
-    orderCredentials: {
-        firstNameOrder : "" ,
-        lastNameOrder: "",
-        usernameOrder: "",
-        adressOrder: "" ,
-        stateOrder: "",
-        cityOrder: "",
-        zipCode: "",
-        paymentMethodOrder: "",
-        creditCardNumber: "",
-        cvv:""
-  
-    },
-
-    errors: {
-            username:         { isValid: true, message: "", touched: false , formName: "credentials"},
-            password:         { isValid: true, message: "", touched: false , formName: "credentials" },
-            firstName:        { isValid: true, message: "", touched: false ,formName: "registerCredentials" },
-            lastName:         { isValid: true, message: "", touched: false, formName: "registerCredentials" },
-            usernameRegister: { isValid: true, message: "", touched: false , formName: "registerCredentials"},
-            passwordRegister: { isValid: true, message: "", touched: false , formName: "registerCredentials" },
-            confirmPassword:  { isValid: true, message: "", touched: false, formName: "registerCredentials" },
-            firstNameOrder :  { isValid: true, message: "", touched: false, formName: "orderCredentials" }, 
-            lastNameOrder:    { isValid: true, message: "", touched: false, formName: "orderCredentials" }, 
-            usernameOrder: { isValid: true, message: "", touched: false, formName: "orderCredentials" }, 
-            adressOrder:    { isValid: true, message: "", touched: false, formName: "orderCredentials" },
-            stateOrder:       { isValid: true, message: "", touched: false, formName: "orderCredentials" }, 
-            cityOrder:        { isValid: true, message: "", touched: false, formName: "orderCredentials" }, 
-            zipCode:          { isValid: true, message: "", touched: false, formName: "orderCredentials" }, 
-            paymentMethodOrder:    { isValid: true, message: "", touched: false, formName: "orderCredentials" }, 
-            creditCardNumber: { isValid: true, message: "", touched: false, formName: "orderCredentials" },
-            cvv:              { isValid: true, message: "", touched: false, formName: "orderCredentials" }, 
-            
-          
-    },
+   
     
     validForm: false,
-    formType : "",
     user: {},
     logged: false ,
     token: "" ,
@@ -125,247 +78,21 @@ const initialState = {
 const reducer = (state=initialState , action ) =>{
     let tempToken;
     let tempLogged;
-    let event;
-    let errorsForm; 
     let user = {};
-    let cridentialsType
     let response
-    let tempState = []
-    let tempAllLoc = {} 
+  
     
         
    switch (action.type) {
 
-       case actionTypes.ONCHANGE:
-         
-           event = action.payload.event
-           const value = event.currentTarget.value;
-           const name = event.currentTarget.name;
-           const checked = event.currentTarget.checked;
-           cridentialsType = action.payload.cridentialsType
-           errorsForm = { ...state.errors };
-            
       
-           switch (name) {
-
-               case "firstName":
-               case "firstNameOrder":    
-                   
-                    errorsForm[name].touched = true
-                    if (value.length < 3 || value.trim() === "") {
-                        errorsForm[name].message = "First Name must be 3 characters long!";
-                        errorsForm[name].isValid = false;
-                        
-                    } else {
-                        errorsForm[name].message = "";
-                        errorsForm[name].isValid = true;
-                    
-                    }
-               
-               break;
-               case "lastName":
-               case "lastNameOrder":        
-                errorsForm[name].touched = true;
-                    if (value.length < 3 || value.trim() === "") {
-                        errorsForm[name].message = "LastName Must be 3 characters long!";
-                        errorsForm[name].isValid = false;
-                        
-                        
-                    } else {
-                        errorsForm[name].message = "";
-                        errorsForm[name].isValid = true;
-                        
-                    }
-
-                    break;
-               case "username":
-               case "usernameRegister": 
-               case "usernameOrder":     
-                   errorsForm[name].touched = true;
-                   if (!validEmailRegex.test(value) || value.trim() === "") {
-                       errorsForm[name].message = "email invalid"
-                       errorsForm[name].isValid = false
-                   } else {
-                       errorsForm[name].message = ""
-                       errorsForm[name].isValid = true
-                   }
-       
-                   break;
-                             
-               case "password":
-               case "passwordRegister":    
-                   errorsForm[name].touched = true;
-                   if (value.length < 6 || value.trim() === "") {
-                       errorsForm[name].message = "password must be 6 charcter long"
-                       errorsForm[name].isValid = false
-                   } else {
-                       errorsForm[name].message = ""
-                       errorsForm[name].isValid = true
-                   }
-                   break;
-               
-               case "confirmPassword":
-                   errorsForm.confirmPassword.touched = true;
-                   if (value !== state.registerCredentials.passwordRegister) {
-                       errorsForm.confirmPassword.message = "Passwords don't match"
-                       errorsForm.confirmPassword.isValid = false
-                   } else {
-                       errorsForm.confirmPassword.message = ""
-                       errorsForm.confirmPassword.isValid = true
-                   }
-                   break;
-               
-               case "adressOrder":
-                errorsForm.adressOrder.touched = true;
-                if (value.trim() === "") {
-                     errorsForm.adressOrder.message = "Please enter your shipping address. "
-                     errorsForm.adressOrder.isValid = false;
-                  
-                    } else {
-                    errorsForm.adressOrder.message = "";
-                    errorsForm.adressOrder.isValid = true;
-                }
-
-                 break;   
-              case 'stateOrder':
-                   errorsForm.stateOrder.touched = true
-               if (value === "choose state") {
-                   errorsForm.stateOrder.message = " the state is required"
-                   errorsForm.stateOrder.isValid = false
-                       
-               } else {
-                   state.listeOfCitys = []
-                   let allLoc = {...state.allLocation}
-                   Object.entries(allLoc).forEach(loc => {
-                  
-                       if (loc[0] === value) {
-                           loc[1].map(option =>  state.listeOfCitys.push(option.localite))
-           
-                       }
-                   });
-                   errorsForm.stateOrder.message = "";
-                   errorsForm.stateOrder.isValid = true;
-               }          
-                   break; 
-               
-               case "cityOrder":
-               errorsForm.cityOrder.touched = true;
-               if (value === "choose city") {
-                   errorsForm.cityOrder.message = "city is required";
-                   errorsForm.cityOrder.isValid = false;
-                   
-               } else {
-                    errorsForm.cityOrder.message = "";
-                    errorsForm.cityOrder.isValid = true; 
-               }
-               
-               
-               break;
-               
-               case "zipCode":
-               errorsForm.zipCode.touched = true;
-               if (value.trim() === "" || !zipCodRegex.test(value)) {
-                   errorsForm.zipCode.message = "Zip Code invalid";
-                   errorsForm.zipCode.isValid = false;
-                   
-               } else {
-                    errorsForm.zipCode.message = "";
-                    errorsForm.zipCode.isValid = true; 
-               }
-                 break; 
-                 
-             case "paymentMethodOrder":
-                   errorsForm.paymentMethodOrder.touched = true;
-                 
-               if (!checked) {
-                   errorsForm.paymentMethodOrder.message = "Payment Method IS Required";
-                   errorsForm.paymentMethodOrder.isValid = false;
-                   
-               } else {
-                    errorsForm.paymentMethodOrder.message = "";
-                    errorsForm.paymentMethodOrder.isValid = true; 
-               }
-                   break;  
-               
-               
-               
-             case "creditCardNumber":
-                   errorsForm.creditCardNumber.touched = true;
-                
-               if (!validateCard(value)) {
-                   errorsForm.creditCardNumber.message = "Card Number Invalid";
-                   errorsForm.creditCardNumber.isValid = false;
-                   
-               } else {
-                    errorsForm.creditCardNumber.message = "";
-                    errorsForm.creditCardNumber.isValid = true; 
-               }
-                   break;  
-               
-            case "cvv":
-                errorsForm.cvv.touched = true;
-                let currentCardNuber = state.orderCredentials.creditCardNumber
-               
-               if (!validateCVV(currentCardNuber , value) || !validateCard(currentCardNuber)) {
-                   errorsForm.cvv.message = "cvv Invalid";
-                   errorsForm.cvv.isValid = false;
-                   
-               } else {
-                    errorsForm.cvv.message = "";
-                    errorsForm.cvv.isValid = true; 
-               }
-                 break; 
-
-               default:
-                 
-           }
-           
-           return {
-               ...state,
-               [cridentialsType]: { ...state[cridentialsType] , [name]: value },
-               errors: errorsForm,
-              
-           }
-       
-        case actionTypes.ONSUBMIT:
-            let allFormValid;
-            event = action.payload.event
-            cridentialsType = action.payload.cridentialsType
-            errorsForm = { ...state.errors }
-            event.preventDefault();
-            console.log(cridentialsType)
-            Object.entries(errorsForm).forEach((error) => {
-                    if (error[1].formName === cridentialsType) {
-                        
-                        if ((!error[1].isValid && error[1].touched) || (error[1].isValid && !error[1].touched)) {
-                            
-                            allFormValid = false
-                            errorsForm[error[0]].message = "This Field is Required";
-                            errorsForm[error[0]].isValid = false;
-                        
-                        } else {
-
-                            allFormValid = true;
-                        
-                        }
-                    }
-                    
-            });
-           console.log(allFormValid)
-                        
-            return {
-                ...state,
-                errors: errorsForm,
-                validForm: allFormValid,
-                formType : cridentialsType
-            }
         
         case actionTypes.ONLOGIN:
                 
             return {
                 ...state,
                 //loding:true
-                validForm: false,
+                //validForm: false,
             }
     
         case actionTypes.LOGINSUCCESS:

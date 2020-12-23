@@ -108,11 +108,6 @@ const iniitialState = {
     
     validForm: false,
     formType : "",
-    user: {},
-    logged: false ,
-    token: "" ,
-    registred: false,
-    loding: false,
     allLocation: {},
     listeOfStates: [],
     listeOfCitys : [],
@@ -123,11 +118,10 @@ const iniitialState = {
 
 const reducer = (state = iniitialState, action) => {
     
-    let tempToken;
-    let tempLogged;
+   
     let event;
     let errorsForm; 
-    let user = {};
+   
     let cridentialsType
     let response
     let tempState = []

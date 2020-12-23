@@ -14,7 +14,7 @@ import {login , onChange , onSubmit}from "../../../Store/actions/actionLoginUser
 class Login extends Component{
  
   componentDidMount() {
-     console.log(this.props.validForm)
+     //console.log(this.props.validForm)
      if (this.props.logged) {
               this.props.history.replace("/")
         }
@@ -23,9 +23,10 @@ class Login extends Component{
 
 
   componentDidUpdate() {
+     console.log(this.props.validForm)
     if (this.props.validForm) {
-      this.props.onLogin(this.props.credentials);
-    } 
+        this.props.onLogin(this.props.credentials , this.props.validForm);
+      } 
 
      if (this.props.logged) {
               this.props.history.replace("/")
@@ -90,7 +91,7 @@ const mapStateToProps = (state) => {
         
      onHandleChange : (event , cridentialsType) => dispatch(onChange(event , cridentialsType)) ,
      onHandelSubmit : (event , cridentialsType) => dispatch(onSubmit(event , cridentialsType ))  ,  
-     onLogin: (credentialsLogin) =>  dispatch(login(credentialsLogin))
+     onLogin: (credentialsLogin , validForm) =>  dispatch(login(credentialsLogin , validForm))
  
     
    }

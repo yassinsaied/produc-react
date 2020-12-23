@@ -13,40 +13,44 @@ import {
 import athApi from "../../Services/authApi"
 import registerApi from "../../Services/registerApi"
 
-export const login = (credentials) => (dispatch) => {
-   dispatch({
-                  type: ONLOGIN,
-                  payload: { credentials: credentials }
-      })
-
-    return athApi.authenticate(credentials).then(
-        res => {
-           
-        dispatch({
-                type: LOGINSUCCESS,
-                payload: { dataToken: res },
-            });
-         return res.data.token
-        }).then(token => {
-               return athApi.getUserByUserName(token).then(
-               userData => {
-
-                   let user = userData.data['hydra:member'][0]
-                    dispatch({
-                        type: SETCURRENTUSER,
-                        payload: { user: user }
-
-                    })
-                       
-                })  
-            
-        }).catch(error => {
-          console.log(error)
-               dispatch({
-                    type: LOGINFAILD,
-                    payload: { errorResponse: error },
-           });
+export const login = (credentials, validForm) => (dispatch) => {
+    
+    if (validForm) {
+      
+    dispatch({
+                    type: ONLOGIN,
+                    payload: { credentials: credentials }
         })
+
+        return athApi.authenticate(credentials).then(
+            res => {
+            
+            dispatch({
+                    type: LOGINSUCCESS,
+                    payload: { dataToken: res },
+                });
+            return res.data.token
+            }).then(token => {
+                return athApi.getUserByUserName(token).then(
+                userData => {
+
+                    let user = userData.data['hydra:member'][0]
+                        dispatch({
+                            type: SETCURRENTUSER,
+                            payload: { user: user }
+
+                        })
+                        
+                    })  
+                
+            }).catch(error => {
+            console.log(error)
+                dispatch({
+                        type: LOGINFAILD,
+                        payload: { errorResponse: error },
+            });
+            })
+      } 
 
 }
 
