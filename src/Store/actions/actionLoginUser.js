@@ -8,14 +8,15 @@ import {
      LOGOUT,
     ONREGISTER,
     REGISTERSUCCESS,
-    REGISTERFAILD
+    REGISTERFAILD,
+    ONERRORESPONSE
 } from "./types"
 import athApi from "../../Services/authApi"
 import registerApi from "../../Services/registerApi"
 
 export const login = (credentials, validForm) => (dispatch) => {
     
-    if (validForm) {
+  
       
     dispatch({
                     type: ONLOGIN,
@@ -49,8 +50,17 @@ export const login = (credentials, validForm) => (dispatch) => {
                         type: LOGINFAILD,
                         payload: { errorResponse: error },
             });
+
+              dispatch({
+                  type: ONERRORESPONSE,
+                  payload : {formType:"login"}
+                 
+              });
+
+
+
             })
-      } 
+     
 
 }
 
@@ -75,7 +85,13 @@ export const register = (registerCredentials) => (dispatch) => {
            
             type: REGISTERFAILD,
             payload : {errorRegister : error}
-       })
+       });
+
+       dispatch({
+        type: ONERRORESPONSE,
+        payload : {formType:"register"}
+       
+      });
 
     })
 

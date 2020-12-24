@@ -23,9 +23,9 @@ class Login extends Component{
 
 
   componentDidUpdate() {
-     console.log(this.props.validForm)
+    
     if (this.props.validForm) {
-        this.props.onLogin(this.props.credentials , this.props.validForm);
+        this.props.onLogin(this.props.credentials);
       } 
 
      if (this.props.logged) {
@@ -74,13 +74,13 @@ return (<>
 }
 const mapStateToProps = (state) => {
     return {
-        credentials: state.loginR.credentials,
-        errors :   state.loginR.errors,
+        credentials: state.formR.credentials,
+        errors :   state.formR.errors,
         token:     state.loginR.token,
         user:      state.loginR.user,
         logged:    state.loginR.logged,
-        validForm: state.loginR.validForm,
-        formType: state.loginR.formType,
+        validForm: state.formR.validForm,
+        formType: state.formR.formType,
         loding : state.loginR.loding,
           
 
