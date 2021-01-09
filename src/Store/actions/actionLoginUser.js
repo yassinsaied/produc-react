@@ -1,3 +1,5 @@
+
+  
 import {
     LOGINSUCCESS,
     LOGINFAILD,
@@ -8,14 +10,15 @@ import {
      LOGOUT,
     ONREGISTER,
     REGISTERSUCCESS,
-    REGISTERFAILD
+    REGISTERFAILD,
+    ONERRORESPONSE
 } from "./types"
 import athApi from "../../Services/authApi"
 import registerApi from "../../Services/registerApi"
 
-export const login = (credentials, validForm) => (dispatch) => {
+export const login = (credentials) => (dispatch) => {
     
-    if (validForm) {
+  
       
     dispatch({
                     type: ONLOGIN,
@@ -44,13 +47,22 @@ export const login = (credentials, validForm) => (dispatch) => {
                     })  
                 
             }).catch(error => {
-            console.log(error)
+            
                 dispatch({
                         type: LOGINFAILD,
                         payload: { errorResponse: error },
             });
+
+              dispatch({
+                  type: ONERRORESPONSE,
+                  payload : {formType:"login"}
+                 
+              });
+
+
+
             })
-      } 
+     
 
 }
 
@@ -58,11 +70,10 @@ export const register = (registerCredentials) => (dispatch) => {
     
     dispatch({
         type: ONREGISTER,
-       
-
+  
     })
     return registerApi.registerUser(registerCredentials).then(res=>{
-
+       
         dispatch({
             type: REGISTERSUCCESS,
             payload : {successRegister : res}
@@ -70,12 +81,18 @@ export const register = (registerCredentials) => (dispatch) => {
        })
 
     }).catch(error => {
-
+            console.log(error)
         dispatch({
            
             type: REGISTERFAILD,
             payload : {errorRegister : error}
-       })
+       });
+
+       dispatch({
+        type: ONERRORESPONSE,
+        payload : {formType:"register"}
+       
+      });
 
     })
 
@@ -113,4 +130,3 @@ export const logout = () => (dispatch) => {
 
 
 }
-

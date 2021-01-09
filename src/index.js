@@ -7,6 +7,7 @@ import App from "./App";
 import cartReducer from "./Store/Reducers/cart";
 import loginReducer from "./Store/Reducers/loginUser"
 import orderReducer from "./Store/Reducers/order"
+import formReducer from "./Store/Reducers/form"
 import * as serviceWorker from "./serviceWorker";
 import authApi from "./Services/authApi"
 
@@ -15,7 +16,8 @@ const persisteData = authApi.loadState();
 const rootReducer = combineReducers({
   cartR : cartReducer,
   loginR: loginReducer,
-  orderR : orderReducer
+  orderR : orderReducer,
+  formR :   formReducer
 
 
 });
@@ -29,6 +31,8 @@ const store = createStore(rootReducer , persisteData ,applyMiddleware(thunk));
     cartR :  store.getState().cartR,
     loginR: store.getState().loginR,
     orderR: store.getState().orderR,
+    
+  
     
   
 

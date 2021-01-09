@@ -9,7 +9,9 @@ const initialState = {
     orderProducts : []
     },
 
-    messageResult : ""
+    orderDone: false,
+    loding: false,
+    messageOrderResult  :""
     
 }
 
@@ -30,7 +32,7 @@ const reducer = (state= initialState , action) => {
                 listOrPr.push(newFromProduct);
               
             })
-            state.loginR.validForm = false
+          
             
             return Object.assign({}, state, {
               ...state ,
@@ -40,14 +42,19 @@ const reducer = (state= initialState , action) => {
                     user: uriUser,
                     orderProducts : listOrPr
                 },
-                    })
+              loding :true
+            })
+                
+           
         
         case actionTypes.ONSUCCESSORDER:
             
             return {
      
                 ...state,
-                messageResult : action.payload.successOrder
+                orderDone: true,
+                loding: false,
+                messageOrderResult :"Your order has been received and accepted"
          
             }
         
@@ -56,8 +63,19 @@ const reducer = (state= initialState , action) => {
             return {
      
                 ...state,
-                messageResult : action.payload.errorOrder
-         
+                orderDone: true,
+                loding: false,
+                messageOrderResult :"Your order has been failed please review and try again later"
+           
+            }
+        
+        case action.AFTERESPONSEORDER:
+            
+            return {
+             ...state,
+             orderDone: false,
+             messageOrderResult :""
+
             }
      
     

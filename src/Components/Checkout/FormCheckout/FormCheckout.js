@@ -11,13 +11,13 @@ class formCheckout extends Component{
     
     componentDidMount() {
        
-        console.log(this.props.user)
+       
    } 
     
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
  
     
-      if (this.props.validForm ) {
+      if (this.props.validForm && this.props.validForm !== prevProps.validForm) {
            this.props.onHandelOrder(
               this.props.orderCredentials.stateOrder,
               this.props.orderCredentials.cityOrder,
@@ -114,14 +114,18 @@ class formCheckout extends Component{
 
 const mapStateToProps = (state) => {
     return {
+        listeOfCitys: state.formR.listeOfCitys,
+        validForm: state.formR.validForm,
+        formType: state.formR.formType,
+        errors: state.formR.errors,
+        orderCredentials: state.formR.orderCredentials,
+        user: state.loginR.user,
+        loding: state.loginR.loding,
         listProducts: state.cartR.listProducts,
-        listeOfCitys : state.loginR.listeOfCitys,
-        errors: state.loginR.errors,
-        orderCredentials: state.loginR.orderCredentials,
-        user:      state.loginR.user,
-        validForm: state.loginR.validForm,
-        formType: state.loginR.formType,
-        loding : state.loginR.loding,
+        allLocation:   state.formR.allLocation,
+        listeOfStates: state.formR.listeOfStates
+        
+        
          
     };
 };

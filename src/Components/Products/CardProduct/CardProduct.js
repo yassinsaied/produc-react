@@ -16,7 +16,7 @@ const CardProduct = ({ product }) => {
   useEffect(() => {
     if (product.promo > 0) {
       setPromoProduct({
-        newPrice: (product.price * product.promo) / 100,
+        newPrice: ((product.price * product.promo) / 100).toFixed(2),
         oldPrice: product.price,
         promo: true,
       });

@@ -9,30 +9,24 @@ import { connect } from "react-redux";
 class Register extends Component {
 
 
-     componentDidMount() {
-     if ( this.props.logged) {
-              this.props.history.replace("/")
-        }
-    } 
-
-
    
-    componentWillUpdate(nextProps, nextState) {
-        if (nextProps.formType === "registerCredentials" && nextProps.formType !== this.props.formType) {
-            
-                if (nextProps.validForm === true ) {
-                    const userRegister = { 
-                        email: this.props.registerCredentials.usernameRegister ,
-                        password:  this.props.registerCredentials.passwordRegister ,
-                        firstName:  this.props.registerCredentials.firstName,
-                        lastName :  this.props.registerCredentials.lastName
 
-                    }
-                    this.props.onRegister(userRegister) ;
-                
-                }
+    componentDidUpdate(prevProps) {
+    
+     if (this.props.validForm && this.props.validForm !== prevProps.validForm && !this.props.registred) {
+            const userRegister = { 
+                email: this.props.registerCredentials.usernameRegister ,
+                password:  this.props.registerCredentials.passwordRegister ,
+                firstName:  this.props.registerCredentials.firstName,
+                lastName :  this.props.registerCredentials.lastName
+
+            }
+             this.props.onRegister(userRegister , this.props.validForm) ;
+        
         }
-      }
+   
+    
+      } 
       
 
     render() {
@@ -96,13 +90,13 @@ class Register extends Component {
 const mapStateToProps = (state) =>{
   return {
 
-    registerCredentials : state.loginR.registerCredentials,
-    errors: state.loginR.errors,
-    validForm: state.loginR.validForm ,
-    formType: state.loginR.formType,
+    registerCredentials : state.formR.registerCredentials,
+    errors: state.formR.errors,
+    validForm: state.formR.validForm ,
+    formType: state.formR.formType,
     loding: state.loginR.loding,
     registred: state.loginR.registred,
-    logged:    state.loginR.logged,
+   
   }
 
 
@@ -122,7 +116,3 @@ const mapDispatchToProps = (dispatch) =>{
 
 
 export default  connect(mapStateToProps,mapDispatchToProps)(Register) ;
-
-
-
-

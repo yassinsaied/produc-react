@@ -4,7 +4,9 @@ import {
     LOCATIONFAILED,
     ONADDORDER,
     ONSUCCESSORDER,
-    ONFAIILEDORDER
+    ONFAIILEDORDER,
+    AFTERESPONSEORDER,
+    INITIALISATIONCART
 }
     from "./types"
 import locationApi from "../../Services/fetchLocationApi"
@@ -43,15 +45,22 @@ export const onAddOrder = (state , city , address , user , listProducts) => (dis
 
     })
       const orderToPost = getState().orderR.order;
-      console.log(orderToPost)
+      //console.log(orderToPost)
     return orderApi.postOrder(orderToPost).then(res => {
         
         dispatch({
             type: ONSUCCESSORDER,
             payload : {successOrder : res} 
+        })
 
+        dispatch({
+            type: INITIALISATIONCART,
+           
+        })
 
-         })
+    
+        
+
 
     }).catch(err => {
         dispatch({
@@ -59,9 +68,22 @@ export const onAddOrder = (state , city , address , user , listProducts) => (dis
             payload :{errorOrder: err}
         })
 
+   
+
     })
     
     
+
+}
+
+export const afterResponseOrfer = () => (dispatch) => {
+    
+  dispatch({
+              
+          type:AFTERESPONSEORDER,
+                
+          }) 
+
 
 }
 

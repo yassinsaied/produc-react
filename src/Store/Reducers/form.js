@@ -125,9 +125,7 @@ const reducer = (state = iniitialState, action) => {
    
     let event;
     let errorsForm; 
-   
     let cridentialsType
-    let response
     let tempState = []
     let tempAllLoc = {} 
     
@@ -359,15 +357,16 @@ const reducer = (state = iniitialState, action) => {
            }
        
        case actionTypes.ONERRORESPONSE :
-           errorsForm = { ...state.errors }
-           
-         if(action.payload.formType === "credentials"){  
+           errorsForm = { ...state.errors } ;
+           let  errorOrder ;
+          
+         if(action.payload.formType === "login"){  
                 errorsForm.username.message = " invalid credentials";
                 errorsForm.username.isValid = false
                 errorsForm.password.message = " invalid credentials";
                 errorsForm.password.isValid = false
              
-             }else if (action.payload.formType === "registerCredentials") {
+             }else if (action.payload.formType === "register") {
           
                errorsForm.usernameRegister.message = "This email adrealy existe"
                errorsForm.usernameRegister.isValid = false
@@ -375,14 +374,41 @@ const reducer = (state = iniitialState, action) => {
            }
          else {
              
-             
+         
+         errorOrder = "Its Impossible to pass This Order"
              
            }
            
            return {
-
+             ...state,
+             errors : errorsForm,
+             errorMessageOrder: errorOrder,
+             validForm:false
+             
                
            }
+
+           case actionTypes.LOCATIONSUCCESS:
+            tempAllLoc = action.payload.allLocation
+            Object.entries(tempAllLoc).forEach(itemState => {
+                            tempState.push(itemState[0])
+            });
+           
+           return {
+               ...state,
+               allLocation : tempAllLoc,
+               listeOfStates : tempState
+
+           }
+       
+       case actionTypes.LOCATIONFAILED:
+
+           return {
+               ...state,
+               allLocation : {},
+               gouvernorats : {}
+             
+           }   
        
            default:
            break;
